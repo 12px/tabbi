@@ -1,6 +1,6 @@
 <template>
   <nav class="container">
-    <div class="filter-bar columns">
+    <div class="columns">
       <div class="column logo is-hidden-mobile">
         <strong class="has-text-primary">•pinnd•</strong>
       </div>
@@ -8,11 +8,11 @@
         <filter-tool></filter-tool>
       </div>
     </div>
-    <div class="tool-bar columns">
-      <div class="column is-hidden-mobile">
+    <div class="toolbar columns is-hidden-mobile">
+      <div class="column">
         <create-tool></create-tool>
       </div>
-      <div class="column is-hidden-mobile"></div>
+      <div class="column"></div>
       <div class="column">
         <toggle-tool></toggle-tool>
       </div>
@@ -33,8 +33,20 @@
 </script>
 
 <style lang="scss">
+  @import '~bulma/sass/utilities/_all.sass';
+
   .logo {
     flex: none;
     padding-top: 1.07em;
+  }
+
+  .toolbar .column {
+    padding-top: 0;
+  }
+
+  .toolbar,
+  .toolbar .button {
+    font-weight: bold;
+    color: $grey-light;
   }
 </style>
