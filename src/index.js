@@ -3,6 +3,7 @@ import App from './App.vue'
 
 import auth from './tools/auth'
 import router from './tools/router'
+import store from './storage/store'
 
 Vue.use(auth)
 
@@ -13,6 +14,7 @@ Vue.component('icon', Icon)
 Vue.config.productionTip = false
 
 const app = new Vue({
+  store,
   router,
   render: h => h(App)
 })
