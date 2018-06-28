@@ -4,7 +4,7 @@ import auth0 from 'auth0-js'
 
 let webAuth = new auth0.WebAuth({
   domain: '12px.auth0.com',
-  clientID: '3ltNIL5CKE9NY0v3etPtMVeMPtiP3Vl9',
+  clientID: 'O4pIwfbLSfTZwdyjxnR6XWY1Ehml0zhT',
   redirectUri: 'http://localhost:4000/callback', 
   audience: 'https://12px.auth0.com/api/v2/',
   responseType: 'token id_token',
