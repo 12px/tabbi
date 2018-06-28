@@ -7,12 +7,12 @@
     </span>
     <span class="control board-cols">
       <button :class="cBtn" @click="$store.commit('toggle_view_cols')">
-        <span class="icon"><icon name="th"></icon></span>
+        <span class="icon"><icon name="th" scale="0.65"></icon></span>
       </button>
     </span>
     <span class="control trash">
       <button :class="tClass" @click="$store.commit('toggle_view_trash')">
-        <span class="icon"><icon name="trash"></icon></span>
+        <span class="icon"><icon name="trash" scale="0.6"></icon></span>
         <span>0</span>
       </button>
     </span>
@@ -35,14 +35,6 @@
 </script>
 
 <style>
-  .toggle-tool .icon {
-    font-size: 0.65em;
-  }
-  .toggle-tool .trash .icon {
-    font-size: .5em;
-    margin-right: .75em !important;
-  }
-
   .toggle-tool {
     justify-content: flex-end!important;
   }

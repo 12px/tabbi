@@ -25,6 +25,14 @@
     padding: 1rem
   }
 
+  .column.none {
+    flex: none;
+  }
+
+  .opt {
+    cursor: pointer;
+  }
+
   .muted { color: $grey-light; }
   .barely { color: $grey-lighter; }
 </style>

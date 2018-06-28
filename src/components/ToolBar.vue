@@ -1,7 +1,7 @@
 <template>
   <nav class="container">
     <div class="columns">
-      <div class="column logo is-hidden-mobile">
+      <div class="column none logo is-hidden-mobile">
         <strong class="has-text-primary">•pinnd•</strong>
       </div>
       <div class="column">
@@ -26,9 +26,7 @@
   import ToggleTool from './ToolBar/ToggleTool.vue'
 
   export default {
-    components: {
-      FilterTool, CreateTool, ToggleTool
-    }
+    components: { FilterTool, CreateTool, ToggleTool }
   }
 </script>
 
@@ -36,7 +34,6 @@
   @import '~bulma/sass/utilities/_all.sass';
 
   .logo {
-    flex: none;
     padding-top: 1.07em;
   }
 

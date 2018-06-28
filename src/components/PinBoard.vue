@@ -2,7 +2,10 @@
   <div class="container">
     
     <div class="columns is-multiline" v-if="!view.trash">
-      
+      <board :class="cols"
+        v-for="(board, key) in boards"
+        :id="key" :key="board.id" :self="board">
+      </board>
     </div>
 
     <div class="columns is-multiline" v-if="view.trash">
@@ -13,6 +16,8 @@
 </template>
 
 <script>
+  import Board from './PinBoard/Board.vue'
+
   export default {
     computed: {
       view()   { return this.$store.state.view },
@@ -26,7 +31,8 @@
         if (this.view.cols == 4) result.push('is-one-quarter')
         return result.join(' ')
       }
-    }
+    },
+    components: { Board }
   }
 </script>
 
