@@ -15,12 +15,13 @@ const state = {
   boards: [{
     id: 1,
     name: "Inbox",
-    idKey: 2,
+    idKey: 3,
     links: [{
-      id: 1,
-      name: "pinnd - testing",
-      link: "http://localhost:4000",
-      tags: ["dev", "home"]
+      id: 1, name: "pinnd - testing",
+      link: "http://localhost:4000", tags: ["dev", "home"]
+    },{
+      id: 2, name: "pinnd - testing 2",
+      link: "http://localhost:4000", tags: []
     }]
   }],
 
