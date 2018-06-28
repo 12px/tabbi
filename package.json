@@ -1,0 +1,25 @@
+{
+  "name": "pinnd",
+  "version": "0.0.1",
+  "description": "Bookmarks, simple.",
+  "main": "src/index.js",
+  "repository": "https://github.com/12px/pinnd.git",
+  "author": "12px <dalton@12px.io>",
+  "license": "MIT",
+  "scripts": {
+    "start": "poi src/index.js"
+  },
+  "dependencies": {
+    "auth0-js": "^9.6.1",
+    "bulma": "^0.7.1",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuedraggable": "^2.16.0",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "node-sass": "^4.9.0",
+    "poi": "^10.2.9",
+    "sass-loader": "^7.0.3"
+  }
+}
