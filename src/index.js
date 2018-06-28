@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import store from './vuex/store'
 import auth from './tools/auth'
 import router from './tools/router'
-import store from './storage/store'
 
 Vue.use(auth)
 
