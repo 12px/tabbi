@@ -1,9 +1,15 @@
 <template>
-  <div class="home">
-    Home
+  <div id="home">
+    <tool-bar></tool-bar>
   </div>
 </template>
 
-<script></script>
+<script>
+  import ToolBar from '../components/ToolBar.vue'
+
+  export default {
+    components: { ToolBar }
+  }
+</script>
 
 <style></style>

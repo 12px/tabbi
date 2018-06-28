@@ -20,4 +20,11 @@
     height: 100vh;
     overflow: auto;
   }
+
+  .container {
+    padding: 1rem
+  }
+
+  .muted { color: $grey-light; }
+  .barely { color: $grey-lighter; }
 </style>

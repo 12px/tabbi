@@ -1,12 +1,11 @@
 <template>
-  <div class="callback">CALLBACK</div>
+  <div class="callback"></div>
 </template>
 
 <script>
   export default {
     name: 'callback',
     mounted() {
-      console.log('hiya')
       this.$auth.handleAuth().then((data) => {
         this.$router.push({ name: 'home' })
       })
