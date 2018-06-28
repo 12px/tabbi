@@ -20,7 +20,7 @@ const state = {
       id: 1,
       name: "pinnd - testing",
       link: "http://localhost:4000",
-      tags: []
+      tags: ["dev", "home"]
     }]
   }],
 
