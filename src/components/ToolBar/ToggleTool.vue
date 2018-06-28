@@ -1,17 +1,17 @@
 <template>
   <div class="field has-addons toggle-tool">
     <span class="control max-links">
-      <button class="button is-rounded is-small is-light">
-        <span>Show 0</span>
+      <button :class="cBtn" @click="$store.commit('toggle_view_rows')">
+        <span>Show {{ view.rows }}</span>
       </button>
     </span>
     <span class="control board-cols">
-      <button class="button is-rounded is-small is-light">
+      <button :class="cBtn" @click="$store.commit('toggle_view_cols')">
         <span class="icon"><icon name="th"></icon></span>
       </button>
     </span>
     <span class="control trash">
-      <button class="button is-rounded is-small is-light">
+      <button :class="tClass" @click="$store.commit('toggle_view_trash')">
         <span class="icon"><icon name="trash"></icon></span>
         <span>0</span>
       </button>
@@ -19,7 +19,20 @@
   </div>
 </template>
 
-<script></script>
+<script>
+  export default {
+    data() { return {
+      cBtn: 'button is-rounded is-small is-light',
+      aBtn: 'button is-rounded is-small is-primary has-text-white'
+    } },
+    computed: {
+      view()    { return this.$store.state.view },
+      trash()   { return this.$store.state.trash },
+      tClass()  { return this.view.trash ? this.aBtn: this.cBtn },
+      trashed() { return this.trash.boards.length + this.trash.links.length }
+    }
+  }
+</script>
 
 <style>
   .toggle-tool .icon {
