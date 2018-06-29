@@ -34,7 +34,8 @@ const state = {
     },{
       id: 6, name: "pinnd - testing 6",
       link: "http://localhost:4000", tags: []
-    },{
+    }]
+  },{
     id: 2,
     name: "Inbox 2",
     idKey: 7,
@@ -77,7 +78,7 @@ const state = {
     by: false,
     active: false,
     key: 'string'
-  }
+  },
 }
 
 export default new Vuex.Store({ state, mutations })
