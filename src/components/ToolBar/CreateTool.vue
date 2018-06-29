@@ -43,7 +43,7 @@
             <div class="select">
               <select v-model="board">
                 <option value="0">Choose Board</option>
-                <option v-for="(brd) in $store.state.boards" :value="brd.id">
+                <option v-for="brd in $store.state.boards" :value="brd.id">
                   {{ brd.name }}
                 </option>
               </select>
@@ -116,16 +116,15 @@
       },
       create(type) {
         if (!this.name) return alert('No Name Specified.')
-        if (!this.link && type == 'link') return alert('No URL Specified.')
-        if (this.board < 1 && type == 'link') return alert('No Board Specified.')
-
         if (type == 'board') this.$store.commit('new_board', this.name)
         if (type == 'link') {
-          this.$store.commit('new_link', {
-            name: this.name,
-            link: this.link,
-            board: this.board,
-            tags: this.tags
+          if (!this.link) return alert('No URL Specified.')
+          if (this.board < 1) return alert('No Board Specified')
+
+          let index = this.$pd.xById(this.$store.state.boards, this.board)
+
+          this.$store.commit('new_link', { 
+            name: this.name, link: this.link, board: index, tags: this.tags  
           })
         }
         this.clear()

@@ -19,7 +19,15 @@ const mutations = {
   new_board(state, data) {
     state.boards.push({ id: state.idKey, name: data, idKey: 1, links: [] })
     state.idKey += 1
-  }
+  },
+
+  new_link(state, data) {
+    let board = state.boards[data.board]
+    board.links.push({ 
+      id: board.idKey, name: data.name,  link: data.link, tags: data.tags
+    })
+    board.idKey += 1
+  },
 
 }
 
