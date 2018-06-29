@@ -1,5 +1,5 @@
 <template>
-  <div class="tack">
+  <div class="tack" v-show="!filtered()">
 
     <div class="columns is-marginless is-mobile">
       <div class="column is-clipped">
@@ -23,9 +23,15 @@
   export default {
     props: ['self'],
     computed: {
+      filter()   { return this.$store.state.filter },
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
       prescale() { return this.tagged ? '0.65' : '1' }
+    },
+    methods: {
+      filtered() { 
+        return this.$pd.filtered(this.filter, this.self.name, this.self.tags); 
+      }
     }
   }
 </script>
