@@ -8,6 +8,10 @@
 </script>
 
 <style lang="scss">
+  $input-hover-border-color: hsl(0, 0%, 86%);
+  $input-focus-border-color: hsl(0, 0%, 86%);
+  $input-focus-box-shadow-size: 0;
+  
   @import '~bulma/bulma.sass';
 
   body {
