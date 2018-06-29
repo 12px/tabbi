@@ -26,7 +26,7 @@
       </tack>
 
 
-      <div class="show muted has-text-centered" v-if="over">
+      <div class="show muted has-text-centered" v-if="overflow">
         <small class="opt" v-show="show" @click="show = false">Show Less</small>
         <small class="opt" v-show="!show" @click="show = true">Show More</small>
       </div>
@@ -43,9 +43,10 @@
       show: false
     } },
     computed: {
-      filter() { return this.$store.state.filter },
-      rows()   { return this.$store.state.view.rows },
-      over()   { return this.self.links.length > this.rows }
+      filter()   { return this.$store.state.filter },
+      rows()     { return this.$store.state.view.rows },
+      overflow() { let over = this.self.links.length > this.rows 
+                   return over && !this.filter.active }
     },
     methods: {
       filtered() { 
