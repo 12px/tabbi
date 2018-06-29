@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    props: ['self', 'id'],
+    props: ['self'],
     computed: {
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
@@ -63,7 +63,7 @@
     }
 
     .prefix {
-      width: 1em;
+      width: 1.25em;
     }
   }
 </style>

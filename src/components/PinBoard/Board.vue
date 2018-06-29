@@ -21,8 +21,7 @@
         This board is empty.
       </div>
 
-      <tack v-for="(tack, key) in self.links"
-        :key="tack.id" :id="key" :self="tack">
+      <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack">
       </tack>
 
     </div>
