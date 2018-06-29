@@ -1,7 +1,7 @@
 const mutations = {
 
   toggle_view_cols(state, data) {
-    state.view.columns += state.view.columns < 4 ? 1 : -3
+    state.view.cols += state.view.cols < 4 ? 1 : -3
   },
 
   toggle_view_rows(state, data) {

@@ -4,7 +4,7 @@
     <div class="columns is-marginless is-mobile">
       <div class="column is-clipped">
         <div class="prefix is-pulled-left barely">
-          <icon :name="prefix"  :flip="preflip" :scale="prescale"></icon>
+          <icon :name="prefix"  flip="horizontal" :scale="prescale"></icon>
         </div>
         <a :href="self.link">{{ self.name }}</a>
       </div>
@@ -25,7 +25,6 @@
     computed: {
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
-      preflip()  { return this.tagged ? 'horizontal' : '' },
       prescale() { return this.tagged ? '0.65' : '1' }
     }
   }
