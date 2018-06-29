@@ -21,9 +21,15 @@
         This board is empty.
       </div>
 
-      <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack">
+      <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
+        v-show="visible(key)">
       </tack>
 
+
+      <div class="show muted has-text-centered" v-if="over">
+        <small class="opt" v-show="show" @click="show = false">Show Less</small>
+        <small class="opt" v-show="!show" @click="show = true">Show More</small>
+      </div>
     </div>
   </div>
 </template>
@@ -33,12 +39,20 @@
 
   export default {
     props: ['self', 'id'],
+    data() { return { 
+      show: false
+    } },
     computed: {
-      filter() { return this.$store.state.filter }
+      filter() { return this.$store.state.filter },
+      rows()   { return this.$store.state.view.rows },
+      over()   { return this.self.links.length > this.rows }
     },
     methods: {
       filtered() { 
         return this.$pd.filtered(this.filter, this.self.name, this.self.links, true) 
+      },
+      visible(key) {
+        return this.show || key < this.rows || this.filter.active
       }
     },
     components: { Tack }
@@ -59,5 +73,8 @@
     padding-top: 0;
     padding-bottom: 0;
     margin-bottom: -0.5rem;
+  }
+  .board .show {
+    margin-top: .5em;
   }
 </style>
