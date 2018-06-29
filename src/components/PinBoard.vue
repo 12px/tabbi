@@ -37,4 +37,8 @@
 </script>
 
 <style lang="scss">
+  .select,
+  .select select {
+    width: 100%;
+  }
 </style>

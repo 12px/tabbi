@@ -13,20 +13,78 @@
       </div>
     </div>
 
-    <div class="field has-addons" v-if="view == 'board'">
-      <div class="field-label is-small opt muted" @click="clear">
-        <icon name="times"></icon>
+    <div class="box has-background-primary" v-if="view != 'toggle'">
+      <div v-if="view == 'board'">
+        <div class="field">
+          <div class="control is-expanded">
+            <input class="input" type="text" 
+              placeholder="Board Name" v-model="name" @keyup.enter="create('board')">
+          </div>
+        </div>
       </div>
-      <div class="field-body">
-        <span class="control">
-          <input type="text" class="input is-small is-rounded" 
-            placeholder="Board Name" v-model="name" @keyup.enter="create('board')">
-        </span>
-        <span class="control" @click="create('board')">
-          <button class="button is-rounded is-small is-primary has-text-white">
-            <icon name="check"></icon>
-          </button>
-        </span>
+
+      <div v-if="view == 'link'">
+        <div class="field">
+          <span class="control is-expanded">
+            <input type="text" class="input" 
+              placeholder="Link Name" v-model="name" @keyup.enter="create('link')">
+          </span>
+        </div>
+
+        <div class="field">
+          <span class="control is-expanded">
+            <input type="text" class="input" 
+              placeholder="Link URL" v-model="link" @keyup.enter="create('link')">
+          </span>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <select v-model="board">
+                <option value="0">Choose Board</option>
+                <option v-for="(brd) in $store.state.boards" :value="brd.id">
+                  {{ brd.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input class="input" type="text" 
+              placeholder="Add New Tag" v-model="nTag" @keyup.enter="addTag">
+          </div>
+          <div class="control">
+            <a class="button" @click="addTag">
+              <icon name="check"></icon>
+            </a>
+          </div>
+        </div>
+        <div class="tags">
+          <strong class="tag" v-for="(tag, i) in tags">
+            #{{ tag }}
+            <span @click="remTag(i)">
+              <icon class="opt" name="times" scale="0.65"></icon>
+            </span>
+          </strong>
+        </div>
+      </div>
+
+
+      <div class="buttons is-right">
+        <button class="button is-white" @click="clear">
+          Cancel
+        </button>
+        <button v-if="view == 'link'" 
+          class="button is-inverted is-primary" @click="create('link')">
+          Add Link
+        </button>
+        <button v-if="view == 'board'" 
+          class="button is-inverted is-primary" @click="create('board')">
+          Add Board
+        </button>
       </div>
     </div>
 
@@ -45,6 +103,10 @@
       }
     },
     methods: {
+      remTag(i) { this.tags.splice(i, 1) },
+      addTag()  { if (!this.nTag) return alert("No Tag Specified")
+                  this.tags.push(this.nTag)
+                  this.nTag = '' },
       clear() {
         this.tags = []
         this.name = ''
@@ -77,5 +139,14 @@
     flex: none;
     margin-right: 0;
     padding-right: 1em;
+  }
+
+  .tags .fa-icon {
+    margin-top: 0.35rem;
+    margin-left: 0.35rem;  
+  }
+
+  .creator .buttons {
+    margin-top: 1em;
   }
 </style>
