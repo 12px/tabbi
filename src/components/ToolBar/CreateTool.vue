@@ -17,7 +17,7 @@
       <div v-if="view == 'board'">
         <div class="field">
           <div class="control is-expanded">
-            <input class="input" type="text" 
+            <input class="input" type="text" v-focus
               placeholder="Board Name" v-model="name" @keyup.enter="create('board')">
           </div>
         </div>
@@ -26,7 +26,7 @@
       <div v-if="view == 'link'">
         <div class="field">
           <span class="control is-expanded">
-            <input type="text" class="input" 
+            <input type="text" class="input" v-focus
               placeholder="Link Name" v-model="name" @keyup.enter="create('link')">
           </span>
         </div>
