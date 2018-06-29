@@ -23,7 +23,7 @@ let pd = {
     let result = [];
     for (var l = arr.length - 1; l >= 0; l--) {
       let link = arr[l];
-      if (thing == 'str') result.push(link.title);
+      if (thing == 'str') result.push(link.name);
       else if (link.tags && link.tags.length) {
         for (var t = link.tags.length - 1; t >= 0; t--) {
           result.push(link.tags[t]);
