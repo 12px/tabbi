@@ -1,5 +1,5 @@
 <template>
-  <div class="board">
+  <div class="board" v-show="!filtered()">
 
     <div class="name columns is-mobile">
       <div class="column has-hint">
@@ -33,6 +33,14 @@
 
   export default {
     props: ['self', 'id'],
+    computed: {
+      filter() { return this.$store.state.filter }
+    },
+    methods: {
+      filtered() { 
+        return this.$pd.filtered(this.filter, this.self.name, this.self.links, true) 
+      }
+    },
     components: { Tack }
   }
 </script>

@@ -16,6 +16,14 @@ const mutations = {
     state.lastUsed = data
   },
 
+  set_filter(state, data) {
+    if (!data) return state.filter.active = false
+    let by = data.charAt(0)
+    state.filter.by = by == '/' ? 'board' : by == '#' ? 'tag' : 'string'
+    state.filter.key = state.filter.by == 'string' ? data : data.substr(1)
+    state.filter.active = true
+  },
+
   new_board(state, data) {
     state.boards.push({ id: state.idKey, name: data, idKey: 1, links: [] })
     state.idKey += 1

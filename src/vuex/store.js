@@ -36,6 +36,13 @@ const state = {
     cols: 3,
     rows: 5,
     trash: false
+  },
+
+  // filtering
+  filter: {
+    by: false,
+    active: false,
+    key: 'string'
   }
 }
 
