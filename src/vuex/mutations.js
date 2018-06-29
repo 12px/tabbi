@@ -10,6 +10,15 @@ const mutations = {
 
   toggle_view_trash(state, data) {
     state.view.trash = !state.view.trash
+  },
+
+  set_last_used(state, data) {
+    state.lastUsed = data
+  },
+
+  new_board(state, data) {
+    state.boards.push({ id: state.idKey, name: data, idKey: 1, links: [] })
+    state.idKey += 1
   }
 
 }
