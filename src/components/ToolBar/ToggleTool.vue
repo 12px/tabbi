@@ -2,12 +2,14 @@
   <b-field class="toggle-tool">
     <span class="control max-links">
       <button :class="cBtn" @click="$store.commit('toggle_view_rows')">
-        <span>Show {{ view.rows }}</span>
+        <span class="icon"><icon name="th-list" scale="0.65"></icon></span>
+        <span>{{ view.rows }}</span>
       </button>
     </span>
-    <span class="control board-cols">
+    <span class="control board-cols is-hidden-mobile">
       <button :class="cBtn" @click="$store.commit('toggle_view_cols')">
         <span class="icon"><icon name="th" scale="0.65"></icon></span>
+        <span>{{ view.cols }}</span>
       </button>
     </span>
     <span class="control trash">
@@ -41,7 +43,7 @@
 
   @media screen and (max-width: 768px) {
     .toggle-tool, .create-tool {
-      justify-content: center!important;
+      margin-bottom: 1em;
     }
   }
 </style>
