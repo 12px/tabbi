@@ -25,7 +25,9 @@
         v-show="visible(key)">
       </tack>
 
-      <editor v-if="edit.active" :board="id" :item="edit.item"></editor>
+      <editor v-if="edit.active" :board="id" :item="edit.item" 
+        v-on:finished="finished">
+      </editor>
 
       <div class="show muted has-text-centered" v-if="overflow">
         <small class="opt" v-show="show" @click="show = false">Show Less</small>
@@ -49,13 +51,14 @@
       filter()   { return this.$store.state.filter },
       rows()     { return this.$store.state.view.rows },
       overflow() { let over = this.self.links.length > this.rows 
-                   return over && !this.filter.active }
+                   return over && !this.filter.active && !this.edit.active }
     },
     methods: {
+      finished() { return this.edit.active = false },
       filtered() { 
         return this.$$.filtered(this.filter, this.self.name, this.self.links, true) 
       },
-      visible(key) {
+      visible(key) { if (this.edit.active) return false
         return this.show || key < this.rows || this.filter.active
       }
     },
