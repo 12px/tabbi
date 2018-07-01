@@ -124,6 +124,11 @@
     margin-top: 1em;
   }
 
+  .creator .box {
+    margin-top: 1px;
+    min-width: 268px;
+  }
+
   .create-tool .fa-icon {
     margin-right: 0.5em;
   }
