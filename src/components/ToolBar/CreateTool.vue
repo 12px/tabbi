@@ -1,17 +1,18 @@
 <template>
   <div class="creator" @keyup.escape="clear">
     
-    <div class="field has-addons" v-if="view == 'toggle'">
-      <div class="field-label is-small">New</div>
-      <div class="field-body">
-        <span class="control" @click="view = 'board'">
-          <button class="button is-rounded is-small is-light">Board</button>
-        </span>
-        <span class="control" @click="view = 'link'">
-          <button class="button is-rounded is-small is-light">Link</button>
-        </span>
-      </div>
-    </div>
+    <b-field class="create-tool" v-if="view =='toggle'">
+      <span class="control" @click="view = 'board'">
+        <button class="button is-rounded is-small is-primary is-outlined">
+          <icon name="plus-circle" scale="0.7"></icon> Board
+        </button>
+      </span>
+      <span class="control" @click="view = 'link'">
+        <button class="button is-rounded is-small is-primary is-outlined">
+          <icon name="plus-circle" scale="0.7"></icon> Link
+        </button>
+      </span>
+    </b-field>
 
     <div class="box" v-if="view != 'toggle'">
       <b-field>
@@ -121,5 +122,9 @@
 
   .creator .buttons {
     margin-top: 1em;
+  }
+
+  .create-tool .fa-icon {
+    margin-right: 0.5em;
   }
 </style>

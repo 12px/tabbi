@@ -1,5 +1,5 @@
 <template>
-  <div class="field has-addons toggle-tool">
+  <b-field class="toggle-tool">
     <span class="control max-links">
       <button :class="cBtn" @click="$store.commit('toggle_view_rows')">
         <span>Show {{ view.rows }}</span>
@@ -16,7 +16,7 @@
         <span>0</span>
       </button>
     </span>
-  </div>
+  </b-field>
 </template>
 
 <script>
@@ -40,7 +40,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    .toggle-tool {
+    .toggle-tool, .create-tool {
       justify-content: center!important;
     }
   }

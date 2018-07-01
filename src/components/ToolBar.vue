@@ -8,11 +8,11 @@
         <filter-tool></filter-tool>
       </div>
     </div>
-    <div class="toolbar columns is-hidden-mobile">
+    <div class="toolbar columns">
       <div class="column">
         <create-tool></create-tool>
       </div>
-      <div class="column"></div>
+      <div class="column is-hidden-mobile"></div>
       <div class="column">
         <toggle-tool></toggle-tool>
       </div>
