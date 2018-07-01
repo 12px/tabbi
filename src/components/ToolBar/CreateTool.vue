@@ -19,38 +19,40 @@
           @keyup.native.enter="create()"></b-input>
       </b-field>
 
-      <b-field v-if="view == 'link'">
-        <b-input placeholder="Link URL" v-model="link" 
-          @keyup.native.enter="create()"></b-input>
-      </b-field>
+      <div v-if="view == 'link'">
+        <b-field>
+          <b-input placeholder="Link URL" v-model="link" 
+            @keyup.native.enter="create()"></b-input>
+        </b-field>
 
-      <b-field v-if="view == 'link'">
-        <b-select placeholder="Choose Board" v-model="board">
-          <option v-for="brd in $store.state.boards" :value="brd.id">
-            {{ brd.name }}
-          </option>
-        </b-select>
-      </b-field>
+        <b-field>
+          <b-select placeholder="Choose Board" v-model="board">
+            <option v-for="brd in $store.state.boards" :value="brd.id">
+              {{ brd.name }}
+            </option>
+          </b-select>
+        </b-field>
 
-      <b-field v-if="view == 'link'">
-        <b-input placeholder="Add Tag" v-model="nTag" expanded 
-          @keyup.native.enter="addTag"></b-input>
+        <b-field>
+          <b-input placeholder="Add Tag" v-model="nTag" expanded 
+            @keyup.native.enter="addTag"></b-input>
 
-        <div class="control">
-          <button class="button" @click="addTag">
-            <icon name="check"></icon>
-          </button>
-        </div>
-      </b-field>
+          <div class="control">
+            <button class="button" @click="addTag">
+              <icon name="check"></icon>
+            </button>
+          </div>
+        </b-field>
 
-      <b-taglist v-if="view == 'link'">
-        <b-tag v-for="(tag, i) in tags" :key="i">
-          <strong>#{{ tag }}</strong>
-          <span @click="remTag(i)">
-            <icon class="opt" name="times" scale="0.65"></icon>
-          </span>
-        </b-tag>
-      </b-taglist>
+        <b-taglist>
+          <b-tag v-for="(tag, i) in tags" :key="i">
+            <strong>#{{ tag }}</strong>
+            <span @click="remTag(i)">
+              <icon class="opt" name="times" scale="0.65"></icon>
+            </span>
+          </b-tag>
+        </b-taglist>
+      </div>
 
       <b-field grouped position="is-right">
         <button class="button is-white" @click="clear">Cancel</button>
