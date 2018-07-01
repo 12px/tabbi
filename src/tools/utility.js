@@ -33,15 +33,17 @@ let pd_util = {
     return result;
   },
 
-  filtered(filter, name, arr, board) {
+  filtered(filter, data, isBoard) {
     let pool = [];
     if (!filter.active) return false;
-    if (filter.by == 'tag' && !board) pool = arr;
-    if (filter.by == 'string' && !board) pool = name;
-    if (filter.by == 'board' && !board) return false;
-    if (filter.by == 'board' && board) pool = name;
-    if (filter.by == 'tag' && board) pool = this.find('tags', arr);
-    if (filter.by == 'string' && board) pool = this.find('str', arr);
+    if (isBoard && filter.by == 'board') pool = data.name
+    if (isBoard && filter.by == 'tag') pool = this.find('tags', data.links)
+    if (isBoard && filter.by == 'string') pool = this.find('str', data.links)
+
+    if (!isBoard && filter.by == 'board') return false
+    if (!isBoard && filter.by == 'tag') pool = data.tags
+    if (!isBoard && filter.by == 'string') pool = data.name
+
     return this.compare(filter.key, pool);
   }
 }

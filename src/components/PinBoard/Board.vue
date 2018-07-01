@@ -55,11 +55,9 @@
     },
     methods: {
       finished()   { return this.edit.active = false },
+      filtered()   { return this.$$.filtered(this.filter, this.self, true) },
       visible(key) { if (this.edit.active) return false
                      return this.show || key < this.rows || this.filter.active
-      },
-      filtered() { 
-        return this.$$.filtered(this.filter, this.self.name, this.self.links, true) 
       }
     },
     components: { Tack, Editor }

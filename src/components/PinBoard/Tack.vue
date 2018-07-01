@@ -29,9 +29,7 @@
       prescale() { return this.tagged ? '0.65' : '1' }
     },
     methods: {
-      filtered() { 
-        return this.$$.filtered(this.filter, this.self.name, this.self.tags); 
-      }
+      filtered() { return this.$$.filtered(this.filter, this.self); }
     }
   }
 </script>
