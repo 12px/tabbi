@@ -54,12 +54,12 @@
                    return over && !this.filter.active && !this.edit.active }
     },
     methods: {
-      finished() { return this.edit.active = false },
+      finished()   { return this.edit.active = false },
+      visible(key) { if (this.edit.active) return false
+                     return this.show || key < this.rows || this.filter.active
+      },
       filtered() { 
         return this.$$.filtered(this.filter, this.self.name, this.self.links, true) 
-      },
-      visible(key) { if (this.edit.active) return false
-        return this.show || key < this.rows || this.filter.active
       }
     },
     components: { Tack, Editor }
