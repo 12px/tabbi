@@ -53,6 +53,11 @@ export default {
     Vue.prototype.$$ = pd_util
 
     // autofocus
-    Vue.directive('focus', { inserted: function (el) { el.focus() } })
+    Vue.directive('focus', { 
+      inserted(el) { 
+        let isInput = el.getAttribute('type') == 'text'
+        return isInput ? el.focus() : el.querySelector('input').focus() 
+      } 
+    })
   }
 }

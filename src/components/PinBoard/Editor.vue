@@ -2,7 +2,7 @@
   <div class="editor" @keyup.escape="finish">
 
     <b-field v-if="!link">
-      <b-input placeholder="Board Name" v-model="self.name"
+      <b-input v-focus placeholder="Board Name" v-model="self.name"
         @keyup.native.enter="finish"></b-input>
       <div class="control" @click="finish">
         <button class="button is-primary">
@@ -13,7 +13,7 @@
 
     <div v-if="link">
       <b-field>
-        <b-input placeholder="Link Name" v-model="link.name" 
+        <b-input v-focus placeholder="Link Name" v-model="link.name" 
           @keyup.native.enter="finish"></b-input>
       </b-field>
 
