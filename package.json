@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "auth0-js": "^9.6.1",
-    "bulma": "^0.7.1",
+    "buefy": "^0.6.6",
     "vue": "^2.5.16",
     "vue-awesome": "^3.0.3",
     "vue-router": "^3.0.1",

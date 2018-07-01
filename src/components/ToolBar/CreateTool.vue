@@ -13,79 +13,51 @@
       </div>
     </div>
 
-    <div class="box has-background-primary" v-if="view != 'toggle'">
-      <div v-if="view == 'board'">
-        <div class="field">
-          <div class="control is-expanded">
-            <input class="input" type="text" v-focus
-              placeholder="Board Name" v-model="name" @keyup.enter="create('board')">
-          </div>
-        </div>
-      </div>
+    <div class="box" v-if="view != 'toggle'">
+      <b-field>
+        <b-input v-focus placeholder="Name" v-model="name" 
+          @keyup.native.enter="create()"></b-input>
+      </b-field>
 
-      <div v-if="view == 'link'">
-        <div class="field">
-          <span class="control is-expanded">
-            <input type="text" class="input" v-focus
-              placeholder="Link Name" v-model="name" @keyup.enter="create('link')">
+      <b-field v-if="view == 'link'">
+        <b-input placeholder="Link URL" v-model="link" 
+          @keyup.native.enter="create()"></b-input>
+      </b-field>
+
+      <b-field v-if="view == 'link'">
+        <b-select placeholder="Choose Board" v-model="board">
+          <option v-for="brd in $store.state.boards" :value="brd.id">
+            {{ brd.name }}
+          </option>
+        </b-select>
+      </b-field>
+
+      <b-field v-if="view == 'link'">
+        <b-input placeholder="Add Tag" v-model="nTag" expanded 
+          @keyup.native.enter="addTag"></b-input>
+
+        <div class="control">
+          <button class="button" @click="addTag">
+            <icon name="check"></icon>
+          </button>
+        </div>
+      </b-field>
+
+      <b-taglist v-if="view == 'link'">
+        <b-tag v-for="(tag, i) in tags" :key="i" @close="remTag(i)">
+          <strong>#{{ tag }}</strong>
+          <span @click="remTag(i)">
+            <icon class="opt" name="times" scale="0.65"></icon>
           </span>
-        </div>
+        </b-tag>
+      </b-taglist>
 
-        <div class="field">
-          <span class="control is-expanded">
-            <input type="text" class="input" 
-              placeholder="Link URL" v-model="link" @keyup.enter="create('link')">
-          </span>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <div class="select">
-              <select v-model="board">
-                <option value="0">Choose Board</option>
-                <option v-for="brd in $store.state.boards" :value="brd.id">
-                  {{ brd.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <input class="input" type="text" 
-              placeholder="Add New Tag" v-model="nTag" @keyup.enter="addTag">
-          </div>
-          <div class="control">
-            <a class="button" @click="addTag">
-              <icon name="check"></icon>
-            </a>
-          </div>
-        </div>
-        <div class="tags">
-          <strong class="tag" v-for="(tag, i) in tags">
-            #{{ tag }}
-            <span @click="remTag(i)">
-              <icon class="opt" name="times" scale="0.65"></icon>
-            </span>
-          </strong>
-        </div>
-      </div>
-
-
-      <div class="buttons is-right">
-        <button class="button is-white" @click="clear">
-          Cancel
+      <b-field grouped position="is-right">
+        <button class="button is-white" @click="clear">Cancel</button>
+        <button class="button is-inverted is-primary" @click="create()">
+          Confirm
         </button>
-        <button v-if="view == 'link'" 
-          class="button is-inverted is-primary" @click="create('link')">
-          Add Link
-        </button>
-        <button v-if="view == 'board'" 
-          class="button is-inverted is-primary" @click="create('board')">
-          Add Board
-        </button>
-      </div>
+      </b-field>
     </div>
 
   </div>
@@ -114,10 +86,10 @@
         this.nTag = ''
         this.view = 'toggle'
       },
-      create(type) {
+      create() {
         if (!this.name) return alert('No Name Specified.')
-        if (type == 'board') this.$store.commit('new_board', this.name)
-        if (type == 'link') {
+        if (this.view == 'board') this.$store.commit('new_board', this.name)
+        if (this.view == 'link') {
           if (!this.link) return alert('No URL Specified.')
           if (this.board < 1) return alert('No Board Specified')
 
