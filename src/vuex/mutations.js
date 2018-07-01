@@ -37,6 +37,15 @@ const mutations = {
     board.idKey += 1
   },
 
+  change_board(state, data) {
+    let oB = state.boards[data.old]
+    let nB = state.boards[data.new]
+    let link = state.boards[data.old].links[data.item]
+    nB.links.push({ ...link, id: nB.idKey })
+    oB.links.splice(data.item, 1)
+    nB.idKey += 1
+  }
+
 }
 
 export default mutations

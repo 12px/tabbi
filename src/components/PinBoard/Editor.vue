@@ -25,9 +25,8 @@
       <b-field>
         <b-select v-model="lBoard">
           <option value="0">Change Board</option>
-          <option v-for="brd in $store.state.boards" :value="brd.id">
-            {{ brd.name }}
-          </option>
+          <option v-for="(brd, key) in $store.state.boards" :value="key"
+            v-if="self.id != brd.id">{{ brd.name }}</option>
         </b-select>
       </b-field>
 
@@ -65,18 +64,25 @@
     props: ['board', 'item'],
     data() { return {
       lTag: '',
-      lBoard: '0'
+      lBoard: 0
     } },
     computed: {
       self() { return this.$store.state.boards[this.board] },
       link() { return this.self.links[this.item] }
     },
     methods: {
-      finish()  { return this.$emit('finished') },
       remTag(i) { this.link.tags.splice(i, 1) },
       addTag()  { if (!this.lTag) return alert("No Tag Specified.")
-                 this.link.tags.push(this.lTag)
-                 this.lTag = '' }
+                  this.link.tags.push(this.lTag)
+                  this.lTag = '' },
+      finish()  { 
+        if (this.lBoard > 0) {
+          this.$store.commit('change_board', { 
+            old: this.board, new: this.lBoard, item: this.item
+          })
+        }
+        return this.$emit('finished') 
+      }
     }
   }
 </script>
