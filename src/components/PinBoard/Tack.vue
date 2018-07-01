@@ -15,6 +15,12 @@
         </span>
       </div>
     </div>
+
+    <b-taglist v-if="showTags">
+      <b-tag v-for="(tag, i) in self.tags" :key="i">
+        <strong>#{{ tag }}</strong>
+      </b-tag>
+    </b-taglist>
     
   </div>
 </template>
@@ -26,7 +32,8 @@
       filter()   { return this.$store.state.filter },
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
-      prescale() { return this.tagged ? '0.65' : '1' }
+      prescale() { return this.tagged ? '0.65' : '1' },
+      showTags() { return this.filter.active && this.filter.by == 'tag' }
     },
     methods: {
       filtered() { return this.$$.filtered(this.filter, this.self); }

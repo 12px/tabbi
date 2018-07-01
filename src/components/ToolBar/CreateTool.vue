@@ -44,7 +44,7 @@
       </b-field>
 
       <b-taglist v-if="view == 'link'">
-        <b-tag v-for="(tag, i) in tags" :key="i" @close="remTag(i)">
+        <b-tag v-for="(tag, i) in tags" :key="i">
           <strong>#{{ tag }}</strong>
           <span @click="remTag(i)">
             <icon class="opt" name="times" scale="0.65"></icon>

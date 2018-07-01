@@ -1,6 +1,6 @@
 <template>
-  <input type="text" class="input is-rounded" 
-    placeholder="Type to filter/search" @keyup="runFilter">
+  <b-input rounded placeholder="Type to filter/search" 
+    @keyup.native="runFilter"></b-input>
 </template>
 
 <script>
