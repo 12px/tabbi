@@ -1,4 +1,4 @@
-let pd = {
+let pd_util = {
   // find obj in array by id
   xById(arr, id) { return arr.findIndex((i) => i.id == id) },
 
@@ -48,7 +48,7 @@ let pd = {
 
 export default {
   install: function(Vue) {
-    Vue.prototype.$pd = pd
+    Vue.prototype.$$ = pd_util
 
     // autofocus
     Vue.directive('focus', { inserted: function (el) { el.focus() } })

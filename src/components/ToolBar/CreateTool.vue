@@ -121,7 +121,7 @@
           if (!this.link) return alert('No URL Specified.')
           if (this.board < 1) return alert('No Board Specified')
 
-          let index = this.$pd.xById(this.$store.state.boards, this.board)
+          let index = this.$$.xById(this.$store.state.boards, this.board)
 
           this.$store.commit('new_link', { 
             name: this.name, link: this.link, board: index, tags: this.tags  

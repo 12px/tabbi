@@ -30,7 +30,7 @@
     },
     methods: {
       filtered() { 
-        return this.$pd.filtered(this.filter, this.self.name, this.self.tags); 
+        return this.$$.filtered(this.filter, this.self.name, this.self.tags); 
       }
     }
   }

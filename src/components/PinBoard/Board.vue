@@ -53,7 +53,7 @@
     },
     methods: {
       filtered() { 
-        return this.$pd.filtered(this.filter, this.self.name, this.self.links, true) 
+        return this.$$.filtered(this.filter, this.self.name, this.self.links, true) 
       },
       visible(key) {
         return this.show || key < this.rows || this.filter.active
