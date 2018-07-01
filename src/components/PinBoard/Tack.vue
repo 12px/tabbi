@@ -10,7 +10,7 @@
       </div>
 
       <div class="column none is-flex-mobile">
-        <span class="opt muted">
+        <span class="opt muted" @click="$emit('editTack')">
           <icon name="pencil-alt" scale="0.7"></icon>
         </span>
       </div>

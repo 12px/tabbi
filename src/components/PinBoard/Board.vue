@@ -4,7 +4,7 @@
     <div class="name columns is-mobile">
       <div class="column has-hint">
         <strong class="muted">{{ self.name }}</strong>
-        <span class="hint hr muted">
+        <span class="hint hr muted" @click="amend('board')">
           <icon class="opt" name="pencil-alt" scale="0.7"></icon>
         </span>
       </div>
@@ -22,7 +22,7 @@
       </div>
 
       <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
-        v-show="visible(key)">
+        v-show="visible(key)" v-on:editTack="amend(key)">
       </tack>
 
       <editor v-if="edit.active" :board="id" :item="edit.item" 
@@ -58,7 +58,8 @@
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
       visible(key) { if (this.edit.active) return false
                      return this.show || key < this.rows || this.filter.active
-      }
+      },
+      amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active }
     },
     components: { Tack, Editor }
   }
