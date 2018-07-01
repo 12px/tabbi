@@ -25,6 +25,7 @@
         v-show="visible(key)">
       </tack>
 
+      <editor v-if="edit.active" :board="id" :item="edit.item"></editor>
 
       <div class="show muted has-text-centered" v-if="overflow">
         <small class="opt" v-show="show" @click="show = false">Show Less</small>
@@ -36,11 +37,13 @@
 
 <script>
   import Tack from './Tack.vue'
+  import Editor from './Editor.vue'
 
   export default {
     props: ['self', 'id'],
     data() { return { 
-      show: false
+      show: false,
+      edit: { item: false, active: false }
     } },
     computed: {
       filter()   { return this.$store.state.filter },
@@ -56,7 +59,7 @@
         return this.show || key < this.rows || this.filter.active
       }
     },
-    components: { Tack }
+    components: { Tack, Editor }
   }
 </script>
 
