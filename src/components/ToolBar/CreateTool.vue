@@ -3,12 +3,12 @@
     
     <b-field class="create-tool" v-if="view =='toggle'">
       <span class="control" @click="view = 'board'">
-        <button class="button is-rounded is-small is-outlined">
+        <button class="button is-rounded is-small is-light">
           <icon name="plus-circle" scale="0.7"></icon> Board
         </button>
       </span>
       <span class="control" @click="view = 'link'">
-        <button class="button is-rounded is-small is-outlined">
+        <button class="button is-rounded is-small is-light">
           <icon name="plus-circle" scale="0.7"></icon> Link
         </button>
       </span>
