@@ -8,7 +8,7 @@
         <filter-tool></filter-tool>
       </div>
     </div>
-    <div class="toolbar columns is-mobile is-clipped">
+    <div class="toolbar columns is-mobile is-clipped-mobile">
       <div class="column">
         <create-tool></create-tool>
       </div>

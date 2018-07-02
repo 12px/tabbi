@@ -13,6 +13,7 @@
   $input-focus-box-shadow-size: 0;
   
   @import '~bulma/bulma.sass';
+  @import '~bulma-tooltip/src/sass/index.sass';
 
   body {
     min-width: 300px;
@@ -31,4 +32,10 @@
   .grab { cursor: move; }
   .muted { color: $grey-light; }
   .barely { color: $grey-lighter; }
+
+  @media screen and (max-width: 768px) {
+    .is-clipped-mobile {
+      overflow: hidden !important;
+    }
+  }
 </style>
