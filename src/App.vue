@@ -1,11 +1,9 @@
 <template>
   <div id="app">
+    <!-- views/Home.vue -> comp/AppHome.vue -->
     <router-view />
   </div>
 </template>
-
-<script>
-</script>
 
 <style lang="scss">
   $input-hover-border-color: hsl(0, 0%, 86%);
@@ -33,6 +31,7 @@
   .grab { cursor: move; }
   .muted { color: $grey-light; }
   .barely { color: $grey-lighter; }
+  .is-primary-border { border: 1px solid $primary; }
 
   @media screen and (max-width: 768px) {
     .is-clipped-mobile {

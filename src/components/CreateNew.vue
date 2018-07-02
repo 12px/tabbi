@@ -1,29 +1,16 @@
 <template>
   <div class="creator" @keyup.escape="clear">
-    
-    <b-field class="create-tool" v-if="view == 'toggle'">
-      <span class="control" @click="view = 'board'">
-        <button class="button is-rounded is-small is-light">
-          <icon name="plus-circle" scale="0.7"></icon> Board
-        </button>
-      </span>
-      <span class="control" @click="view = 'link'">
-        <button class="button is-rounded is-small is-light">
-          <icon name="plus-circle" scale="0.7"></icon> Link
-        </button>
-      </span>
-    </b-field>
 
-    <div class="box" v-if="view != 'toggle'">
+    <div class="box is-primary-border">
       <b-field>
         <b-input v-focus placeholder="Name" v-model="name" 
-          @keyup.native.enter="create()"></b-input>
+          @keyup.native.enter="createNew()"></b-input>
       </b-field>
 
-      <div v-if="view == 'link'">
+      <div v-if="create.thing == 'link'">
         <b-field>
           <b-input placeholder="Link URL" v-model="link" 
-            @keyup.native.enter="create()"></b-input>
+            @keyup.native.enter="createNew()"></b-input>
         </b-field>
 
         <b-field>
@@ -57,7 +44,7 @@
 
       <b-field grouped position="is-right">
         <button class="button is-white" @click="clear">Cancel</button>
-        <button class="button is-inverted is-primary" @click="create()">
+        <button class="button is-inverted is-primary" @click="createNew()">
           Confirm
         </button>
       </b-field>
@@ -69,9 +56,10 @@
 <script>
   export default {
     data() { return { 
-      view: 'toggle', name: '', link: '', nTag: '', tags: []
+      name: '', link: '', nTag: '', tags: []
     } },
     computed: {
+      create() { return this.$store.state.create },
       board: {
         get()    { return this.$store.state.lastUsed },
         set(val) { return this.$store.commit('set_last_used', val) }
@@ -88,12 +76,12 @@
         this.name = ''
         this.link = ''
         this.nTag = ''
-        this.view = 'toggle'
+        this.$store.commit('close_create_new')
       },
-      create() {
+      createNew() {
         if (!this.name) return this.alert('No Name Specified.')
-        if (this.view == 'board') this.$store.commit('new_board', this.name)
-        if (this.view == 'link') {
+        if (this.create.thing == 'board') this.$store.commit('new_board', this.name)
+        if (this.create.thing == 'link') {
           if (!this.link) return this.alert('No URL Specified.')
           if (this.board < 1) return this.alert('No Board Specified')
 
@@ -110,6 +98,9 @@
 </script>
 
 <style>
+  .creator {
+    margin-bottom: 1rem;
+  }
   .creator .field-label {
     flex: none;
     margin-right: 0;

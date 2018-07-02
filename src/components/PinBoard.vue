@@ -1,53 +1,92 @@
 <template>
-  <div class="container">
-    
-    <draggable class="columns is-multiline" v-if="!view.trash"
-      v-model="sorting" :options="{ handle: '.grab' }">
-      
-      <board :class="cols"
-        v-for="(board, key) in boards"
-        :id="key" :key="board.id" :self="board">
-      </board>
+  <div class="pin-board" v-show="!filtered()">
 
-    </draggable>
-
-
-    <div class="columns is-multiline" v-if="view.trash">
-      
+    <div class="name columns is-mobile">
+      <div class="column has-hint">
+        <strong class="muted grab">{{ self.name }}</strong>
+        <span class="hint hr muted" @click="amend('board')">
+          <icon class="opt" name="pencil-alt" scale="0.7"></icon>
+        </span>
+      </div>
+      <div class="opt column none has-hint muted">
+        <strong class="hint hl muted">
+          <small>Open {{ self.links.length}}</small>
+        </strong>
+        <icon name="external-link-alt" scale="0.8"></icon>
+      </div>
     </div>
 
+    <div class="box">
+      <div class="has-text-centered muted" v-if="!self.links.length">
+        This board is empty.
+      </div>
+
+      <draggable v-model="self.links" :options="drOpt" @start="dr(1)" @end="dr(0)">
+        <thumb-tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
+          v-show="visible(key)" v-on:editTack="amend(key)">
+        </thumb-tack>
+      </draggable>
+
+      <pin-board-editor v-if="edit.active" :board="id" :item="edit.item" 
+        v-on:finished="finished">
+      </pin-board-editor>
+
+      <div class="show muted has-text-centered" v-if="overflow">
+        <small class="opt" v-show="show" @click="show = false">Show Less</small>
+        <small class="opt" v-show="!show" @click="show = true">Show More</small>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import Board from './PinBoard/Board.vue'
   import Draggable from 'vuedraggable'
+  import ThumbTack from './ThumbTack.vue'
+  import PinBoardEditor from './PinBoardEditor.vue'
 
   export default {
+    props: ['self', 'id'],
+    data() { return { 
+      show: false,
+      edit: { item: false, active: false },
+      dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
+    } },
     computed: {
-      view()   { return this.$store.state.view },
-      trash()  { return this.$store.state.trash },
-      boards() { return this.$store.state.boards },
-      sorting: {
-        get() { return this.boards },
-        set(x) { this.$store.commit('sort_boards', x) }
-      },
-      cols() {
-        let result = ['column', 'is-clipped']
-        if (this.view.cols == 1) result.push('is-12')
-        if (this.view.cols == 2) result.push('is-half')
-        if (this.view.cols == 3) result.push('is-one-third')
-        if (this.view.cols == 4) result.push('is-one-quarter')
-        return result.join(' ')
+      filter()   { return this.$store.state.filter },
+      rows()     { return this.$store.state.view.rows },
+      overflow() { let over = this.self.links.length > this.rows 
+        return over && !this.filter.active && !this.edit.active && !this.dragging 
       }
     },
-    components: { Board, Draggable }
+    methods: {
+      dr(val)      { this.dragging = val },
+      finished()   { return this.edit.active = false },
+      filtered()   { return this.$$.filtered(this.filter, this.self, true) },
+      visible(key) { if (this.edit.active) return false
+        return this.show || key < this.rows || this.filter.active || this.dragging
+      },
+      amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active }
+    },
+    components: { ThumbTack, PinBoardEditor, Draggable }
   }
 </script>
 
-<style lang="scss">
-  .select,
-  .select select {
-    width: 100%;
+<style>
+  .has-hint:not(:hover) > .hint { 
+    opacity: 0; 
+  }
+  .hint.hl { 
+    padding-right: 0.5em;
+  }
+  .hint.hr { 
+    padding-left: 0.5em;
+  }
+  .name .column {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -0.5rem;
+  }
+  .pin-board .show {
+    margin-top: .5em;
   }
 </style>

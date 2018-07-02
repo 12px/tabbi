@@ -8,7 +8,16 @@ const mutations = {
     state.view.rows = state.view.rows == 5 ? 10: state.view.rows == 10 ? 25 : 5
   },
 
-  toggle_view_trash(state, data) { state.view.trash = !state.view.trash },
+  toggle_view_page(state, data) { 
+    state.view.page = state.view.page == data ? 'pinnd' : data 
+  },
+
+  show_create_new(state, data) {
+    state.create.now = true
+    state.create.thing = data
+  },
+
+  close_create_new(state, data) { state.create.now = false },
 
   set_last_used(state, data) { state.lastUsed = data },
 

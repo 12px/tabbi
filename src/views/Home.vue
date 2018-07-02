@@ -1,18 +1,16 @@
 <template>
   <div id="home">
 
-    <tool-bar></tool-bar>
-    <pin-board></pin-board>
+    <app-home></app-home>
 
   </div>
 </template>
 
 <script>
-  import ToolBar from '../components/ToolBar.vue'
-  import PinBoard from '../components/PinBoard.vue'
+  import AppHome from '../components/AppHome.vue'
 
   export default {
-    components: { ToolBar, PinBoard }
+    components: { AppHome }
   }
 </script>
 

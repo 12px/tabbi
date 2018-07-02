@@ -69,7 +69,7 @@ const state = {
   view: {
     cols: 3,
     rows: 5,
-    trash: false
+    page: 'pinnd' // pinnd, trash
   },
 
   // filtering
@@ -78,6 +78,12 @@ const state = {
     active: false,
     key: 'string'
   },
+
+  // creating
+  create: {
+    now: false,
+    thing: 'board'
+  }
 }
 
 export default new Vuex.Store({ state, mutations })
