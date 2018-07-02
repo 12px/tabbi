@@ -25,18 +25,10 @@
     overflow: auto;
   }
 
-  .container {
-    padding: 1rem
-  }
-
-  .column.none {
-    flex: none;
-  }
-
-  .opt {
-    cursor: pointer;
-  }
-
+  .container { padding: 1rem }
+  .column.none { flex: none; }
+  .opt { cursor: pointer; }
+  .grab { cursor: move; }
   .muted { color: $grey-light; }
   .barely { color: $grey-lighter; }
 </style>
