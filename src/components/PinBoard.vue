@@ -2,7 +2,7 @@
   <div class="container">
     
     <draggable class="columns is-multiline" v-if="!view.trash"
-      v-model="sorting" :options="$$.dr.pb">
+      v-model="sorting" :options="{ handle: '.grab' }">
       
       <board :class="cols"
         v-for="(board, key) in boards"
