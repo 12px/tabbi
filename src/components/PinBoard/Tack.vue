@@ -3,7 +3,7 @@
 
     <div class="columns is-marginless is-mobile">
       <div class="column is-clipped">
-        <div class="prefix is-pulled-left barely">
+        <div class="grab prefix is-pulled-left barely">
           <icon :name="prefix"  flip="horizontal" :scale="prescale"></icon>
         </div>
         <a :href="self.link">{{ self.name }}</a>

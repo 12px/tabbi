@@ -3,7 +3,7 @@
 
     <div class="name columns is-mobile">
       <div class="column has-hint">
-        <strong class="muted">{{ self.name }}</strong>
+        <strong class="muted grab">{{ self.name }}</strong>
         <span class="hint hr muted" @click="amend('board')">
           <icon class="opt" name="pencil-alt" scale="0.7"></icon>
         </span>
@@ -21,9 +21,11 @@
         This board is empty.
       </div>
 
-      <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
-        v-show="visible(key)" v-on:editTack="amend(key)">
-      </tack>
+      <draggable v-model="self.links" :options="drOpt" @start="dr(1)" @end="dr(0)">
+        <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
+          v-show="visible(key)" v-on:editTack="amend(key)">
+        </tack>
+      </draggable>
 
       <editor v-if="edit.active" :board="id" :item="edit.item" 
         v-on:finished="finished">
@@ -40,28 +42,33 @@
 <script>
   import Tack from './Tack.vue'
   import Editor from './Editor.vue'
+  import Draggable from 'vuedraggable'
 
   export default {
     props: ['self', 'id'],
     data() { return { 
       show: false,
-      edit: { item: false, active: false }
+      edit: { item: false, active: false },
+      drOpt: { handle: '.grab'},
+      dragging: 0
     } },
     computed: {
       filter()   { return this.$store.state.filter },
       rows()     { return this.$store.state.view.rows },
       overflow() { let over = this.self.links.length > this.rows 
-                   return over && !this.filter.active && !this.edit.active }
+        return over && !this.filter.active && !this.edit.active && !this.dragging 
+      }
     },
     methods: {
+      dr(val)      { this.dragging = val },
       finished()   { return this.edit.active = false },
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
       visible(key) { if (this.edit.active) return false
-                     return this.show || key < this.rows || this.filter.active
+        return this.show || key < this.rows || this.filter.active || this.dragging
       },
       amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active }
     },
-    components: { Tack, Editor }
+    components: { Tack, Editor, Draggable }
   }
 </script>
 
