@@ -8,14 +8,14 @@ Vue.use(Vuex)
 const state = {
   // local
   ver: 1,
-  idKey: 3,
+  linkKey: 15,
+  boardKey: 3,
   lastUsed: 1,
 
   // bookmarks
   boards: [{
     id: 1,
     name: "Inbox",
-    idKey: 7,
     links: [{
       id: 1, name: "pinnd - testing 1",
       link: "http://localhost:4000", tags: ["dev", "home"]
@@ -38,24 +38,23 @@ const state = {
   },{
     id: 2,
     name: "Inbox 2",
-    idKey: 7,
     links: [{
-      id: 1, name: "testing 1",
+      id: 7, name: "testing 1",
       link: "http://localhost:4000", tags: []
     },{
-      id: 2, name: "testing 2",
+      id: 8, name: "testing 2",
       link: "http://localhost:4000", tags: []
     },{
-      id: 3, name: "testing 3",
+      id: 9, name: "testing 3",
       link: "http://localhost:4000", tags: []
     },{
-      id: 4, name: "testing 4",
+      id: 10, name: "testing 4",
       link: "http://localhost:4000", tags: []
     },{
-      id: 5, name: "testing 5",
+      id: 11, name: "testing 5",
       link: "http://localhost:4000", tags: []
     },{
-      id: 6, name: "testing 6",
+      id: 12, name: "testing 6",
       link: "http://localhost:4000", tags: []
     }]
   }],

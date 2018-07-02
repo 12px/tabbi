@@ -3,7 +3,10 @@ let pd_util = {
   xById(arr, id) { return arr.findIndex((i) => i.id == id) },
 
   // draggable config
-  drcfg: { handle: '.grab'},
+  dr: { 
+    pb: { handle: '.grab' },
+    bd: { handle: '.grab', group: 'tacks' }
+  },
 
   // filter
   compare(a, b) {

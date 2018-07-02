@@ -21,7 +21,7 @@
         This board is empty.
       </div>
 
-      <draggable v-model="self.links" :options="$$.drcfg" @start="dr(1)" @end="dr(0)">
+      <draggable v-model="self.links" :options="$$.dr.bd" @start="dr(1)" @end="dr(0)">
         <tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
           v-show="visible(key)" v-on:editTack="amend(key)">
         </tack>

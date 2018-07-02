@@ -21,16 +21,16 @@ const mutations = {
   },
 
   new_board(state, data) {
-    state.boards.push({ id: state.idKey, name: data, idKey: 1, links: [] })
-    state.idKey += 1
+    state.boards.push({ id: state.boardKey, name: data, links: [] })
+    state.boardKey += 1
   },
 
   new_link(state, data) {
     let board = state.boards[data.board]
     board.links.push({ 
-      id: board.idKey, name: data.name,  link: data.link, tags: data.tags
+      id: state.linkKey, name: data.name,  link: data.link, tags: data.tags
     })
-    board.idKey += 1
+    state.linkKey += 1
   },
 
   sort_boards(state, data) { state.boards = data },
@@ -38,10 +38,8 @@ const mutations = {
   change_board(state, data) {
     let oB = state.boards[data.old]
     let nB = state.boards[data.new]
-    let link = state.boards[data.old].links[data.item]
-    nB.links.push({ ...link, id: nB.idKey })
+    nB.links.push(link)
     oB.links.splice(data.item, 1)
-    nB.idKey += 1
   }
 
 }
