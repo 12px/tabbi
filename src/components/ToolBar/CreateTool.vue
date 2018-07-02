@@ -1,7 +1,7 @@
 <template>
   <div class="creator" @keyup.escape="clear">
     
-    <b-field class="create-tool" v-if="view =='toggle'">
+    <b-field class="create-tool" v-if="view == 'toggle'">
       <span class="control" @click="view = 'board'">
         <button class="button is-rounded is-small is-light">
           <icon name="plus-circle" scale="0.7"></icon> Board

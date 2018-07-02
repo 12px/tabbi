@@ -3,7 +3,7 @@
 
     <b-field v-if="!link">
       <b-input v-focus placeholder="Board Name" v-model="self.name"
-        @keyup.native.enter="finish"></b-input>
+        @keyup.native.enter="finish" expanded></b-input>
       <div class="control" @click="finish">
         <button class="button is-primary">
           <icon name="check"></icon>
