@@ -37,6 +37,13 @@
       <!-- Trash View -->
       <div class="columns is-multiline" v-if="view.page == 'trash'">
         
+        <!-- Trashed Links -->
+        <trash-bin :class="cols" :self="trash" :id="'links'"></trash-bin>
+
+        <!-- Trashed Boards -->
+        <trash-bin :class="cols" 
+          v-for="(bin, key) in trash.boards" :self="bin" :id="key" :key="key">
+        </trash-bin>
       </div>
 
     </div>
@@ -49,6 +56,7 @@
   import MainMenu from './MainMenu.vue'
   import CreateNew from './CreateNew.vue'
   import PinBoard from './PinBoard.vue'
+  import TrashBin from './TrashBin.vue'
 
   export default {
     computed: {
@@ -76,7 +84,7 @@
         this.$store.commit('set_filter', e.target.value)
       }
     },
-    components: { MainMenu, CreateNew, PinBoard, Draggable }
+    components: { MainMenu, CreateNew, PinBoard, TrashBin, Draggable }
   }
 </script>
 
