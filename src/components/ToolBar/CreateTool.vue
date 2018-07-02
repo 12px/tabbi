@@ -78,8 +78,9 @@
       }
     },
     methods: {
+      alert(m) { this.$toast.open(this.$$.toast(m)) },
       remTag(i) { this.tags.splice(i, 1) },
-      addTag()  { if (!this.nTag) return alert("No Tag Specified")
+      addTag()  { if (!this.nTag) return this.alert('No Tag Specified.')
                   this.tags.push(this.nTag)
                   this.nTag = '' },
       clear() {
@@ -90,11 +91,11 @@
         this.view = 'toggle'
       },
       create() {
-        if (!this.name) return alert('No Name Specified.')
+        if (!this.name) return this.alert('No Name Specified.')
         if (this.view == 'board') this.$store.commit('new_board', this.name)
         if (this.view == 'link') {
-          if (!this.link) return alert('No URL Specified.')
-          if (this.board < 1) return alert('No Board Specified')
+          if (!this.link) return this.alert('No URL Specified.')
+          if (this.board < 1) return this.alert('No Board Specified')
 
           let index = this.$$.xById(this.$store.state.boards, this.board)
 

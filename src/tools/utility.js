@@ -2,6 +2,9 @@ let pd_util = {
   // find obj in array by id
   xById(arr, id) { return arr.findIndex((i) => i.id == id) },
 
+  // make alert toast
+  toast(message) { return { message, container: '#app' } },
+
   // filter
   compare(a, b) {
     if (!b) return true;

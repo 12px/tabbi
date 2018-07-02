@@ -71,8 +71,9 @@
       link() { return this.self.links[this.item] }
     },
     methods: {
+      alert(m)  { this.$toast.open(this.$$.toast(m)) },
       remTag(i) { this.link.tags.splice(i, 1) },
-      addTag()  { if (!this.lTag) return alert("No Tag Specified.")
+      addTag()  { if (!this.lTag) return this.alert("No Tag Specified.")
                   this.link.tags.push(this.lTag)
                   this.lTag = '' },
       finish()  { 
