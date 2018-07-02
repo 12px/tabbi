@@ -3,7 +3,7 @@
     <span class="control max-links">
       <b-tooltip label="Max Visible Links">
         <button :class="cBtn" @click="$store.commit('toggle_view_rows')">
-          <span class="icon"><icon name="th-list" scale="0.65"></icon></span>
+          <icon name="th-list" scale="0.65"></icon>
           <span>{{ view.rows }}</span>
         </button>
       </b-tooltip>
@@ -11,7 +11,7 @@
     <span class="control board-cols is-hidden-mobile">
       <b-tooltip label="Boards Per Row">
         <button :class="cBtn" @click="$store.commit('toggle_view_cols')">
-          <span class="icon"><icon name="th" scale="0.65"></icon></span>
+          <icon name="th" scale="0.65"></icon>
           <span>{{ view.cols }}</span>
         </button>
       </b-tooltip>
@@ -19,7 +19,7 @@
     <span class="control trash">
       <b-tooltip label="Trashed">
         <button :class="tClass" @click="$store.commit('toggle_view_trash')">
-          <span class="icon"><icon name="trash" scale="0.6"></icon></span>
+          <icon name="trash" scale="0.65"></icon>
           <span>0</span>
         </button>
       </b-tooltip>
@@ -45,6 +45,10 @@
 <style>
   .toggle-tool {
     justify-content: flex-end!important;
+  }
+
+  .toggle-tool .fa-icon {
+    margin-right: 0.25rem;
   }
 
   @media screen and (max-width: 768px) {
