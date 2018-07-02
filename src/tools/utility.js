@@ -2,6 +2,9 @@ let pd_util = {
   // find obj in array by id
   xById(arr, id) { return arr.findIndex((i) => i.id == id) },
 
+  // draggable config
+  drcfg: { handle: '.grab'},
+
   // filter
   compare(a, b) {
     if (!b) return true;

@@ -1,12 +1,16 @@
 <template>
   <div class="container">
     
-    <div class="columns is-multiline" v-if="!view.trash">
+    <draggable class="columns is-multiline" v-if="!view.trash"
+      v-model="sorting" :options="$$.drcfg">
+      
       <board :class="cols"
         v-for="(board, key) in boards"
         :id="key" :key="board.id" :self="board">
       </board>
-    </div>
+
+    </draggable>
+
 
     <div class="columns is-multiline" v-if="view.trash">
       
@@ -17,12 +21,17 @@
 
 <script>
   import Board from './PinBoard/Board.vue'
+  import Draggable from 'vuedraggable'
 
   export default {
     computed: {
       view()   { return this.$store.state.view },
       trash()  { return this.$store.state.trash },
       boards() { return this.$store.state.boards },
+      sorting: {
+        get() { return this.boards },
+        set(x) { this.$store.commit('sort_boards', x) }
+      },
       cols() {
         let result = ['column', 'is-clipped']
         if (this.view.cols == 1) result.push('is-12')
@@ -32,7 +41,7 @@
         return result.join(' ')
       }
     },
-    components: { Board }
+    components: { Board, Draggable }
   }
 </script>
 

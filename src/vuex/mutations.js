@@ -8,13 +8,9 @@ const mutations = {
     state.view.rows = state.view.rows == 5 ? 10: state.view.rows == 10 ? 25 : 5
   },
 
-  toggle_view_trash(state, data) {
-    state.view.trash = !state.view.trash
-  },
+  toggle_view_trash(state, data) { state.view.trash = !state.view.trash },
 
-  set_last_used(state, data) {
-    state.lastUsed = data
-  },
+  set_last_used(state, data) { state.lastUsed = data },
 
   set_filter(state, data) {
     if (!data) return state.filter.active = false
@@ -36,6 +32,8 @@ const mutations = {
     })
     board.idKey += 1
   },
+
+  sort_boards(state, data) { state.boards = data },
 
   change_board(state, data) {
     let oB = state.boards[data.old]
