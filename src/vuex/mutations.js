@@ -12,6 +12,11 @@ const mutations = {
     state.view.page = state.view.page == data ? 'pinnd' : data 
   },
 
+  toggle_create_new(state, data) {
+    state.create.now = state.create.thing == data ? !state.create.now : true
+    state.create.thing = data
+  },
+
   show_create_new(state, data) {
     state.create.now = true, state.create.thing = data
   },

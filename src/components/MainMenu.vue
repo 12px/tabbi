@@ -3,13 +3,13 @@
     <div class="level-left">
       <b-field class="level-item">
         <div class="control">
-          <button :class="btnL" @click="$store.commit('show_create_new', 'board')">
+          <button :class="btnL" @click="$store.commit('toggle_create_new', 'board')">
             <icon name="plus-circle" scale="0.65"></icon>Board
           </button>
         </div>
 
         <div class="control">
-          <button :class="btnL" @click="$store.commit('show_create_new', 'link')">
+          <button :class="btnL" @click="$store.commit('toggle_create_new', 'link')">
             <icon name="plus-circle" scale="0.65"></icon>Link
           </button>
         </div>
