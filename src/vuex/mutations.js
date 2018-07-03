@@ -13,8 +13,7 @@ const mutations = {
   },
 
   show_create_new(state, data) {
-    state.create.now = true
-    state.create.thing = data
+    state.create.now = true, state.create.thing = data
   },
 
   close_create_new(state, data) { state.create.now = false },
@@ -35,8 +34,7 @@ const mutations = {
   },
 
   new_link(state, data) {
-    let board = state.boards[data.board]
-    board.links.push({ 
+    state.boards[data.board].links.push({ 
       id: state.linkKey, name: data.name,  link: data.link, tags: data.tags
     })
     state.linkKey += 1
@@ -45,10 +43,8 @@ const mutations = {
   sort_boards(state, data) { state.boards = data },
 
   change_board(state, data) {
-    let oB = state.boards[data.old]
-    let nB = state.boards[data.new]
-    nB.links.push(link)
-    oB.links.splice(data.item, 1)
+    state.boards[data.new].links.push(link)
+    state.boards[data.old].links.splice(data.item, 1)
   }
 
 }
