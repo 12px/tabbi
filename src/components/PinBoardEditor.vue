@@ -49,13 +49,16 @@
           </span>
         </b-tag>
       </b-taglist>
-
-      <b-field grouped position="is-centered">
-        <button class="button is-inverted is-primary" @click="finish">
-          Confirm
-        </button>
-      </b-field>
     </div>
+
+    <b-field class="bottom" position="is-right">
+      <button class="button is-inverted is-primary is-danger" @click="trash">
+        Move to Trash
+      </button>
+      <button class="button is-inverted is-primary" @click="finish">
+        Confirm
+      </button>
+    </b-field>
   </div>
 </template>
 
@@ -76,7 +79,13 @@
       addTag()  { if (!this.lTag) return this.alert("No Tag Specified.")
                   this.link.tags.push(this.lTag)
                   this.lTag = '' },
-      finish()  { 
+      trash()   { 
+        if (this.item == 'board') this.$store.commit('trash_board', this.board)
+        else this.$store.commit('trash_link', { board: this.board, item: this.item })
+        this.alert("Moved to Trash")
+        this.finish()
+      },
+      finish() { 
         if (this.lBoard > 0) {
           this.$store.commit('change_board', { 
             old: this.board, new: this.lBoard, item: this.item
@@ -88,5 +97,8 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="css">
+  .bottom {
+    margin-top: 1rem;
+  }
 </style>

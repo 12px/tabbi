@@ -45,6 +45,16 @@ const mutations = {
   change_board(state, data) {
     state.boards[data.new].links.push(link)
     state.boards[data.old].links.splice(data.item, 1)
+  },
+
+  trash_board(state, data) {
+    state.trash.boards.push(state.boards[data])
+    state.boards.splice(data, 1)
+  },
+
+  trash_link(state, data) {
+    state.trash.links.push(state.boards[data.board].links[data.item])
+    state.boards[data.board].links.splice(data.item, 1)
   }
 
 }
