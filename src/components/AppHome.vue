@@ -4,7 +4,7 @@
     <nav id="navbar" class="container">
       <div class="columns is-mobile">
         <div class="column none logo is-hidden-mobile">
-          <strong class="has-text-primary">•{{ view.page }}•</strong>
+          <strong class="has-text-primary">•pinnd•</strong>
         </div>
         <div class="column">
           <b-input rounded placeholder="Type to filter/search" 
