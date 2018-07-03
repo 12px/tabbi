@@ -10,11 +10,15 @@
           <b-input rounded placeholder="Type to filter/search" 
             @keyup.native="runFilter"></b-input>
         </div>
-        <div class="column none">
-          <main-menu></main-menu>
+        <div class="column none is-hidden-tablet">
+          <mobile-menu></mobile-menu>
         </div>
       </div>
     </nav>
+
+    <div id="toolbar" class="container">
+      <main-menu></main-menu>
+    </div>
 
     <div class="container">
 
@@ -54,6 +58,7 @@
 <script>
   import Draggable from 'vuedraggable'
   import MainMenu from './MainMenu.vue'
+  import MobileMenu from './MobileMenu.vue'
   import CreateNew from './CreateNew.vue'
   import PinBoard from './PinBoard.vue'
   import TrashBin from './TrashBin.vue'
@@ -84,13 +89,14 @@
         this.$store.commit('set_filter', e.target.value)
       }
     },
-    components: { MainMenu, CreateNew, PinBoard, TrashBin, Draggable }
+    components: { MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable }
   }
 </script>
 
 <style>
-  #navbar.container {
-    margin-bottom: 1rem;
+  #toolbar {
+    padding-top: 0;
+    margin-bottom: .5rem;
   }
   #navbar .logo {
     min-width: 85px;

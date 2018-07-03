@@ -29,8 +29,8 @@
   .column.none { flex: none; }
   .opt { cursor: pointer; }
   .grab { cursor: move; }
-  .muted { color: $grey-light; }
-  .barely { color: $grey-lighter; }
+  .muted { color: $grey-light !important; }
+  .barely { color: $grey-lighter !important; }
   .is-primary-border { border: 1px solid $primary; }
 
   @media screen and (max-width: 768px) {
