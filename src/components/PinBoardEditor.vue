@@ -56,7 +56,7 @@
         Move to Trash
       </button>
       <button class="button is-inverted is-primary" @click="finish">
-        Confirm
+        Done
       </button>
     </b-field>
   </div>
