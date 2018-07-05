@@ -63,7 +63,7 @@
       trashed() { return this.trash.boards.length + this.trash.links.length }
     },
     methods: {
-      loaded(e) { return this.$store.commit('import_bookmarks', e) }
+      loaded(e) { return this.$store.dispatch('import_bookmarks', e) }
     }
   }
 </script>
