@@ -22,8 +22,12 @@
         This board is empty.
       </div>
 
-      <thumb-tack v-for="(tack, key) in self.links" :key="tack.id" :self="tack"
-        v-show="visible(key)" v-on:remTack="remove(key)" v-on:resTack="restore(tack)">
+      <thumb-tack 
+        v-for="(tack, key) in self.links" 
+        :key="tack.id" :self="tack" 
+        :trash="trash" v-show="visible(key)" 
+        v-on:remTack="remove(key)" 
+        v-on:resTack="restore(tack)">
       </thumb-tack>
 
       <div class="show muted has-text-centered" v-if="overflow">
