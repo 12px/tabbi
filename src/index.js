@@ -3,13 +3,9 @@ import Buefy from 'buefy'
 import App from './App.vue'
 
 import store from './vuex/store'
-import auth from './tools/auth'
-import router from './tools/router'
-import utility from './tools/utility'
+import utility from './utility'
 
 Vue.use(Buefy)
-
-Vue.use(auth)
 Vue.use(utility)
 
 import 'vue-awesome/icons'
@@ -18,10 +14,8 @@ Vue.component('icon', Icon)
 
 Vue.config.productionTip = false
 
-const app = new Vue({
+new Vue({
   store,
-  router,
+  el: '#app',
   render: h => h(App)
 })
-
-export default app

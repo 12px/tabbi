@@ -10,16 +10,13 @@
     "start": "poi"
   },
   "dependencies": {
-    "auth0-js": "^9.6.1",
     "buefy": "^0.6.6",
     "vue": "^2.5.16",
     "vue-awesome": "^3.0.3",
-    "vue-router": "^3.0.1",
     "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@poi/plugin-vue-static": "^1.0.7",
     "node-sass": "^4.9.0",
     "poi": "^10.2.9",
     "sass-loader": "^7.0.3"

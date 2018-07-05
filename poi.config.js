@@ -10,11 +10,5 @@ module.exports = (options, req) => ({
   webpack(config) {
     config.resolve.alias['vue$'] = 'vue/dist/vue.esm.js'
     return config
-  },
-
-  plugins: [
-    require('@poi/plugin-vue-static')({
-      routes: ['/']
-    })
-  ]
+  }
 })
