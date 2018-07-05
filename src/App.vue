@@ -20,7 +20,9 @@
       <main-menu></main-menu>
     </div>
 
-    <div class="container">
+    <user-login v-if="!$store.state.auth"></user-login>
+
+    <div class="container" v-if="$store.state.auth">
 
       <!-- Create New -->
       <div class="columns is-multiline" v-if="create.now">
@@ -57,6 +59,7 @@
 
 <script>
   import Draggable from 'vuedraggable'
+  import UserLogin from './components/UserLogin.vue'
   import MainMenu from './components/MainMenu.vue'
   import MobileMenu from './components/MobileMenu.vue'
   import CreateNew from './components/CreateNew.vue'
@@ -113,7 +116,7 @@
       }
     },
     components: { 
-      MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable 
+      UserLogin, MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable 
     }
   }
 </script>
