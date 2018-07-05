@@ -5,7 +5,8 @@
       <div class="column has-hint">
         <strong class="muted grab">{{ self.name }}</strong>
       </div>
-      <div class="opt column none has-hint muted" v-if="!links || hasLinks">
+      <div class="opt column none has-hint muted" 
+        v-if="!links || hasLinks" @click="restore()">
         <strong class="hint hl muted">
           <small v-if="!links">Restore Board</small>
           <small v-if="links && !this.filter.active">Restore All</small>
@@ -56,7 +57,9 @@
       visible(key) { return this.show || key < this.rows || this.filter.active },
 
       remove(id) {},
-      restore(t) {}
+      restore(t) {
+        if (!t && !this.links) this.$store.commit('restore_board', this.id)
+      }
     },
     components: { ThumbTack }
   }
