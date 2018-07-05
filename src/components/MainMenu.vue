@@ -37,13 +37,13 @@
 
         <b-dropdown class="control" position="is-bottom-left">
           <button :class="btnR" slot="trigger">
-            <icon name="ellipsis-h"></icon>
+            <icon name="ellipsis-v" scale="0.65"></icon>
           </button>
 
           <!-- use 'custom' to prevent closing -->
           <b-dropdown-item custom>
             <div class="file is-centered is-small is-primary">
-              <label class="file-label">
+              <label class="file-label has-text-centered">
                 <input class="file-input" type="file" @change='loaded'>
                 <span class="file-cta">
                   <span class="file-icon"><icon name="upload"></icon></span>
@@ -87,7 +87,8 @@
   .main-menu .fa-icon {
     margin-right: .25rem;
   }
-  .file-label {
+  label.file-label,
+  label.file-label .file-cta {
     width: 100%;
     justify-content: center;
   }
