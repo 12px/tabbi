@@ -80,6 +80,12 @@ const mutations = {
   restore_board(state, data) {
     state.boards.push(state.trash.boards[data])
     state.trash.boards.splice(data, 1)
+  },
+
+  restore_tack(state, data) {
+    delete data.link.board
+    state.boards[data.board].links.push(data.link)
+    state.trash.links.splice(data.id, 1)
   }
 
 }

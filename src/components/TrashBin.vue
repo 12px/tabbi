@@ -25,7 +25,7 @@
         :key="tack.id" :self="tack" 
         :trash="id" v-show="visible(key)" 
         v-on:remTack="remove(key)" 
-        v-on:resTack="restore(tack)">
+        v-on:resTack="restore(tack, key)">
       </thumb-tack>
 
       <div class="show muted has-text-centered" v-if="overflow">
@@ -57,8 +57,13 @@
       visible(key) { return this.show || key < this.rows || this.filter.active },
 
       remove(id) {},
-      restore(t) {
-        if (!t && !this.links) this.$store.commit('restore_board', this.id)
+      restore(tack, key) {
+        if (!tack && !this.links) this.$store.commit('restore_board', this.id)
+        if (tack) {
+          let board = this.$$.xById(this.$store.state.boards, tack.board)
+          if (board < 0) return this.$toast.open(this.$$.toast('Unknown Board'))
+          this.$store.commit('restore_tack', { link: tack, id: key, board })
+        }
       }
     },
     components: { ThumbTack }
