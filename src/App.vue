@@ -20,9 +20,9 @@
       <main-menu></main-menu>
     </div>
 
-    <user-login v-if="!$store.state.auth"></user-login>
+    <user-login v-if="!auth"></user-login>
 
-    <div class="container" v-if="$store.state.auth">
+    <div class="container" v-if="auth">
 
       <!-- Create New -->
       <div class="columns is-multiline" v-if="create.now">
@@ -68,6 +68,7 @@
 
   export default {
     computed: {
+      auth()   { return this.$auth.isAuth() },
       view()   { return this.$store.state.view },
       trash()  { return this.$store.state.trash },
       filter() { return this.$store.state.filter },

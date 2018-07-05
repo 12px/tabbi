@@ -1,9 +1,5 @@
 const actions = {
 
-  login({commit}, data) {
-    commit('confirm_auth')
-  },
-
   set_filter({commit}, data) {
     let filter = { active: false, by: 'string', key: '' }
     if (data.string) {

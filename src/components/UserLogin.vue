@@ -22,8 +22,8 @@
       })
     },
     methods: {
-      success(e) { this.$store.dispatch('login', e) },
-      error(e) { this.$toast.open(this.$$.toast(e)) }
+      success(e) { this.$auth.handleAuth(e) },
+      error(e) { this.$toast.open(this.$$.toast(e.error)) }
     }
   }
 </script>
