@@ -86,7 +86,7 @@
       runFilter(e) {
         // if (e.key == 'Enter') open Filtered
         if (e.key == 'Escape' || e.key == 'Enter') e.target.value = result.key = ''
-        this.$store.commit('set_filter', e.target.value)
+        this.$store.dispatch('set_filter', { string: e.target.value })
       }
     },
     components: { MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable }

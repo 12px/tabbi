@@ -21,16 +21,16 @@ const mutations = {
     state.create.now = true, state.create.thing = data
   },
 
-  close_create_new(state, data) { state.create.now = false },
+  close_create_new(state, data) { 
+    state.create.now = false 
+  },
 
-  set_last_used(state, data) { state.lastUsed = data },
+  set_last_used(state, data) { 
+    state.lastUsed = data 
+  },
 
-  set_filter(state, data) {
-    if (!data) return state.filter.active = false
-    let by = data.charAt(0)
-    state.filter.by = by == '/' ? 'board' : by == '#' ? 'tag' : 'string'
-    state.filter.key = state.filter.by == 'string' ? data : data.substr(1)
-    state.filter.active = true
+  update_filter(state, data) { 
+    state.filter = data 
   },
 
   new_board(state, data) {
@@ -45,7 +45,9 @@ const mutations = {
     state.linkKey += 1
   },
 
-  sort_boards(state, data) { state.boards = data },
+  sort_boards(state, data) { 
+    state.boards = data 
+  },
 
   change_board(state, data) {
     state.boards[data.new].links.push(link)
@@ -88,11 +90,17 @@ const mutations = {
     state.trash.links.splice(data.id, 1)
   },
 
-  remove_board(state, data) { state.trash.boards.splice(data, 1) },
+  remove_board(state, data) { 
+    state.trash.boards.splice(data, 1) 
+  },
 
-  remove_tack(state, data) { state.trash.links.splice(data, 1) },
+  remove_tack(state, data) { 
+    state.trash.links.splice(data, 1) 
+  },
 
-  remove_all_tacks(state, data) { state.trash.links = [] },
+  remove_all_tacks(state, data) { 
+    state.trash.links = [] 
+  },
 
   import_bookmarks(state, data) {
     let file = data.target.files[0]
