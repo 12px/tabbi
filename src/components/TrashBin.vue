@@ -24,13 +24,18 @@
         v-for="(tack, key) in self.links" 
         :key="tack.id" :self="tack" 
         :trash="id" v-show="visible(key)" 
-        v-on:remTack="remove(key)" 
+        v-on:remTack="removeTack(key)" 
         v-on:resTack="restoreTack(tack, key)">
       </thumb-tack>
 
       <div class="show muted has-text-centered" v-if="overflow">
         <small class="opt" v-show="show" @click="show = false">Show Less</small>
         <small class="opt" v-show="!show" @click="show = true">Show More</small>
+      </div>
+
+      <div class="del has-text-danger has-text-centered" v-if="!links || hasLinks">
+        <small class="opt" v-if="links" @click="removeAll()">Delete All</small>
+        <small class="opt" v-if="!links" @click="removeBoard()">Delete Board</small>
       </div>
     </div>
   </div>
@@ -56,7 +61,9 @@
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
       visible(key) { return this.show || key < this.rows || this.filter.active },
 
-      remove(id) {},
+      removeAll()    { this.$store.commit('remove_all_tacks') },
+      removeTack(id) { this.$store.commit('remove_tack', id) },
+      removeBoard()  { this.$store.commit('remove_board', this.id) },
       restoreAll() { 
         // restore board
         if (!this.links) return this.$store.commit('restore_board', this.id)
@@ -91,5 +98,8 @@
   }
   .pin-board .show {
     margin-top: .5em;
+  }
+  .pin-board .del {
+    margin-top: 1.5em;
   }
 </style>

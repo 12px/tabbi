@@ -86,7 +86,13 @@ const mutations = {
     delete data.link.board
     state.boards[data.board].links.push(data.link)
     state.trash.links.splice(data.id, 1)
-  }
+  },
+
+  remove_board(state, data) { state.trash.boards.splice(data, 1) },
+
+  remove_tack(state, data) { state.trash.links.splice(data, 1) },
+
+  remove_all_tacks(state, data) { state.trash.links = [] }
 
 }
 
