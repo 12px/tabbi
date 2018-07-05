@@ -59,8 +59,8 @@ let pd_util = {
 
     let openArray = function(arr) {
       for (var i = 0; i < arr.length; i++) {
-        let link = arr[i].link ? arr[i].link : arr[i];
-        let newTab = window.open(link)
+        let url = typeof arr[i].link === 'string' ? arr[i].link : arr[i];
+        let newTab = window.open(url)
         try {
           newTab.focus()
         } catch (e) {

@@ -67,6 +67,7 @@
     computed: {
       view()   { return this.$store.state.view },
       trash()  { return this.$store.state.trash },
+      filter() { return this.$store.state.filter },
       create() { return this.$store.state.create },
       boards() { return this.$store.state.boards },
       sorting: {
@@ -84,9 +85,31 @@
     },
     methods: {
       runFilter(e) {
-        // if (e.key == 'Enter') open Filtered
-        if (e.key == 'Escape' || e.key == 'Enter') e.target.value = result.key = ''
+        if (e.key == 'Enter') this.openFiltered()
+        if (e.key == 'Escape' || e.key == 'Enter') e.target.value = ''
         this.$store.dispatch('set_filter', { string: e.target.value })
+      },
+      openFiltered() {
+        let result = [];
+        let byBoard = this.filter.by == 'board'
+
+        // for EVERY board
+        for (var b in this.boards) {
+          let board = this.boards[b];
+
+          if (board.links) {
+            // for EVERY link
+            for (var i = 0; i < board.links.length; i++) {
+              let link = board.links[i];
+              let self = byBoard ? board : link;
+              if (!this.$$.filtered(this.filter, self, byBoard)) {
+                result.push(link.link)
+              }
+            }
+          }
+        }
+
+        return this.$$.openAll(result, this.$toast, this.$dialog);
       }
     },
     components: { MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable }
