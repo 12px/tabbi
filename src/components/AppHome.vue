@@ -16,7 +16,7 @@
       </div>
     </nav>
 
-    <div id="toolbar" class="container">
+    <div id="toolbar" class="container is-hidden-mobile">
       <main-menu></main-menu>
     </div>
 

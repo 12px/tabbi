@@ -34,6 +34,26 @@
             <icon name="trash-alt" scale="0.65"></icon> {{ trashed }}
           </button>
         </div>
+
+        <b-dropdown class="control" position="is-bottom-left">
+          <button :class="btnR" slot="trigger">
+            <icon name="ellipsis-h"></icon>
+          </button>
+
+          <!-- use 'custom' to prevent closing -->
+          <b-dropdown-item custom>
+            <div class="file is-centered is-small is-primary">
+              <label class="file-label">
+                <input class="file-input" type="file" @change='loaded'>
+                <span class="file-cta">
+                  <span class="file-icon"><icon name="upload"></icon></span>
+                  <span class="file-label">Import Bookmarks</span>
+                </span>
+              </label>
+            </div>
+          </b-dropdown-item>
+
+        </b-dropdown>
       </b-field>
     </div>
   </div>
@@ -53,6 +73,9 @@
       view()    { return this.$store.state.view },
       trash()   { return this.$store.state.trash },
       trashed() { return this.trash.boards.length + this.trash.links.length }
+    },
+    methods: {
+      loaded(e) { return this.$store.commit('import_bookmarks', e) }
     }
   }
 </script>
@@ -63,5 +86,9 @@
   }
   .main-menu .fa-icon {
     margin-right: .25rem;
+  }
+  .file-label {
+    width: 100%;
+    justify-content: center;
   }
 </style>

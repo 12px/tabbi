@@ -18,6 +18,18 @@
       </button>
     </b-dropdown-item>
 
+    <b-dropdown-item>
+      <div class="file is-small is-primary">
+        <label class="file-label">
+          <input class="file-input" type="file" @change='loaded'>
+          <span class="file-cta">
+            <span class="file-icon"><icon name="upload"></icon></span>
+            <span class="file-label">Import Bookmarks</span>
+          </span>
+        </label>
+      </div>
+    </b-dropdown-item>
+
     <!-- use 'custom' to prevent closing -->
     <b-dropdown-item custom>
       <button class="button is-light is-small"
@@ -49,6 +61,9 @@
       view()    { return this.$store.state.view },
       trash()   { return this.$store.state.trash },
       trashed() { return this.trash.boards.length + this.trash.links.length }
+    },
+    methods: {
+      loaded(e) { return this.$store.commit('import_bookmarks', e) }
     }
   }
 </script>
@@ -58,10 +73,10 @@
     width: 100%;
     font-weight: 700;
   }
-  .mobile-menu .dropdown-item {
+  #app .dropdown-item {
     padding-right: 1rem;
   }
-  .mobile-menu .dropdown-item:hover {
+  #app .dropdown-item:hover {
     background-color: transparent;
   }
 </style>
