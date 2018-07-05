@@ -48,7 +48,36 @@ let pd_util = {
     if (!isBoard && filter.by == 'string') pool = data.name
 
     return this.compare(filter.key, pool);
-  }
+  },
+
+  // link opener
+  openAll(links, alert, confirm) {
+    let allow = "You'll need to allow popups to use this feature!";
+    let prefix = `You're trying to open ${links.length} links`;
+    let tooMany = `${prefix}, try refining your search.`;
+    let goAhead = `${prefix}, continue?`;
+
+    let openArray = function(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        let link = arr[i].link ? arr[i].link : arr[i];
+        let newTab = window.open(link)
+        try {
+          newTab.focus()
+        } catch (e) {
+          alert.open(this.toast(allow))
+          break
+        }
+      }
+    }
+
+    if (links.length > 20) return alert.open(this.toast(tooMany));
+    if (links.length < 5) return openArray(links);
+
+    confirm.confirm({
+      message: goAhead,
+      onConfirm: function() { openArray(links) }
+    })
+  },
 }
 
 export default {

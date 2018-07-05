@@ -20,18 +20,12 @@ const mutations = {
   show_create_new(state, data) {
     state.create.now = true, state.create.thing = data
   },
-
-  close_create_new(state, data) { 
-    state.create.now = false 
-  },
-
-  set_last_used(state, data) { 
-    state.lastUsed = data 
-  },
-
-  update_filter(state, data) { 
-    state.filter = data 
-  },
+  
+  close_create_new(state, data) {  state.create.now = false  },
+  
+  set_last_used(state, data) {  state.lastUsed = data  },
+  
+  update_filter(state, data) {  state.filter = data  },
 
   new_board(state, data) {
     state.boards.push({ id: state.boardKey, name: data, links: [] })
@@ -39,15 +33,12 @@ const mutations = {
   },
 
   new_link(state, data) {
-    state.boards[data.board].links.push({ 
-      id: state.linkKey, name: data.name,  link: data.link, tags: data.tags
-    })
+    state.boards[data.board].links.push({  id: state.linkKey, 
+      name: data.name,  link: data.link, tags: data.tags })
     state.linkKey += 1
   },
 
-  sort_boards(state, data) { 
-    state.boards = data 
-  },
+  sort_boards(state, data) {  state.boards = data  },
 
   change_board(state, data) {
     state.boards[data.new].links.push(link)

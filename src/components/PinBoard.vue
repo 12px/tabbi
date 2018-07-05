@@ -8,7 +8,7 @@
           <icon class="opt" name="pencil-alt" scale="0.7"></icon>
         </span>
       </div>
-      <div class="opt column none has-hint muted">
+      <div class="opt column none has-hint muted" @click="openBoard">
         <strong class="hint hl muted">
           <small>Open {{ self.links.length}}</small>
         </strong>
@@ -62,10 +62,13 @@
       dr(val)      { this.dragging = val },
       finished()   { return this.edit.active = false },
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
+      amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active },
       visible(key) { if (this.edit.active) return false
         return this.show || key < this.rows || this.filter.active || this.dragging
       },
-      amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active }
+      openBoard()  { 
+        return this.$$.openAll(this.self.links, this.$toast, this.$dialog) 
+      },
     },
     components: { ThumbTack, PinBoardEditor, Draggable }
   }
