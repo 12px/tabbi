@@ -31,8 +31,8 @@
       <draggable class="columns is-multiline" v-if="view.page == 'pinnd'"
         v-model="sorting" :options="{ handle: '.grab' }">
         
-        <pin-board :class="cols" v-for="(board, key) in boards" 
-          :id="key" :key="board.id" :self="board">
+        <pin-board :class="cols" 
+          v-for="(board, key) in boards" :id="key" :key="board.id" :self="board">
         </pin-board>
 
       </draggable>
