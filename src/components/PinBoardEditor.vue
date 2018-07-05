@@ -4,11 +4,6 @@
     <b-field v-if="!link">
       <b-input v-focus placeholder="Board Name" v-model="self.name"
         @keyup.native.enter="finish" expanded></b-input>
-      <div class="control" @click="finish">
-        <button class="button is-primary">
-          <icon name="check"></icon>
-        </button>
-      </div>
     </b-field>
 
     <div v-if="link">
@@ -51,14 +46,18 @@
       </b-taglist>
     </div>
 
-    <b-field class="bottom" position="is-right">
-      <button class="button is-inverted is-primary is-danger" @click="trash">
-        Move to Trash
-      </button>
-      <button class="button is-inverted is-primary" @click="finish">
-        Done
-      </button>
-    </b-field>
+    <div class="level bottom">
+      <div class="level-left">
+        <button class="level-item button is-inverted is-danger" @click="trash">
+          <icon name="trash-alt"></icon>
+        </button>
+      </div>
+      <div class="level-right">
+        <button class="level-item button is-inverted is-primary" @click="finish">
+          <icon name="check"></icon>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
