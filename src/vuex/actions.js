@@ -11,10 +11,6 @@ const actions = {
     commit('update_filter', filter)
   },
 
-  open_filtered() {
-
-  },
-
   import_bookmarks({commit}, data) {
     let file = data.target.files[0]
     if (file) {
