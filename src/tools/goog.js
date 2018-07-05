@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-let auth = new Vue({
+let goog = new Vue({
   computed: {
     token: {
       get: function()  { return localStorage.getItem('id_token') },
@@ -39,6 +39,6 @@ let auth = new Vue({
 
 export default {
   install: function(Vue) {
-    Vue.prototype.$auth = auth
+    Vue.prototype.$goog = goog
   }
 }

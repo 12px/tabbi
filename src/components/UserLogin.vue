@@ -22,7 +22,7 @@
       })
     },
     methods: {
-      success(e) { this.$auth.handleAuth(e) },
+      success(e) { this.$goog.handleAuth(e) },
       error(e) { this.$toast.open(this.$$.toast(e.error)) }
     }
   }
