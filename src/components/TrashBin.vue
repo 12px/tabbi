@@ -6,7 +6,7 @@
         <strong class="muted grab">{{ self.name }}</strong>
       </div>
       <div class="opt column none has-hint muted" 
-        v-if="!links || hasLinks" @click="restore()">
+        v-if="!links || hasLinks" @click="restoreAll()">
         <strong class="hint hl muted">
           <small v-if="!links">Restore Board</small>
           <small v-if="links && !this.filter.active">Restore All</small>
@@ -25,7 +25,7 @@
         :key="tack.id" :self="tack" 
         :trash="id" v-show="visible(key)" 
         v-on:remTack="remove(key)" 
-        v-on:resTack="restore(tack, key)">
+        v-on:resTack="restoreTack(tack, key)">
       </thumb-tack>
 
       <div class="show muted has-text-centered" v-if="overflow">
@@ -57,13 +57,17 @@
       visible(key) { return this.show || key < this.rows || this.filter.active },
 
       remove(id) {},
-      restore(tack, key) {
-        if (!tack && !this.links) this.$store.commit('restore_board', this.id)
-        if (tack) {
-          let board = this.$$.xById(this.$store.state.boards, tack.board)
-          if (board < 0) return this.$toast.open(this.$$.toast('Unknown Board'))
-          this.$store.commit('restore_tack', { link: tack, id: key, board })
-        }
+      restoreAll() { 
+        // restore board
+        if (!this.links) return this.$store.commit('restore_board', this.id)
+        // restore all links
+        let t = this.trashed
+        for (var i = t.length - 1; i >= 0; i--) this.restoreTack(t[i])
+      },
+      restoreTack(tack, key) {
+        let board = this.$$.xById(this.$store.state.boards, tack.board)
+        if (board < 0) return this.$toast.open(this.$$.toast('Unknown Board'))
+        this.$store.commit('restore_tack', { link: tack, id: key, board })
       }
     },
     components: { ThumbTack }
