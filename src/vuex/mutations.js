@@ -58,7 +58,9 @@ const mutations = {
   },
 
   trash_link(state, data) {
-    state.trash.links.push(state.boards[data.board].links[data.item])
+    let board = state.boards[data.board]
+    let item = board.links[data.item]
+    state.trash.links.push({ ...item, board: board.id })
     state.boards[data.board].links.splice(data.item, 1)
   }
 
