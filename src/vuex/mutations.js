@@ -55,7 +55,18 @@ const mutations = {
   trash_board(state, data) {
     let board = state.boards[data]
     // if not empty, trash, otherwise delete
-    if (board.links.length) state.trash.boards.push(board)
+    if (board.links.length) {
+      state.trash.boards.push(board)
+
+      // if any links have been deleted to this board, add them to the board.
+      for (var i = state.trash.links.length - 1; i >= 0; i--) {
+        if (state.trash.links[i].board == board.id) {
+          delete state.trash.links[i].board;
+          board.links.push(state.trash.links[i]);
+          state.trash.links.splice(i, 1);
+        }
+      }
+    }
     state.boards.splice(data, 1)
   },
 
