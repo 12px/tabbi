@@ -4,16 +4,13 @@
     <div class="name columns is-mobile">
       <div class="column has-hint">
         <strong class="muted grab">{{ self.name }}</strong>
-        <span class="hint hr muted" @click="amend('board')">
-          <icon class="opt" name="pencil-alt" scale="0.7"></icon>
-        </span>
       </div>
       <div class="opt column none has-hint muted" v-if="!links || hasLinks">
         <strong class="hint hl muted">
           <small v-if="!links">Restore Board</small>
           <small v-if="links && !this.filter.active">Restore All</small>
         </strong>
-        <icon name="external-link-alt" scale="0.8" v-if="!this.filter.active"></icon>
+        <icon name="history" scale="0.8" v-if="!this.filter.active"></icon>
       </div>
     </div>
 
@@ -25,7 +22,7 @@
       <thumb-tack 
         v-for="(tack, key) in self.links" 
         :key="tack.id" :self="tack" 
-        :trash="trash" v-show="visible(key)" 
+        :trash="id" v-show="visible(key)" 
         v-on:remTack="remove(key)" 
         v-on:resTack="restore(tack)">
       </thumb-tack>

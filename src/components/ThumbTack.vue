@@ -9,14 +9,24 @@
         <a :href="self.link">{{ self.name }}</a>
       </div>
 
-      <div class="column none is-flex-mobile">
+      <div class="column none is-flex-mobile" v-if="!trash">
         <span class="opt muted" @click="$emit('editTack')">
           <icon name="pencil-alt" scale="0.7"></icon>
         </span>
       </div>
+
+      <div class="column none is-flex-mobile" v-if="trashed">
+        <span class="opt has-text-danger" @click="$emit('remTack')">
+          <icon name="trash-alt" scale="0.7"></icon>
+        </span>
+        <span class="opt has-text-primary" @click="$emit('resTack')">
+          <icon name="history" scale="0.7"></icon>
+        </span>
+      </div>
     </div>
 
-    <b-taglist v-if="showTags">
+    <b-taglist v-if="showTags || trash">
+      <b-tag v-if="trashed"><strong>{{ boardName }}</strong></b-tag>
       <b-tag v-for="(tag, i) in self.tags" :key="i">
         <strong>#{{ tag }}</strong>
       </b-tag>
@@ -27,13 +37,17 @@
 
 <script>
   export default {
-    props: ['self'],
+    props: ['self', 'trash'],
     computed: {
+      trashed()  { return this.trash && this.trash == 'links' },
       filter()   { return this.$store.state.filter },
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
       prescale() { return this.tagged ? '0.65' : '1' },
-      showTags() { return this.filter.active && this.filter.by == 'tag' }
+      showTags() { return this.filter.active && this.filter.by == 'tag' },
+      board()    { let index = this.$$.xById(this.$store.state.boards, this.self.board)
+                   return this.$store.state.boards[index] },
+      boardName() { return this.board.name ? this.board.name : 'Removed' }
     },
     methods: {
       filtered() { return this.$$.filtered(this.filter, this.self); }
@@ -54,27 +68,21 @@
       text-overflow: ellipsis;
     }
 
-    .column {
-      padding: .2em 0 0 0;
-    }
+    .column { padding: .2em 0 0 0; }
 
     .fa-icon {
       margin-bottom: 0.2rem;
       vertical-align: middle;
     }
 
-    &:hover {
-      a {
-        color: $primary;
-      }
-    }
+    .opt { margin-left: 0.5rem; }
 
-    &:not(:hover) .none {
-      display: none;
-    }
+    &:hover a { color: $primary; }
 
-    .prefix {
-      width: 1.25em;
-    }
+    &:not(:hover) .none { display: none; }
+
+    .prefix { width: 1.25em; }
+
+    .tags { margin-top: .25rem; }
   }
 </style>
