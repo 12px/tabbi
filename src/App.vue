@@ -20,9 +20,7 @@
       <main-menu></main-menu>
     </div>
 
-    <user-login v-if="!$goog.isAuth()"></user-login>
-
-    <div class="container" v-if="$goog.isAuth()">
+    <div class="container">
 
       <!-- Create New -->
       <div class="columns is-multiline" v-if="create.now">
@@ -59,7 +57,6 @@
 
 <script>
   import Draggable from 'vuedraggable'
-  import UserLogin from './components/UserLogin.vue'
   import MainMenu from './components/MainMenu.vue'
   import MobileMenu from './components/MobileMenu.vue'
   import CreateNew from './components/CreateNew.vue'
@@ -115,9 +112,30 @@
         return this.$$.openAll(result, this.$toast, this.$dialog);
       }
     },
-    components: { 
-      UserLogin, MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable 
-    }
+    mounted() {
+      this.$goog.loadAPIs().then(() => {
+        this.$goog.initialize().then(() => {
+          this.$goog.findData().then((data) => {
+            if (!data.result.files.length) {
+              console.info("No Saved File Data, Creating...")
+              this.$goog.createData().then(() => { 
+                this.$goog.saveData(this.$store.state).then((file) => {
+                  console.info("Created Data.")
+                }) 
+              })
+            } else {
+              console.info("Loading Data...")
+              this.$goog.loadData(data.result.files[0].id).then((file) => {
+                let loaded = JSON.parse(file.body)
+                this.$store.commit('load_data', loaded)
+                console.info("Loaded Data.")
+              })
+            }
+          })
+        })
+      })
+    },
+    components: { MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable }
   }
 </script>
 

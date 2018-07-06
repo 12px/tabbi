@@ -1,41 +1,65 @@
 import Vue from 'vue'
 
-let goog = new Vue({
-  computed: {
-    token: {
-      get: function()  { return localStorage.getItem('id_token') },
-      set: function(id) { localStorage.setItem('id_token', id) }
-    },
-    accessToken: {
-      get: function()     { return localStorage.getItem('access_token') },
-      set: function(access) { localStorage.setItem('access_token', access) }
-    },
-    expiresAt: {
-      get: function() { return localStorage.getItem('expires_at') },
-      set: function(when) {
-        let expires = JSON.stringify(when * 1000 + new Date().getTime())
-        localStorage.setItem('expires_at', expires)
-      }
-    },
-    user: {
-      get: function()     { return JSON.parse(localStorage.getItem('user')) },
-      set: function(user) { localStorage.setItem('user', JSON.stringify(user)) }
-    }
+let params = {
+  apiKey: 'AIzaSyANEWNcTsXZau98evL6qnDc3IXOrJwEuPs',
+  clientId: '645077009967-ttvthb5jpctk45q6524k87k5rm3n2r4p.apps.googleusercontent.com',
+  scope: 'https://www.googleapis.com/auth/drive.appdata'
+}
+let list = { 
+  q: 'name="db.json"',
+  spaces: 'appDataFolder', 
+  fields: 'nextPageToken, files(id, name)' 
+}
+
+const goog = {
+
+  loadAPIs() {
+    return new Promise((resolve, reject) => {
+      Promise.all([ gapi.client.load('drive', 'v3') ]).then(() => { resolve() })
+    })
   },
-  methods: {
-    isAuth() { return new Date().getTime() < this.expiresAt },
-    handleAuth(data) {
-      let api = data.Zi, user = data.w3
-      if (api && api.id_token && api.access_token) {
-        this.token = api.id_token
-        this.accessToken = api.access_token
-        this.expiresAt = api.expires_at
-        this.user = user
-        setTimeout(() => window.location.reload(), 1000)
-      }
-    }
+
+  initialize() {
+    return new Promise((resolve, reject) => {
+      gapi.client.init(params).then(() => { resolve() })
+    })
+  },
+
+  findData() {
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files.list(list).then((data) => { resolve(data) })
+    })
+  },
+
+  loadData(id) {
+    return new Promise((resolve, reject) => {
+      let by = { alt: 'media', fileId: id }
+      gapi.client.drive.files.get(by).then((data) => { resolve(data) })
+    })
+  },
+
+  createData() {
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files.create({
+        fields: 'id', resource: { name: 'db.json', parents: ['appDataFolder'] }
+      }).then((response) => { resolve(response.result.id) })
+    })
+  },
+
+  saveData(data) {
+    return new Promise((resolve, reject) => {
+      this.findData().then((found) => {
+        gapi.client.request({
+          path: '/upload/drive/v3/files/' + found.result.files[0].id,
+          method: 'PATCH',
+          params: { uploadType: 'media' },
+          body: JSON.stringify(data)
+        }).then((result) => { resolve(result) })
+      })
+    })
   }
-})
+
+}
 
 export default {
   install: function(Vue) {
