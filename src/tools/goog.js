@@ -39,6 +39,7 @@ const goog = {
   },
 
   createData() {
+    console.info("Creating Data...")
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
         fields: 'id', resource: { name: 'db.json', parents: ['appDataFolder'] }
@@ -47,6 +48,7 @@ const goog = {
   },
 
   saveData(data) {
+    console.info("Saving Data...")
     return new Promise((resolve, reject) => {
       this.findData().then((found) => {
         gapi.client.request({
@@ -54,7 +56,10 @@ const goog = {
           method: 'PATCH',
           params: { uploadType: 'media' },
           body: JSON.stringify(data)
-        }).then((result) => { resolve(result) })
+        }).then((result) => { 
+          console.info("Saved Data")
+          resolve(result) 
+        })
       })
     })
   }

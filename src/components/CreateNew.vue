@@ -77,6 +77,9 @@
         this.link = ''
         this.nTag = ''
         this.$store.commit('close_create_new')
+        this.$goog.saveData(this.$store.state).then((data) => {
+          console.log(data)
+        })
       },
       createNew() {
         if (!this.name) return this.alert('No Name Specified.')

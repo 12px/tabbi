@@ -1,6 +1,9 @@
 const mutations = {
 
-  load_data(state, data) { state = data },
+  load_data(state, data) {
+    state.loaded = true
+    for (var prop in data) { state[prop] = data[prop] }
+  },
 
   toggle_view_cols(state, data) {
     state.view.cols += state.view.cols < 4 ? 1 : -3

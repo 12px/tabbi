@@ -20,7 +20,11 @@
       <main-menu></main-menu>
     </div>
 
-    <div class="container">
+    <div v-if="!$store.state.loaded" class="container has-text-centered is-loading">
+      Loading...
+    </div>
+
+    <div class="container" v-if="$store.state.loaded">
 
       <!-- Create New -->
       <div class="columns is-multiline" v-if="create.now">
@@ -117,11 +121,9 @@
         this.$goog.initialize().then(() => {
           this.$goog.findData().then((data) => {
             if (!data.result.files.length) {
-              console.info("No Saved File Data, Creating...")
+              console.info("No Saved File Data Found.")
               this.$goog.createData().then(() => { 
-                this.$goog.saveData(this.$store.state).then((file) => {
-                  console.info("Created Data.")
-                }) 
+                this.$goog.saveData(this.$store.state)
               })
             } else {
               console.info("Loading Data...")
