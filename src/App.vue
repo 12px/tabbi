@@ -20,8 +20,13 @@
       <main-menu></main-menu>
     </div>
 
-    <div v-if="!$store.state.loaded" class="container has-text-centered is-loading">
-      Loading...
+    <div v-if="!$store.state.loaded" class="container">
+      <div class="has-text-centered">
+        <strong class="has-text-primary">
+          <icon name="spinner" scale="1" spin></icon> <br>
+          LOADING...
+        </strong>
+      </div>
     </div>
 
     <div class="container" v-if="$store.state.loaded">
