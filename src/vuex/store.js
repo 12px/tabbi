@@ -8,7 +8,6 @@ Vue.use(Vuex)
 
 const state = {
   // local
-  loaded: 0,
   linkKey: 1,
   boardKey: 2,
   lastUsed: 1,
