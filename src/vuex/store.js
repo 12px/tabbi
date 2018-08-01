@@ -1,49 +1,28 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+Vue.use(Vuex)
+
+// offline storage plugin
+import localforage from 'localforage'
+
+localforage.config({
+  driver: localforage.indexedDB,
+  storeName: 'pinDB'
+})
+
+const persist = store => {
+  store.subscribe((mutations, state) => {
+    localforage.setItem('state', state)
+  })
+}
+
+
+// import store
+import state from './state'
 import actions from './actions'
 import mutations from './mutations'
 
-Vue.use(Vuex)
-
-const state = {
-  // local
-  linkKey: 1,
-  boardKey: 2,
-  lastUsed: 1,
-
-  // bookmarks
-  boards: [{
-    id: 1,
-    name: "Inbox",
-    links: []
-  }],
-
-  trash: {
-    name: "Trash",
-    links: [],
-    boards: []
-  },
-
-  // visul config
-  view: {
-    cols: 3,
-    rows: 5,
-    page: 'pinnd' // pinnd, trash
-  },
-
-  // filtering
-  filter: {
-    by: false,
-    active: false,
-    key: 'string'
-  },
-
-  // creating
-  create: {
-    now: false,
-    thing: 'board'
-  }
-}
-
-export default new Vuex.Store({ state, mutations, actions })
+export default new Vuex.Store({ 
+  state, mutations, actions, plugins: [persist]
+})

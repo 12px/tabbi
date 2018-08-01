@@ -20,7 +20,16 @@
       <main-menu></main-menu>
     </div>
 
-    <div class="container">
+    <div v-if="!$store.state.loaded" class="container">
+      <div class="has-text-centered">
+        <strong class="has-text-primary">
+          <icon name="spinner" scale="1" spin></icon> <br>
+          LOADING...
+        </strong>
+      </div>
+    </div>
+
+    <div class="container" v-if="$store.state.loaded">
 
       <!-- Create New -->
       <div class="columns is-multiline" v-if="create.now">
@@ -113,7 +122,7 @@
       }
     },
     mounted() {
-      // load or create data
+      console.log(LocalForage)
     },
     components: { MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable }
   }
