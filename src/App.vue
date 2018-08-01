@@ -122,25 +122,7 @@
       }
     },
     mounted() {
-      this.$goog.loadAPIs().then(() => {
-        this.$goog.initialize().then(() => {
-          this.$goog.findData().then((data) => {
-            if (!data.result.files.length) {
-              console.info("No Saved File Data Found.")
-              this.$goog.createData().then(() => { 
-                this.$goog.saveData(this.$store.state)
-              })
-            } else {
-              console.info("Loading Data...")
-              this.$goog.loadData(data.result.files[0].id).then((file) => {
-                let loaded = JSON.parse(file.body)
-                this.$store.commit('load_data', loaded)
-                console.info("Loaded Data.")
-              })
-            }
-          })
-        })
-      })
+      // load or create data
     },
     components: { MainMenu, MobileMenu, CreateNew, PinBoard, TrashBin, Draggable }
   }

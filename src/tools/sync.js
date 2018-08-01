@@ -11,7 +11,7 @@ let list = {
   fields: 'nextPageToken, files(id, name)' 
 }
 
-const goog = {
+const sync = {
 
   loadAPIs() {
     return new Promise((resolve, reject) => {
@@ -68,6 +68,6 @@ const goog = {
 
 export default {
   install: function(Vue) {
-    Vue.prototype.$goog = goog
+    Vue.prototype.$sync = sync
   }
 }
