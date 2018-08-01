@@ -3,7 +3,6 @@ const state = {
   linkKey: 1,
   boardKey: 2,
   lastUsed: 1,
-  loaded: false,
   synced: false,
 
   // bookmarks
