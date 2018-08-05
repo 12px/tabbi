@@ -1,41 +1,45 @@
 <template>
   <div class="pin-board" v-show="!filtered()">
-
-    <div class="name columns is-mobile">
-      <div class="column has-hint">
-        <strong class="muted grab">{{ self.name }}</strong>
+    
+    <div class="mute name ctr row">
+      <div class="col">
+        <h6 class="m-0 on-h">
+          {{ self.name }}
+        </h6>
       </div>
-      <div class="opt column none has-hint muted" 
-        v-if="!links || hasLinks" @click="restoreAll()">
-        <strong class="hint hl muted">
-          <small v-if="!links">Restore Board</small>
-          <small v-if="links && !this.filter.active">Restore All</small>
-        </strong>
-        <icon name="history" scale="0.8" v-if="!this.filter.active"></icon>
+      <div class="good col none on-h opt" 
+        v-if="!links || hasLinks" @click="restoreAll">
+        <span class="is-h hl">Restore</span>
+        <icon name="history" scale="0.8"></icon>
       </div>
     </div>
 
-    <div class="box">
-      <div class="has-text-centered muted" v-if="!hasLinks">
+    <div class="card">
+      <div class="mute txt-c" v-if="!hasLinks">
         This board is empty.
       </div>
 
       <thumb-tack 
-        v-for="(tack, key) in self.links" 
-        :key="tack.id" :self="tack" 
+        v-for="(tack, key) in self.links"
+        :key="tack.id" :self="tack"
         :trash="id" v-show="visible(key)" 
-        v-on:remTack="removeTack(key)" 
+        v-on:remTack="removeTack(key)"
         v-on:resTack="restoreTack(tack, key)">
       </thumb-tack>
 
-      <div class="show muted has-text-centered" v-if="overflow">
-        <small class="opt" v-show="show" @click="show = false">Show Less</small>
-        <small class="opt" v-show="!show" @click="show = true">Show More</small>
-      </div>
-
-      <div class="del has-text-danger has-text-centered" v-if="!links || hasLinks">
-        <small class="opt" v-if="links" @click="removeAll()">Delete All</small>
-        <small class="opt" v-if="!links" @click="removeBoard()">Delete Board</small>
+      <div class="row m-0">
+        <div class="mute col">
+          <div v-if="overflow">
+            <span class="opt" v-show="show" @click="show = false">Show Less</span>
+            <span class="opt" v-show="!show" @click="show = true">Show More</span>
+          </div>
+        </div>
+        <div class="bad col txt-r">
+          <div v-if="!links || hasLinks">
+            <span class="opt" v-show="links" @click="removeAll">Delete All</span>
+            <span class="opt" v-show="!links" @click="removeBoard">Delete Board</span>
+          </div>  
+        </div>
       </div>
     </div>
   </div>
@@ -81,25 +85,4 @@
   }
 </script>
 
-<style>
-  .has-hint:not(:hover) > .hint { 
-    opacity: 0; 
-  }
-  .hint.hl { 
-    padding-right: 0.5em;
-  }
-  .hint.hr { 
-    padding-left: 0.5em;
-  }
-  .name .column {
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-bottom: -0.5rem;
-  }
-  .pin-board .show {
-    margin-top: .5em;
-  }
-  .pin-board .del {
-    margin-top: 1.5em;
-  }
-</style>
+<style></style>

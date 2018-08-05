@@ -1,36 +1,38 @@
 <template>
   <div class="tack" v-show="!filtered()">
 
-    <div class="columns is-marginless is-mobile">
-      <div class="column is-clipped">
-        <div class="grab prefix is-pulled-left barely">
-          <icon :name="prefix"  flip="horizontal" :scale="prescale"></icon>
+    <div class="ctr row on-h">
+      <div class="col link">
+        <div class="grab prefix fl-l bare">
+          <icon :name="prefix" flip="horizontal" :scale="prescale"></icon>
         </div>
-        <a :href="self.link">{{ self.name }}</a>
+        <a class="nice" :href="self.link">{{ self.name }}</a>
       </div>
 
-      <div class="column none is-flex-mobile" v-if="!trash">
-        <span class="opt muted" @click="$emit('editTack')">
+      <div class="col none is-h" v-if="!trash">
+        <span class="opt bare" @click="$emit('editTack')">
           <icon name="pencil-alt" scale="0.7"></icon>
         </span>
       </div>
 
-      <div class="column none is-flex-mobile" v-if="trashed">
-        <span class="opt has-text-danger" @click="$emit('remTack')">
+      <div class="col none is-h" v-if="trash">
+        <span class="opt bare" @click="$emit('remTack')">
           <icon name="trash-alt" scale="0.7"></icon>
         </span>
-        <span class="opt has-text-primary" @click="$emit('resTack')">
+        <span class="opt is-h bare" @click="$emit('resTack')">
           <icon name="history" scale="0.7"></icon>
         </span>
       </div>
     </div>
 
-    <b-taglist v-if="showTags || trash">
-      <b-tag v-if="trashed"><strong>{{ boardName }}</strong></b-tag>
-      <b-tag v-for="(tag, i) in self.tags" :key="i">
-        <strong>#{{ tag }}</strong>
-      </b-tag>
-    </b-taglist>
+    <div class="row" v-if="showTags || trash">
+      <div class="col tags">
+        <span class="tag" v-if="trashed"><strong>{{ boardName }}</strong></span>
+        <span class="tag" v-for="(tag, i) in self.tags" :key="i">
+          #{{ tag }}
+        </span>
+      </div>
+    </div>
     
   </div>
 </template>
@@ -55,34 +57,31 @@
   }
 </script>
 
-<style lang="scss">
-  @import '~bulma/sass/utilities/_all.sass';
-
+<style lang="less">
   .tack {
+    padding-top: .2em;
+
+    .row { margin-bottom: 0; }
+    .col { padding: 0 1em; }
+
+    .link { overflow: hidden; }
+
     a { 
-      color: $text;
+      border: none;
       display: block; 
+      font-weight: 600;
       overflow: hidden;
-      font-weight: bold;
       white-space: nowrap;
       text-overflow: ellipsis;
+      padding-bottom: 0.1em;
     }
 
-    .column { padding: .2em 0 0 0; }
-
-    .fa-icon {
-      margin-bottom: 0.2rem;
-      vertical-align: middle;
+    .prefix { 
+      width: 1.25em;
+      margin-top: -0.1em;
     }
 
-    .opt { margin-left: 0.5rem; }
-
-    &:hover a { color: $primary; }
-
-    &:not(:hover) .none { display: none; }
-
-    .prefix { width: 1.25em; }
-
-    .tags { margin-top: .25rem; }
+    .fa-icon { vertical-align: top; }
+    .is-h .fa-icon { margin-top: .3em; }
   }
 </style>

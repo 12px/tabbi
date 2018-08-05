@@ -1,11 +1,27 @@
 const state = {
-  // local
-  linkKey: 1,
-  boardKey: 2,
-  lastUsed: 1,
-  synced: false,
 
-  // bookmarks
+  sync: false,
+
+  meta: {
+    tackKey: 1,
+    boardKey: 2,
+    lastUsed: 1
+  },
+
+  view: {
+    cols: 3,
+    rows: 5,
+    tab: "pinnd",
+    menu: false,
+    theme: "day"
+  },
+
+  filter: {
+    by: "string",
+    key: "string",
+    active: false
+  },
+
   boards: [{
     id: 1,
     name: "Inbox",
@@ -18,24 +34,10 @@ const state = {
     boards: []
   },
 
-  // visul config
-  view: {
-    cols: 3,
-    rows: 5,
-    page: 'pinnd' // pinnd, trash
-  },
-
-  // filtering
-  filter: {
-    by: false,
-    active: false,
-    key: 'string'
-  },
-
   // creating
   create: {
-    now: false,
-    thing: 'board'
+    active: false,
+    thing: "board"
   }
 }
 

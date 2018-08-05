@@ -1,55 +1,55 @@
 <template>
-  <div class="creator" @keyup.escape="clear">
+  <div class="accent container" id="creator" @keyup.escape="clear">
 
-    <div class="box is-primary-border">
-      <b-field>
-        <b-input v-focus placeholder="Name" v-model="name" 
-          @keyup.native.enter="createNew()"></b-input>
-      </b-field>
+    <div class="ctr row tabs p-t">
+      <div class="col">
+        <a href="#" :class="active('board')" 
+          @click="$store.commit('show_create_new', 'board')">New Board</a>
 
-      <div v-if="create.thing == 'link'">
-        <b-field>
-          <b-input placeholder="Link URL" v-model="link" 
-            @keyup.native.enter="createNew()"></b-input>
-        </b-field>
-
-        <b-field>
-          <b-select placeholder="Choose Board" v-model="board">
-            <option v-for="brd in $store.state.boards" :value="brd.id">
-              {{ brd.name }}
-            </option>
-          </b-select>
-        </b-field>
-
-        <b-field>
-          <b-input placeholder="Add Tag" v-model="nTag" expanded 
-            @keyup.native.enter="addTag"></b-input>
-
-          <div class="control">
-            <button class="button" @click="addTag">
-              <icon name="check"></icon>
-            </button>
-          </div>
-        </b-field>
-
-        <b-taglist>
-          <b-tag v-for="(tag, i) in tags" :key="i">
-            <strong>#{{ tag }}</strong>
-            <span @click="remTag(i)">
-              <icon class="opt" name="times" scale="0.65"></icon>
-            </span>
-          </b-tag>
-        </b-taglist>
+        <a href="#" :class="active('link')" 
+          @click="$store.commit('show_create_new', 'link')">New Link</a>
       </div>
-
-      <b-field grouped position="is-right">
-        <button class="button is-white" @click="clear">Cancel</button>
-        <button class="button is-inverted is-primary" @click="createNew()">
-          Confirm
-        </button>
-      </b-field>
     </div>
 
+    <div class="row">
+      <div class="col none w-33">
+        <input type="text" placeholder="Name" 
+          v-focus v-model="name" @keyup.enter="createNew">
+      </div>
+      <div class="col none w-33" v-if="create.thing == 'link'">
+        <input type="text" placeholder="Link URL"
+          v-model="link" @keyup.enter="createNew">
+      </div>
+      <div class="col none w-33" v-if="create.thing == 'link'">
+        <select>
+          <option v-for="brd in $store.state.boards" :value="brd.id">
+            {{ brd.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" v-if="create.thing == 'link'">
+      <div class="col none w-33">
+        <input type="text" placeholder="Add Tag" v-model="nTag" @keyup.enter="addTag">
+      </div>
+      <div class="col none w-66">
+        <div class="tags">
+          <span class="tag" v-for="(tag, i) in tags" :key="i">
+            <strong>#{{ tag }}</strong>
+            <span @click="remTag(i)">
+              <icon name="times" scale="0.8"></icon>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row p-b">
+      <div class="col">
+        <button class="otln" @click="clear">Cancel</button>
+        <button @click="createNew">Confirm</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,9 +66,9 @@
       }
     },
     methods: {
-      alert(m) { this.$toast.open(this.$$.toast(m)) },
+      active(i) { return this.create.thing == i ? 'active' : 'mute' },
       remTag(i) { this.tags.splice(i, 1) },
-      addTag()  { if (!this.nTag) return this.alert('No Tag Specified.')
+      addTag()  { if (!this.nTag) return alert('No Tag Specified.')
                   this.tags.push(this.nTag)
                   this.nTag = '' },
       clear() {
@@ -79,11 +79,11 @@
         this.$store.commit('close_create_new')
       },
       createNew() {
-        if (!this.name) return this.alert('No Name Specified.')
+        if (!this.name) return alert('No Name Specified.')
         if (this.create.thing == 'board') this.$store.commit('new_board', this.name)
         if (this.create.thing == 'link') {
-          if (!this.link) return this.alert('No URL Specified.')
-          if (this.board < 1) return this.alert('No Board Specified')
+          if (!this.link) return alert('No URL Specified.')
+          if (this.board < 1) return alert('No Board Specified')
 
           let index = this.$$.xById(this.$store.state.boards, this.board)
 
@@ -97,31 +97,24 @@
   }
 </script>
 
-<style>
-  .creator {
-    margin-bottom: 1rem;
+<style scoped>
+  .row {
+    margin-bottom: 0;
   }
-  .creator .field-label {
-    flex: none;
-    margin-right: 0;
-    padding-right: 1em;
+  .col {
+    margin: 0;
+    padding: 0.5em 1em;
   }
-
-  .tags .fa-icon {
-    margin-top: 0.35rem;
-    margin-left: 0.35rem;  
+  .tabs a {
+    border: none;
+    margin-right: .5em;
   }
-
-  .creator .buttons {
-    margin-top: 1em;
+  .tabs .active {
+    font-weight: bold;
+    border-bottom: 1px solid;
   }
-
-  .creator .box {
-    margin-top: 1px;
-    min-width: 268px;
-  }
-
-  .create-tool .fa-icon {
+  button {
+    padding: 0 1em;
     margin-right: 0.5em;
   }
 </style>

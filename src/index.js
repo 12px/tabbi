@@ -1,7 +1,6 @@
 // import dependencies
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Buefy from 'buefy'
 
 // import app component
 import App from './App.vue'
@@ -12,7 +11,6 @@ import utility from './tools/utility'
 
 // apply plugins
 Vue.use(Vuex)
-Vue.use(Buefy)
 Vue.use(sync)
 Vue.use(utility)
 

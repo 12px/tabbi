@@ -1,95 +1,79 @@
 <template>
-  <div class="main-menu level">
-    <div class="level-left">
-      <b-field class="level-item">
-        <div class="control">
-          <button :class="btnL" @click="$store.commit('toggle_create_new', 'board')">
-            <icon name="plus-circle" scale="0.65"></icon>Board
-          </button>
-        </div>
-
-        <div class="control">
-          <button :class="btnL" @click="$store.commit('toggle_create_new', 'link')">
-            <icon name="plus-circle" scale="0.65"></icon>Link
-          </button>
-        </div>
-      </b-field>
+  <aside class="txt-c accent" @keyup.escape="close">
+    <div class="abs" @click="close">
+      <icon name="times" class="close"></icon>
     </div>
-    <div class="level-right">
-      <b-field class="level-item">
-        <div class="control">
-          <button :class="btnR" @click="$store.commit('toggle_view_rows')">
-            <icon name="th-list" scale="0.65"></icon> {{ view.rows }}
-          </button>
-        </div>
 
-        <div class="control">
-          <button :class="btnR" @click="$store.commit('toggle_view_cols')">
-            <icon name="th" scale="0.65"></icon> {{ view.cols }}
-          </button>
-        </div>
+    <strong class="d-ib">
+      •pinnd•
+    </strong>
 
-        <div class="control">
-          <button :class="btnT" @click="$store.commit('toggle_view_page', 'trash')">
-            <icon name="trash-alt" scale="0.65"></icon> {{ trashed }}
-          </button>
-        </div>
+    <button @click="$store.commit('toggle_create_new', 'board')">
+      New Board
+    </button>
 
-        <b-dropdown class="control" position="is-bottom-left">
-          <button :class="btnR" slot="trigger">
-            <icon name="ellipsis-v" scale="0.65"></icon>
-          </button>
+    <button @click="$store.commit('toggle_create_new', 'link')">
+      New Link
+    </button>
 
-          <!-- use 'custom' to prevent closing -->
-          <b-dropdown-item custom>
-            <div class="file is-centered is-small is-primary">
-              <label class="file-label has-text-centered">
-                <input class="file-input" type="file" @change='loaded'>
-                <span class="file-cta">
-                  <span class="file-icon"><icon name="upload"></icon></span>
-                  <span class="file-label">Import Bookmarks</span>
-                </span>
-              </label>
-            </div>
-          </b-dropdown-item>
+    <div class="spacer"></div>
 
-        </b-dropdown>
-      </b-field>
-    </div>
-  </div>
-    
-    
+    <button @click="$store.commit('toggle_view_rows')">
+      Links: {{ view.rows }}
+    </button>
+
+    <button @click="$store.commit('toggle_view_cols')">
+      Boards: {{ view.cols }}
+    </button>
+
+    <button @click="$store.commit('toggle_view_active')">
+      Theme: <span class="txtt-c">{{ view.theme }}</span>
+    </button>
+
+    <div class="spacer"></div>
+
+    <input id="import" type="file" @change="loaded">
+    <label class="btn" for="import">Import</label>
+  </aside>
 </template>
 
 <script>
   export default {
-    data() { return {
-      btnR: 'button is-light is-small is-rounded muted',
-      btnL: 'button is-primary is-small is-rounded is-outlined',
-      btnA: 'button is-primary is-small is-rounded'
-    } },
-    computed: {
-      btnT()    { return this.view.page == 'trash' ? this.btnA : this.btnR },
-      view()    { return this.$store.state.view },
-      trash()   { return this.$store.state.trash },
-      trashed() { return this.trash.boards.length + this.trash.links.length }
+    computed: { 
+      view()    { return this.$store.state.view }
     },
     methods: {
+      close()   { return this.$store.commit('toggle_view_menu') },
       loaded(e) { return this.$store.dispatch('import_bookmarks', e) }
     }
   }
 </script>
 
-<style>
-  .main-menu .button {
-    font-weight: 700;
+<style scoped>
+  a {
+    border: none;
   }
-  .main-menu .fa-icon {
-    margin-right: .25rem;
+  strong {
+    margin-bottom: 1em;
   }
-  label.file-label,
-  label.file-label .file-cta {
+  label {
+    font-size: 0.8em;
+  }
+  .abs {
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
+  }
+  button, .btn {
+    padding: 0;
     width: 100%;
-    justify-content: center;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .spacer {
+    height: 1px;
+    margin: 1em 0;
+    background: #fff;
   }
 </style>

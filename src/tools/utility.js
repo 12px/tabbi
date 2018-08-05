@@ -73,7 +73,7 @@ let pd_util = {
     if (links.length > 20) return alert.open(this.toast(tooMany));
     if (links.length < 5) return openArray(links);
 
-    confirm.confirm({
+    window.confirm({
       message: goAhead,
       onConfirm: function() { openArray(links) }
     })

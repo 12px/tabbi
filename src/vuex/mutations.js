@@ -5,6 +5,14 @@ const mutations = {
     for (var prop in data) { state[prop] = data[prop] }
   },
 
+  toggle_view_menu(state, data) {
+    state.view.menu = !state.view.menu
+  },
+
+  toggle_view_active(state, data) {
+    state.view.active = state.view.active == "day" ? "night" : "day"
+  },
+
   toggle_view_cols(state, data) {
     state.view.cols += state.view.cols < 4 ? 1 : -3
   },
@@ -13,34 +21,34 @@ const mutations = {
     state.view.rows = state.view.rows == 5 ? 10: state.view.rows == 10 ? 25 : 5
   },
 
-  toggle_view_page(state, data) { 
-    state.view.page = state.view.page == data ? 'pinnd' : data 
+  switch_tab(state, data) { 
+    state.view.tab = data 
   },
 
   toggle_create_new(state, data) {
-    state.create.now = state.create.thing == data ? !state.create.now : true
+    state.create.active = state.create.thing == data ? !state.create.active : true
     state.create.thing = data
   },
 
   show_create_new(state, data) {
-    state.create.now = true, state.create.thing = data
+    state.create.active = true, state.create.thing = data
   },
   
-  close_create_new(state, data) {  state.create.now = false  },
+  close_create_new(state, data) {  state.create.active = false  },
   
-  set_last_used(state, data) {  state.lastUsed = data  },
+  set_last_used(state, data) {  state.meta.lastUsed = data  },
   
   update_filter(state, data) {  state.filter = data  },
 
   new_board(state, data) {
-    state.boards.push({ id: state.boardKey, name: data, links: [] })
-    state.boardKey += 1
+    state.boards.push({ id: state.meta.boardKey, name: data, links: [] })
+    state.meta.boardKey += 1
   },
 
   new_link(state, data) {
-    state.boards[data.board].links.push({  id: state.linkKey, 
+    state.boards[data.board].links.push({  id: state.meta.tackKey, 
       name: data.name,  link: data.link, tags: data.tags })
-    state.linkKey += 1
+    state.meta.tackKey += 1
   },
 
   sort_boards(state, data) {  state.boards = data  },
@@ -103,12 +111,12 @@ const mutations = {
       let board = data[b]
       for (var l = board.links.length - 1; l >= 0; l--) {
         let link = board.links[l]
-        link.id = state.linkKey
-        state.linkKey += 1
+        link.id = state.meta.tackKey
+        state.meta.tackKey += 1
       }
-      board.id = state.boardKey
+      board.id = state.meta.boardKey
       state.boards.push(board)
-      state.boardKey += 1
+      state.meta.boardKey += 1
     }
   }
 }
