@@ -6,7 +6,7 @@
       </div>
       <div class="filter col">
         <input type="text" id="filter" v-focus
-          placeholder="Type to filter/search" @keyup="runFilter">
+          placeholder="Type to filter / search" @keyup="runFilter">
       </div>
     </div>
   </div>

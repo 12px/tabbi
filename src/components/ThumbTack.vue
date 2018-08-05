@@ -4,7 +4,9 @@
     <div class="ctr row on-h">
       <div class="col link">
         <div class="grab prefix fl-l bare">
-          <icon :name="prefix" flip="horizontal" :scale="prescale"></icon>
+          <icon :class="preclass" :name="prefix" 
+            flip="horizontal" :scale="prescale">
+          </icon>
         </div>
         <a class="nice" :href="self.link">{{ self.name }}</a>
       </div>
@@ -46,6 +48,7 @@
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
       prescale() { return this.tagged ? '0.65' : '1' },
+      preclass() { return this.tagged ? 'tagged' : '' },
       showTags() { return this.filter.active && this.filter.by == 'tag' },
       board()    { let index = this.$$.xById(this.$store.state.boards, this.self.board)
                    return this.$store.state.boards[index] },
@@ -79,6 +82,10 @@
     .prefix { 
       width: 1.25em;
       margin-top: -0.1em;
+    }
+
+    .tagged {
+      margin-top: .4em;
     }
 
     .fa-icon { vertical-align: top; }
