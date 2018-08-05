@@ -17,7 +17,7 @@
         </span>
       </div>
 
-      <div class="col none is-h" v-if="trash">
+      <div class="col trash none is-h" v-if="trash">
         <span class="opt bare" @click="$emit('remTack')">
           <icon name="trash-alt" scale="0.7"></icon>
         </span>
@@ -90,5 +90,6 @@
 
     .fa-icon { vertical-align: top; }
     .is-h .fa-icon { margin-top: .3em; }
+    .trash .fa-icon { margin-left: 0.5em; }
   }
 </style>

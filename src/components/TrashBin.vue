@@ -27,7 +27,7 @@
         v-on:resTack="restoreTack(tack, key)">
       </thumb-tack>
 
-      <div class="row m-0">
+      <div class="row m-0" v-if="hasLinks">
         <div class="mute col">
           <div v-if="overflow">
             <span class="opt" v-show="show" @click="show = false">Show Less</span>
