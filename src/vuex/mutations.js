@@ -6,7 +6,7 @@ const mutations = {
   },
 
   toggle_view_menu(state, data) {
-    state.view.menu = !state.view.menu
+    state.view.menu = data ? data : !state.view.menu
   },
 
   toggle_view_active(state, data) {
@@ -26,8 +26,8 @@ const mutations = {
   },
 
   toggle_create_new(state, data) {
-    state.create.active = state.create.thing == data ? !state.create.active : true
-    state.create.thing = data
+    state.create.active = !state.create.active
+    state.view.menu = false
   },
 
   show_create_new(state, data) {

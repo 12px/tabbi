@@ -1,5 +1,11 @@
 const actions = {
 
+  escape({commit, state}, data) {
+    if (state.view.menu) return commit('toggle_view_menu')
+    if (state.create.active) return commit('toggle_create_new')
+    if (state.view.tab != 'pinnd') return commit('switch_tab', 'pinnd')
+  },
+
   set_filter({commit}, data) {
     let filter = { active: false, by: 'string', key: '' }
     if (data.string) {
@@ -47,6 +53,7 @@ const actions = {
         commit('import_links', boards)
       }
       r.readAsText(file)
+      commit('toggle_view_menu')
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="pinnd" :class="view.theme">
+  <div id="pinnd" :class="view.theme" @keyup.escape="$store.dispatch('escape')">
 
     <main-menu :class="view.menu ? 'active' : ''"></main-menu>
 
@@ -56,15 +56,14 @@
   export default {
     computed: {
       view() { return this.$store.state.view },
+      trash()  { return this.$store.state.trash },
+      create() { return this.$store.state.create },
+      boards() { return this.$store.state.boards },
       cols() {
         let c = this.view.cols
         let cols = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
         return `col m-0 ${cols}`
       },
-
-      trash()  { return this.$store.state.trash },
-      create() { return this.$store.state.create },
-      boards() { return this.$store.state.boards },
       sorting: {
         get() { return this.boards },
         set(x) { this.$store.commit('sort_boards', x) }
