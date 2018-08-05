@@ -4,9 +4,9 @@
       <icon name="times" class="close"></icon>
     </div>
 
-    <strong class="d-ib">
+    <h6 class="logo">
       •pinnd•
-    </strong>
+    </h6>
 
     <button @click="$store.commit('toggle_create_new', 'board')">
       New Board
@@ -58,6 +58,9 @@
   }
   label {
     font-size: 0.8em;
+  }
+  .logo {
+    margin: 0 0 1em 0;
   }
   .abs {
     top: 1em;
