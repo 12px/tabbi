@@ -1,6 +1,6 @@
 <template>
   <div id="filterBar">
-    <div class="ctr row">
+    <div class="ctr row sm">
       <div class="menu col none">
         <slot></slot>
       </div>

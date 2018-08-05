@@ -1,21 +1,21 @@
 <template>
   <div class="container">
-    <div class="tab row">
+    <div class="tab row sm">
       <div class="left col">
         <a href="#" @click="$store.commit('toggle_create_new', 'board')">
           <icon name="plus-circle"></icon>
         </a>
 
         <a :class="active('pinnd')" href="#" @click="show('pinnd')">
-          Bookmarks
+          Pinnd
         </a>
         <a :class="active('sessions')" href="#" @click="show('sessions')">
           Sessions
         </a>
       </div>
-      <div class="right col txt-r">
+      <div class="right col none txt-r">
         <a :class="active('trash')" href="#" @click="show('trash')">
-          Trash ({{ trashed }})
+          <icon name="trash-alt" scale="0.8"></icon> {{ trashed }}
         </a>
 
       </div>
@@ -50,5 +50,8 @@
   .active {
     padding-bottom: .2em;
     border-bottom: 1px solid;
+  }
+  .fa-icon {
+    margin-top: -0.2em;
   }
 </style>

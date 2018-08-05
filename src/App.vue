@@ -15,7 +15,7 @@
 
     <div class="container">
 
-      <draggable class="row wrap" v-if="view.tab == 'pinnd'"
+      <draggable class="row sm" v-if="view.tab == 'pinnd'"
         v-model="sorting" :options="{ handle: '.grab' }">
           
         <pin-board :class="cols"
@@ -26,7 +26,7 @@
       </draggable>
 
 
-      <div class="row wrap" v-if="view.tab == 'trash'">
+      <div class="row sm" v-if="view.tab == 'trash'">
 
         <trash-bin :class="cols" :self="trash" :id="'links'"></trash-bin>
 
@@ -57,7 +57,7 @@
       cols() {
         let c = this.view.cols
         let cols = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
-        return `col column none ${cols}`
+        return `col m-0 ${cols}`
       },
 
       trash()  { return this.$store.state.trash },
@@ -95,7 +95,6 @@
   .opt     { cursor: pointer; }
   .grab    { cursor: move; }
   .fa-icon { vertical-align: middle; }
-  .column  { margin: 0; }
 
   .card {
     width: 100%;

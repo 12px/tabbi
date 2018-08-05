@@ -7,7 +7,7 @@
           {{ self.name }}
         </h6>
       </div>
-      <div class="good col none on-h opt" 
+      <div class="good col on-h opt" 
         v-if="!links || hasLinks" @click="restoreAll">
         <span class="is-h hl">Restore</span>
         <icon name="history" scale="0.8"></icon>

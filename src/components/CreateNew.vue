@@ -12,15 +12,15 @@
     </div>
 
     <div class="row">
-      <div class="col none w-33">
+      <div class="col w-33">
         <input type="text" placeholder="Name" 
           v-focus v-model="name" @keyup.enter="createNew">
       </div>
-      <div class="col none w-33" v-if="create.thing == 'link'">
+      <div class="col w-33" v-if="create.thing == 'link'">
         <input type="text" placeholder="Link URL"
           v-model="link" @keyup.enter="createNew">
       </div>
-      <div class="col none w-33" v-if="create.thing == 'link'">
+      <div class="col w-33" v-if="create.thing == 'link'">
         <select>
           <option v-for="brd in $store.state.boards" :value="brd.id">
             {{ brd.name }}
@@ -30,10 +30,10 @@
     </div>
 
     <div class="row" v-if="create.thing == 'link'">
-      <div class="col none w-33">
+      <div class="col w-33">
         <input type="text" placeholder="Add Tag" v-model="nTag" @keyup.enter="addTag">
       </div>
-      <div class="col none w-66">
+      <div class="col w-66">
         <div class="tags">
           <span class="tag" v-for="(tag, i) in tags" :key="i">
             <strong>#{{ tag }}</strong>
