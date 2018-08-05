@@ -15,7 +15,7 @@
       </div>
       <div class="right col none txt-r">
         <a :class="active('trash')" href="#" @click="show('trash')">
-          <icon name="trash-alt" scale="0.8"></icon> {{ trashed }}
+          <icon name="trash" scale="0.8"></icon> {{ trashed }}
         </a>
 
       </div>

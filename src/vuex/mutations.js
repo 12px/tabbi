@@ -53,6 +53,8 @@ const mutations = {
 
   sort_boards(state, data) {  state.boards = data  },
 
+  sort_sessions(state, data) {  state.sessions = data  },
+
   change_board(state, data) {
     state.boards[data.new].links.push(link)
     state.boards[data.old].links.splice(data.item, 1)

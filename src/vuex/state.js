@@ -28,6 +28,8 @@ const state = {
     links: []
   }],
 
+  sessions: [],
+
   trash: {
     name: "Trash",
     links: [],

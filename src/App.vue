@@ -16,12 +16,36 @@
     <div class="container">
 
       <draggable class="row sm" v-if="view.tab == 'pinnd'"
-        v-model="sorting" :options="{ handle: '.grab' }">
+        v-model="sortBoards" :options="{ handle: '.grab' }">
           
         <pin-board :class="cols"
           v-for="(board, i) in boards" 
           :id="i" :key="board.id" :self="board">
         </pin-board>
+
+        <div :class="cols" v-if="!boards.length">
+          <div class="card txt-c">
+            You don't have any boards yet! <br>
+            <button @click="$store.commit('toggle_create_new')">Create</button>
+          </div>
+        </div>
+
+      </draggable>
+
+      <draggable class="row sm" v-if="view.tab == 'sessions'"
+        v-model="sortSessions" :options="{ handle: '.grab' }">
+          
+        <pin-board :class="cols"
+          v-for="(session, i) in sessions" 
+          :id="i" :key="session.id" :self="session">
+        </pin-board>
+
+        <div class="col m-0 w-50" v-if="!sessions.length">
+          <div class="card txt-c">
+            You don't have any sessions yet! <br>
+            Add some with the chrome extension!
+          </div>
+        </div>
 
       </draggable>
 
@@ -55,18 +79,25 @@
 
   export default {
     computed: {
-      view() { return this.$store.state.view },
-      trash()  { return this.$store.state.trash },
-      create() { return this.$store.state.create },
-      boards() { return this.$store.state.boards },
+      view()     { return this.$store.state.view },
+      trash()    { return this.$store.state.trash },
+      create()   { return this.$store.state.create },
+      boards()   { return this.$store.state.boards },
+      sessions() { return this.$store.state.sessions },
+
       cols() {
         let c = this.view.cols
         let cols = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
         return `col m-0 ${cols}`
       },
-      sorting: {
+
+      sortBoards: {
         get() { return this.boards },
         set(x) { this.$store.commit('sort_boards', x) }
+      },
+      sortSessions: {
+        get() { return this.sessions },
+        set(x) { this.$store.commit('sort_sessions', x) }
       }
     },
     components: { 
