@@ -11,7 +11,7 @@
         </h6>
       </div>
       <div class="bare col none on-h opt" @click="openBoard">
-        <small class="is-h hl">Open {{ self.links.length }}</small>
+        <span class="is-h hl">Open {{ self.links.length }}</span>
         <icon name="external-link-alt" scale="0.8"></icon>
       </div>
     </div>
