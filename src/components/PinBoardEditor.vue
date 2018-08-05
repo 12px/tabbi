@@ -75,6 +75,7 @@
             old: this.board, new: this.lBoard, item: this.item
           })
         }
+        this.$store.commit('refresh')
         return this.$emit('finished') 
       }
     }

@@ -1,5 +1,7 @@
 const mutations = {
 
+  refresh(state, data) { return state = state },
+
   load_data(state, data) {
     state.loaded = true
     for (var prop in data) { state[prop] = data[prop] }
