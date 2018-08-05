@@ -39,6 +39,8 @@
 
     </div>
 
+    <code id="toast" class="fix tr"></code>
+
   </div>
 </template>
 
@@ -122,6 +124,9 @@
       margin-left: 0.5em;
     }
   }
+
+  #toast { background: mix(@color-main, @color-bg, 10%); }
+  #toast:not(.active) { display: none; }
 
   /*#toolbar {
     padding-top: 0;

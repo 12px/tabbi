@@ -68,7 +68,7 @@
     methods: {
       active(i) { return this.create.thing == i ? 'active' : 'mute' },
       remTag(i) { this.tags.splice(i, 1) },
-      addTag()  { if (!this.nTag) return alert('No Tag Specified.')
+      addTag()  { if (!this.nTag) return this.$$.toast('No Tag Specified.')
                   this.tags.push(this.nTag)
                   this.nTag = '' },
       clear() {
@@ -79,11 +79,11 @@
         this.$store.commit('close_create_new')
       },
       createNew() {
-        if (!this.name) return alert('No Name Specified.')
+        if (!this.name) return this.$$.toast('No Name Specified.')
         if (this.create.thing == 'board') this.$store.commit('new_board', this.name)
         if (this.create.thing == 'link') {
-          if (!this.link) return alert('No URL Specified.')
-          if (this.board < 1) return alert('No Board Specified')
+          if (!this.link) return this.$$.toast('No URL Specified.')
+          if (this.board < 1) return this.$$.toast('No Board Specified')
 
           let index = this.$$.xById(this.$store.state.boards, this.board)
 

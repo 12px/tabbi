@@ -3,7 +3,30 @@ let pd_util = {
   xById(arr, id) { return arr.findIndex((i) => i.id == id) },
 
   // make alert toast
-  toast(message) { return { message, container: '#app' } },
+  toasts: [],
+  toasting: false,
+
+  toast(message) {
+    this.toasts.push(message);
+    this.popup(this.toasts, this.popup);
+  },
+
+  popup(toasts, self) {
+    let el = document.querySelector('#toast');
+
+    if (toasts.length) {
+      let message = toasts.shift();
+      el.classList.add('active');
+      el.innerHTML = message;
+      if (!this.toasting) this.toasting = setTimeout(() => {
+        this.toasting = false
+        self(toasts, self)
+      }, 2000)
+    } else {
+      el.classList.remove('active');
+      el.innerHTML = '';
+    }
+  },
 
   // filter
   compare(a, b) {
@@ -64,20 +87,17 @@ let pd_util = {
         try {
           newTab.focus()
         } catch (e) {
-          alert.open(this.toast(allow))
+          this.toast(allow)
           break
         }
       }
     }
 
-    if (links.length > 20) return alert.open(this.toast(tooMany));
+    if (links.length > 20) return this.toast(tooMany);
     if (links.length < 5) return openArray(links);
 
-    window.confirm({
-      message: goAhead,
-      onConfirm: function() { openArray(links) }
-    })
-  },
+    if (window.confirm(goAhead)) openArray(links)
+  }
 }
 
 export default {

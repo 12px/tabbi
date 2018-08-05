@@ -22,25 +22,25 @@
       },
       openFiltered() {
         let result = [];
-        let byBoard = this.filter.by == 'board'
+        let byBoard = this.$store.state.filter.by == 'board'
 
         // for EVERY board
-        for (var b in this.boards) {
-          let board = this.boards[b];
+        for (var b in this.$store.state.boards) {
+          let board = this.$store.state.boards[b];
 
           if (board.links) {
             // for EVERY link
             for (var i = 0; i < board.links.length; i++) {
               let link = board.links[i];
               let self = byBoard ? board : link;
-              if (!this.$$.filtered(this.filter, self, byBoard)) {
+              if (!this.$$.filtered(this.$store.state.filter, self, byBoard)) {
                 result.push(link.link)
               }
             }
           }
         }
 
-        return this.$$.openAll(result, this.$toast, this.$dialog);
+        return this.$$.openAll(result);
       }
     }
   }
