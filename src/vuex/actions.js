@@ -17,6 +17,24 @@ const actions = {
     commit('update_filter', filter)
   },
 
+  toggle_sync({dispatch, commit, state}, data) {
+    if (!state.sync) dispatch('enable_sync', data)
+    if (state.sync) dispatch('disable_sync', data)
+  },
+
+  enable_sync({commit, state}, sync) {
+    console.info("Syncing...")
+    sync.enable().then((data) => {
+      sync.initialize(data, state).then((synced) => {
+        commit('toggle_sync', synced)
+      })
+    })
+  },
+
+  disable_sync({commit, state}, sync) {
+    sync.disable().then(() => { commit('toggle_sync', false) })
+  },
+
   import_bookmarks({commit}, data) {
     let file = data.target.files[0]
     if (file) {

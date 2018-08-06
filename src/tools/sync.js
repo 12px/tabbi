@@ -3,15 +3,51 @@ import Vue from 'vue'
 let params = {
   apiKey: 'AIzaSyANEWNcTsXZau98evL6qnDc3IXOrJwEuPs',
   clientId: '645077009967-ttvthb5jpctk45q6524k87k5rm3n2r4p.apps.googleusercontent.com',
-  scope: 'https://www.googleapis.com/auth/drive.appdata'
+  scope: 'https://www.googleapis.com/auth/drive.appdata',
+  discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
 }
 let list = { 
-  q: 'name="db.json"',
+  q: 'name="pinnd.json"',
   spaces: 'appDataFolder', 
   fields: 'nextPageToken, files(id, name)' 
 }
 
 const sync = {
+
+  enable() {
+    return new Promise((resolve, reject) => {
+      this.loadAPIs().then(() => {
+        this.authenticate().then(() => {
+          this.findData().then((data) => { resolve(data) })
+        })
+      })
+    })
+  },
+
+  disable() {
+    return new Promise((resolve, reject) => {
+      gapi.auth2.getAuthInstance().signOut().then(() => { resolve() })
+    })
+  },
+
+  initialize(data, state) {
+    return new Promise((resolve, reject) => {
+      if (!data.result.files.length) {
+        console.info("No Sync Data Found.")
+        this.createData().then(() => { 
+          this.saveData(state).then(() => { resolve(true) })
+        })
+      } else {
+        console.info("Syncing Data...")
+        this.loadData(data.result.files[0].id).then((file) => {
+          let loaded = JSON.parse(file.body)
+          // commit('load_data', loaded)
+          console.info("Data Synced.")
+          resolve(true)
+        })
+      }
+    })
+  },
 
   loadAPIs() {
     return new Promise((resolve, reject) => {
@@ -19,9 +55,13 @@ const sync = {
     })
   },
 
-  initialize() {
+  authenticate() {
     return new Promise((resolve, reject) => {
-      gapi.client.init(params).then(() => { resolve() })
+      gapi.client.init(params).then(() => { 
+        let auth = gapi.auth2.getAuthInstance();
+        if (auth.isSignedIn.get()) return resolve();
+        else return Promise.resolve(auth.signIn()).then(() => { resolve() })
+      })
     })
   },
 
@@ -42,7 +82,7 @@ const sync = {
     console.info("Creating Data...")
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
-        fields: 'id', resource: { name: 'db.json', parents: ['appDataFolder'] }
+        fields: 'id', resource: { name: 'pinnd.json', parents: ['appDataFolder'] }
       }).then((response) => { resolve(response.result.id) })
     })
   },

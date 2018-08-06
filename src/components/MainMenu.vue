@@ -32,6 +32,10 @@
 
     <div class="spacer"></div>
 
+    <button @click="$store.dispatch('toggle_sync', $sync)">
+      Sync: {{ $store.state.sync ? 'On' : 'Off' }}
+    </button>
+
     <input id="import" type="file" @change="loaded">
     <label class="btn" for="import">Import</label>
   </aside>
@@ -55,9 +59,6 @@
   }
   strong {
     margin-bottom: 1em;
-  }
-  label {
-    font-size: 0.8em;
   }
   .logo {
     margin: 0 0 1em 0;

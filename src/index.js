@@ -28,6 +28,7 @@ LocalForage.config({
 const persist = store => {
   store.subscribe((mutations, state) => {
     LocalForage.setItem('state', state)
+    LocalForage.setItem('updated', Date.now())
   })
 }
 
@@ -40,13 +41,16 @@ Vue.config.productionTip = false
 
 // initialize the app
 async function initializeApp() {
+  // get state from storage, if any
   const loaded = await LocalForage.getItem('state')
   let data = loaded ? {...state, ...loaded} : state
 
+  // set up store
   const store = new Vuex.Store({ 
     state: data, mutations, actions, plugins: [persist]
   })
 
+  // define app
   var app = new Vue({
     store,
     el: '#app',

@@ -1,31 +1,22 @@
 const mutations = {
 
-  refresh(state, data) { return state = state },
+  refresh(state) { return state = state },
 
-  load_data(state, data) {
-    state.loaded = true
-    for (var prop in data) { state[prop] = data[prop] }
-  },
+  toggle_sync(state, data) { state.sync = data },
 
-  toggle_view_menu(state, data) {
-    state.view.menu = data ? data : !state.view.menu
-  },
+  toggle_view_menu(state, data) { state.view.menu = data ? data : !state.view.menu },
 
-  toggle_view_active(state, data) {
+  toggle_view_active(state) {
     state.view.active = state.view.active == "day" ? "night" : "day"
   },
 
-  toggle_view_cols(state, data) {
-    state.view.cols += state.view.cols < 4 ? 1 : -3
-  },
+  toggle_view_cols(state) { state.view.cols += state.view.cols < 4 ? 1 : -3 },
 
-  toggle_view_rows(state, data) {
+  toggle_view_rows(state) {
     state.view.rows = state.view.rows == 5 ? 10: state.view.rows == 10 ? 25 : 5
   },
 
-  switch_tab(state, data) { 
-    state.view.tab = data 
-  },
+  switch_tab(state, data) { state.view.tab = data },
 
   toggle_create_new(state, data) {
     state.create.active = !state.create.active

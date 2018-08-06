@@ -100,6 +100,9 @@
         set(x) { this.$store.commit('sort_sessions', x) }
       }
     },
+    created() {
+      if (this.$store.state.sync) this.$store.dispatch('enable_sync', this.$sync)
+    },
     components: { 
       FilterBar, MainMenu, TabList, CreateNew, PinBoard, TrashBin, Draggable 
     }
