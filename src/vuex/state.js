@@ -5,7 +5,8 @@ const state = {
   meta: {
     tackKey: 1,
     boardKey: 2,
-    lastUsed: 1
+    lastUsed: 1,
+    updated: 0
   },
 
   view: {

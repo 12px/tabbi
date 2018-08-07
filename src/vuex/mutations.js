@@ -2,6 +2,8 @@ const mutations = {
 
   refresh(state) { return state = state },
 
+  updated(state) { return state.meta.updated = Date.now() },
+
   toggle_sync(state, data) { state.sync = data },
 
   toggle_view_menu(state, data) { state.view.menu = data ? data : !state.view.menu },

@@ -48,11 +48,19 @@ const sync = {
         } else {
           console.info("Syncing Data...")
           let fileId = data.result.files[0].id
-          gapi.client.drive.filesget({ alt: 'media',  fileId }).then((data) => {
-            let loaded = JSON.parse(file.body)
-            // commit('load_data', loaded)
-            console.info("Data Synced.")
-            resolve(true)
+          gapi.client.drive.files.get({ alt: 'media',  fileId }).then((data) => {
+            let loaded = JSON.parse(data.body)
+            if (state.meta.updated > loaded.meta.updated) {
+              console.info("Syncing Local Data")
+              this.save(state).then(() => { resolve(true) })
+            } else if (state.meta.updated == loaded.meta.updated) {
+              console.info("Data In Sync.")
+            } else {
+              // commit('load_data', loaded)
+              console.log(state.meta.updated, loaded.meta.updated)
+              console.info("Data Synced.")
+              resolve(true)
+            }
           })
         }
       })
@@ -71,7 +79,7 @@ const sync = {
   save(data) {
     console.info("Saving Data...")
     return new Promise((resolve, reject) => {
-      this.findData().then((found) => {
+      gapi.client.drive.files.list(list).then((found) => {
         gapi.client.request({
           path: '/upload/drive/v3/files/' + found.result.files[0].id,
           method: 'PATCH',

@@ -26,9 +26,9 @@ LocalForage.config({
   driver: LocalForage.indexedDB
 })
 const persist = store => {
+  store.commit('updated')
   store.subscribe((mutations, state) => {
     LocalForage.setItem('state', state)
-    LocalForage.setItem('updated', Date.now())
   })
 }
 
