@@ -15,12 +15,14 @@ let list = {
 const sync = {
 
   disable() {
+    console.info("Disabling Sync.")
     return new Promise((resolve, reject) => {
       gapi.auth2.getAuthInstance().signOut().then(() => { resolve() })
     })
   },
 
   enable(state) {
+    console.info("Enabling Sync.")
     return new Promise((resolve, reject) => {
       Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
         gapi.client.init(params).then(() => {
@@ -45,7 +47,8 @@ const sync = {
           })
         } else {
           console.info("Syncing Data...")
-          this.load(data.result.files[0].id).then((file) => {
+          let fileId = data.result.files[0].id
+          gapi.client.drive.filesget({ alt: 'media',  fileId }).then((data) => {
             let loaded = JSON.parse(file.body)
             // commit('load_data', loaded)
             console.info("Data Synced.")
@@ -53,13 +56,6 @@ const sync = {
           })
         }
       })
-    })
-  },
-
-  load(id) {
-    return new Promise((resolve, reject) => {
-      let by = { alt: 'media', fileId: id }
-      gapi.client.drive.files.get(by).then((data) => { resolve(data) })
     })
   },
 
