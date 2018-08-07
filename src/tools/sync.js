@@ -14,71 +14,56 @@ let list = {
 
 const sync = {
 
-  enable() {
-    return new Promise((resolve, reject) => {
-      this.loadAPIs().then(() => {
-        this.authenticate().then(() => {
-          this.findData().then((data) => { resolve(data) })
-        })
-      })
-    })
-  },
-
   disable() {
     return new Promise((resolve, reject) => {
       gapi.auth2.getAuthInstance().signOut().then(() => { resolve() })
     })
   },
 
-  initialize(data, state) {
+  enable(state) {
     return new Promise((resolve, reject) => {
-      if (!data.result.files.length) {
-        console.info("No Sync Data Found.")
-        this.createData().then(() => { 
-          this.saveData(state).then(() => { resolve(true) })
+      Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
+        gapi.client.init(params).then(() => {
+          let auth = gapi.auth2.getAuthInstance()
+          if (!auth.isSignedIn.get()) {
+            return Promise.resolve(auth.signIn()).then(() => {
+              this.fetch(state).then(state).then((on) => { resolve(on) })
+            })
+          } else return this.fetch(state).then(state).then((on) => { resolve(on) })
         })
-      } else {
-        console.info("Syncing Data...")
-        this.loadData(data.result.files[0].id).then((file) => {
-          let loaded = JSON.parse(file.body)
-          // commit('load_data', loaded)
-          console.info("Data Synced.")
-          resolve(true)
-        })
-      }
-    })
-  },
-
-  loadAPIs() {
-    return new Promise((resolve, reject) => {
-      Promise.all([ gapi.client.load('drive', 'v3') ]).then(() => { resolve() })
-    })
-  },
-
-  authenticate() {
-    return new Promise((resolve, reject) => {
-      gapi.client.init(params).then(() => { 
-        let auth = gapi.auth2.getAuthInstance();
-        if (auth.isSignedIn.get()) return resolve();
-        else return Promise.resolve(auth.signIn()).then(() => { resolve() })
       })
     })
   },
 
-  findData() {
+  fetch(state) {
     return new Promise((resolve, reject) => {
-      gapi.client.drive.files.list(list).then((data) => { resolve(data) })
+      gapi.client.drive.files.list(list).then((data) => {
+        if (!data.result.files.length) {
+          console.info("No Sync Data Found.")
+          this.create().then(() => { 
+            this.save(state).then(() => { resolve(true) })
+          })
+        } else {
+          console.info("Syncing Data...")
+          this.load(data.result.files[0].id).then((file) => {
+            let loaded = JSON.parse(file.body)
+            // commit('load_data', loaded)
+            console.info("Data Synced.")
+            resolve(true)
+          })
+        }
+      })
     })
   },
 
-  loadData(id) {
+  load(id) {
     return new Promise((resolve, reject) => {
       let by = { alt: 'media', fileId: id }
       gapi.client.drive.files.get(by).then((data) => { resolve(data) })
     })
   },
 
-  createData() {
+  create() {
     console.info("Creating Data...")
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
@@ -87,7 +72,7 @@ const sync = {
     })
   },
 
-  saveData(data) {
+  save(data) {
     console.info("Saving Data...")
     return new Promise((resolve, reject) => {
       this.findData().then((found) => {

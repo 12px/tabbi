@@ -23,12 +23,7 @@ const actions = {
   },
 
   enable_sync({commit, state}, sync) {
-    console.info("Syncing...")
-    sync.enable().then((data) => {
-      sync.initialize(data, state).then((synced) => {
-        commit('toggle_sync', synced)
-      })
-    })
+    sync.enable(state).then((synced) => { commit('toggle_sync', synced) })
   },
 
   disable_sync({commit, state}, sync) {
