@@ -1,4 +1,5 @@
 let pd_util = {
+
   // find obj in array by id
   xById(arr, id) { return arr.findIndex((i) => i.id == id) },
 
@@ -15,7 +16,7 @@ let pd_util = {
     let el = document.querySelector('#toast');
 
     if (toasts.length) {
-      let message = toasts.shift();
+      let message = `<code>${toasts.shift()}</code>`;
       el.classList.add('active');
       el.innerHTML = message;
       if (!this.toasting) this.toasting = setTimeout(() => {

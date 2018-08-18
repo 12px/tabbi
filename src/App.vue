@@ -1,17 +1,13 @@
 <template>
   <div id="pinnd" :class="view.theme" @keyup.escape="$store.dispatch('escape')">
 
-    <main-menu :class="view.menu ? 'active' : ''"></main-menu>
+    <main-menu :view="view" :menu="menu" :creator="creator"></main-menu>
 
-    <filter-bar>
-      <a class="main" href="#" @click="$store.commit('toggle_view_menu')">
-        <icon name="bars"></icon>
-      </a>
-    </filter-bar>
+    <filter-bar :view="view" :menu="menu" :filter="filter"></filter-bar>
 
     <tab-list></tab-list>
 
-    <create-new v-if="create.active"></create-new>
+    <create-new :creator="creator"></create-new>
 
     <div class="container">
 
@@ -26,7 +22,7 @@
         <div :class="cols" v-if="!boards.length">
           <div class="card txt-c">
             You don't have any boards yet! <br>
-            <button @click="$store.commit('toggle_create_new')">Create</button>
+            <button @click="creator.active = true">Create</button>
           </div>
         </div>
 
@@ -63,7 +59,7 @@
 
     </div>
 
-    <code id="toast" class="fix tr"></code>
+    <div id="toast" class="fix tr"></div>
 
   </div>
 </template>
@@ -71,37 +67,41 @@
 <script>
   import Draggable from 'vuedraggable'
   import FilterBar from './components/FilterBar.vue'
-  import MainMenu from './components/MainMenu.vue'
-  import TabList from './components/TabList.vue'
+  import MainMenu  from './components/MainMenu.vue'
+  import TabList   from './components/TabList.vue'
   import CreateNew from './components/CreateNew.vue'
-  import PinBoard from './components/PinBoard.vue'
-  import TrashBin from './components/TrashBin.vue'
+  import PinBoard  from './components/PinBoard.vue'
+  import TrashBin  from './components/TrashBin.vue'
 
   export default {
     computed: {
       view()     { return this.$store.state.view },
+      menu()     { return this.$store.state._.menu },
       trash()    { return this.$store.state.trash },
-      create()   { return this.$store.state.create },
       boards()   { return this.$store.state.boards },
       sessions() { return this.$store.state.sessions },
+      filter()   { return this.$store.state._.filter },
+      creator()  { return this.$store.state._.create },
 
       cols() {
-        let c = this.view.cols
+        let c = this.view.grid
         let cols = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
         return `col m-0 ${cols}`
       },
 
       sortBoards: {
-        get() { return this.boards },
-        set(x) { this.$store.commit('sort_boards', x) }
+        get()     { return this.boards },
+        set(data) { this.$store.commit('update_boards', data) }
       },
       sortSessions: {
-        get() { return this.sessions },
-        set(x) { this.$store.commit('sort_sessions', x) }
+        get()     { return this.sessions },
+        set(data) { this.$store.commit('update_sessions', data) }
       }
     },
     created() {
-      if (this.$store.state.sync) this.$store.dispatch('enable_sync', this.$sync)
+      if (this.$store.state.meta.syncData) {
+        this.$store.dispatch('enable_sync', this.$sync)
+      }
     },
     components: { 
       FilterBar, MainMenu, TabList, CreateNew, PinBoard, TrashBin, Draggable 
@@ -158,29 +158,5 @@
     }
   }
 
-  #toast { background: mix(@color-main, @color-bg, 10%); }
-  #toast:not(.active) { display: none; }
-
-  /*#toolbar {
-    padding-top: 0;
-    margin-bottom: .5rem;
-  }
-  #navbar .logo {
-    min-width: 85px;
-    padding-top: 1.07em;
-  }
-
-  .container { padding: 1rem }
-  .column.none { flex: none; }
-  .opt { cursor: pointer; }
-  .grab { cursor: move; }
-  .muted { color: $grey-light !important; }
-  .barely { color: $grey-lighter !important; }
-  .is-primary-border { border: 1px solid $primary; }
-
-  @media screen and (max-width: 768px) {
-    .is-clipped-mobile {
-      overflow: hidden !important;
-    }
-  }*/
+  #toast code { background: mix(@color-main, @color-bg, 10%); }
 </style>

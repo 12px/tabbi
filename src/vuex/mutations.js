@@ -4,57 +4,40 @@ const mutations = {
 
   updated(state) { return state.meta.updated = Date.now() },
 
-  toggle_sync(state, data) { state.sync = data },
 
-  toggle_view_menu(state, data) { state.view.menu = data ? data : !state.view.menu },
+  update_meta(state, data) { return state.meta = { ...state.meta, ...data } },
 
-  toggle_view_active(state) {
-    state.view.active = state.view.active == "day" ? "night" : "day"
+  update_view(state, data) { return state.view = { ...state.view, ...data } },
+
+  update_boards(state, data) { return state.boards = { ...state.boards, ...data } },
+
+  update_trash(state, data) { return state.trash = { ...state.trash, ...data } },
+
+  update_sessions(state, data) { 
+    return state.sessions = { ...state.sessions, ...data } 
   },
 
-  toggle_view_cols(state) { state.view.cols += state.view.cols < 4 ? 1 : -3 },
+  // creator
+  toggle_creator(state, data) { return state._.create.active = true },
 
-  toggle_view_rows(state) {
-    state.view.rows = state.view.rows == 5 ? 10: state.view.rows == 10 ? 25 : 5
+  create_board(state, data) {
+    state.boards.push({ id: state.meta.boardIndex, name: data, links: [] })
+    state.meta.boardIndex += 1
   },
 
-  switch_tab(state, data) { state.view.tab = data },
-
-  toggle_create_new(state, data) {
-    state.create.active = !state.create.active
-    state.view.menu = false
-  },
-
-  show_create_new(state, data) {
-    state.create.active = true, state.create.thing = data
-  },
-  
-  close_create_new(state, data) {  state.create.active = false  },
-  
-  set_last_used(state, data) {  state.meta.lastUsed = data  },
-  
-  update_filter(state, data) {  state.filter = data  },
-
-  new_board(state, data) {
-    state.boards.push({ id: state.meta.boardKey, name: data, links: [] })
-    state.meta.boardKey += 1
-  },
-
-  new_link(state, data) {
-    state.boards[data.board].links.push({  id: state.meta.tackKey, 
+  create_link(state, data) {
+    state.boards[data.board].links.push({  id: state.meta.linkIndex, 
       name: data.name,  link: data.link, tags: data.tags })
-    state.meta.tackKey += 1
+    state.meta.linkIndex += 1
   },
 
-  sort_boards(state, data) {  state.boards = data  },
-
-  sort_sessions(state, data) {  state.sessions = data  },
-
+  // editor
   change_board(state, data) {
     state.boards[data.new].links.push(link)
     state.boards[data.old].links.splice(data.item, 1)
   },
 
+  // trash
   trash_board(state, data) {
     let board = state.boards[data]
     // if not empty, trash, otherwise delete
@@ -80,40 +63,17 @@ const mutations = {
     state.boards[data.board].links.splice(data.item, 1)
   },
 
-  restore_board(state, data) {
-    state.boards.push(state.trash.boards[data])
-    state.trash.boards.splice(data, 1)
-  },
 
-  restore_tack(state, data) {
-    delete data.link.board
-    state.boards[data.board].links.push(data.link)
-    state.trash.links.splice(data.id, 1)
-  },
-
-  remove_board(state, data) { 
-    state.trash.boards.splice(data, 1) 
-  },
-
-  remove_tack(state, data) { 
-    state.trash.links.splice(data, 1) 
-  },
-
-  remove_all_tacks(state, data) { 
-    state.trash.links = [] 
-  },
-
-  import_links(state, data) {
-    for (var b in data) {
-      let board = data[b]
-      for (var l = board.links.length - 1; l >= 0; l--) {
-        let link = board.links[l]
-        link.id = state.meta.tackKey
-        state.meta.tackKey += 1
+  import_bookmarks(state, data) {
+    for (var board in data) {
+      data[board].id = state.meta.boardIndex
+      state.meta.boardIndex += 1
+      for (var l in data[board].links) {
+        let link = data[board].links[l]
+        link.id = state.meta.linkIndex
+        state.meta.linkIndex += 1
       }
-      board.id = state.meta.boardKey
-      state.boards.push(board)
-      state.meta.boardKey += 1
+      state.boards.push(data[board])
     }
   }
 }

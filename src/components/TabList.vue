@@ -2,7 +2,7 @@
   <div class="container">
     <div class="tab row sm">
       <div class="left col">
-        <a href="#" @click="$store.commit('toggle_create_new')">
+        <a href="#" @click="create.active = !create.active">
           <icon :name="icon"></icon>
         </a>
 
@@ -28,12 +28,12 @@
     computed: {
       view()    { return this.$store.state.view },
       trash()   { return this.$store.state.trash },
-      create()  { return this.$store.state.create },
+      create()  { return this.$store.state._.create },
       icon()    { return this.create.active ? 'times-circle' : 'plus-circle' },
       trashed() { return this.trash.boards.length + this.trash.links.length }
     },
     methods: {
-      show(e)   { return this.$store.commit('switch_tab', e) },
+      show(e)   { return this.$store.commit('update_view', { tab: e }) },
       active(e) { return this.view.tab == e ? 'active' : 'mute' }
     }
   }

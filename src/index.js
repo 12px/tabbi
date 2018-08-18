@@ -45,6 +45,9 @@ async function initializeApp() {
   const loaded = await LocalForage.getItem('state')
   let data = loaded ? {...state, ...loaded} : state
 
+  // don't load local
+  data._ = state._
+
   // set up store
   const store = new Vuex.Store({ 
     state: data, mutations, actions, plugins: [persist]

@@ -1,13 +1,15 @@
 <template>
-  <div class="accent container" id="creator" @keyup.escape="clear">
+  <div class="accent container" id="creator" 
+    @keyup.escape="clear" v-if="creator.active">
 
     <div class="ctr row tabs p-t">
       <div class="col">
-        <a href="#" :class="active('board')" 
-          @click="$store.commit('show_create_new', 'board')">New Board</a>
-
-        <a href="#" :class="active('link')" 
-          @click="$store.commit('show_create_new', 'link')">New Link</a>
+        <a href="#" :class="is('board')" @click="creator.thing = 'board'">
+          New Board
+        </a>
+        <a href="#" :class="is('link')" @click="creator.thing = 'link'">
+          New Link
+        </a>
       </div>
     </div>
 
@@ -16,12 +18,12 @@
         <input type="text" placeholder="Name" 
           v-focus v-model="name" @keyup.enter="createNew">
       </div>
-      <div class="col w-33" v-if="create.thing == 'link'">
+      <div class="col w-33" v-if="creator.thing == 'link'">
         <input type="text" placeholder="Link URL"
           v-model="link" @keyup.enter="createNew">
       </div>
-      <div class="col w-33" v-if="create.thing == 'link'">
-        <select>
+      <div class="col w-33" v-if="creator.thing == 'link'">
+        <select v-model="board">
           <option v-for="brd in $store.state.boards" :value="brd.id">
             {{ brd.name }}
           </option>
@@ -29,7 +31,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="create.thing == 'link'">
+    <div class="row" v-if="creator.thing == 'link'">
       <div class="col w-33">
         <input type="text" placeholder="Add Tag" v-model="nTag" @keyup.enter="addTag">
       </div>
@@ -55,18 +57,19 @@
 
 <script>
   export default {
-    data() { return { 
-      name: '', link: '', nTag: '', tags: []
-    } },
+    props: [ 'creator' ],
+    data() { return {  name: '', link: '', nTag: '', tags: [] } },
+
     computed: {
-      create() { return this.$store.state.create },
+      meta()   { return this.$store.state.meta },
       board: {
-        get()    { return this.$store.state.lastUsed },
-        set(val) { return this.$store.commit('set_last_used', val) }
+        get()    { return this.meta.lastBoard },
+        set(val) { return this.$store.commit('update_meta', { lastBoard: val }) }
       }
     },
     methods: {
-      active(i) { return this.create.thing == i ? 'active' : 'mute' },
+      is(i) { return this.creator.thing == i ? 'active' : 'mute' },
+
       remTag(i) { this.tags.splice(i, 1) },
       addTag()  { if (!this.nTag) return this.$$.toast('No Tag Specified.')
                   this.tags.push(this.nTag)
@@ -76,18 +79,18 @@
         this.name = ''
         this.link = ''
         this.nTag = ''
-        this.$store.commit('close_create_new')
+        this.creator.active = false
       },
       createNew() {
         if (!this.name) return this.$$.toast('No Name Specified.')
-        if (this.create.thing == 'board') this.$store.commit('new_board', this.name)
-        if (this.create.thing == 'link') {
+        if (this.creator.thing == 'board') this.$store.commit('create_board', this.name)
+        if (this.creator.thing == 'link') {
           if (!this.link) return this.$$.toast('No URL Specified.')
           if (this.board < 1) return this.$$.toast('No Board Specified')
 
           let index = this.$$.xById(this.$store.state.boards, this.board)
 
-          this.$store.commit('new_link', { 
+          this.$store.commit('create_link', { 
             name: this.name, link: this.link, board: index, tags: this.tags  
           })
         }

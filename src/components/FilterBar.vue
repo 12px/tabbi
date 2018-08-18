@@ -2,7 +2,9 @@
   <div id="filterBar">
     <div class="ctr row sm">
       <div class="menu col none">
-        <slot></slot>
+        <a class="main" href="#" @click="toggleMenu()">
+          <icon name="bars"></icon>
+        </a>
       </div>
       <div class="filter col">
         <input type="text" id="filter" v-focus
@@ -14,15 +16,28 @@
 
 <script>
   export default {
+    props: ['view', 'filter', 'menu'],
     methods: {
+      toggleMenu() {  this.menu.active = !this.menu.active },
+
       runFilter(e) {
+        let keyword = e.target.value
         if (e.key == 'Enter') this.openFiltered()
-        if (e.key == 'Escape' || e.key == 'Enter') e.target.value = ''
-        this.$store.dispatch('set_filter', { string: e.target.value })
+        if (e.key == 'Escape' || e.key == 'Enter') keyword = ''
+
+        if (keyword) {
+          let by = keyword.charAt(0)
+          this.filter.by = by == ':' ? 'board' : by == '#' ? 'tag' : 'string'
+          this.filter.key = this.filter.by == 'string' ? keyword : keyword.substr(1)
+          this.filter.active = true
+        } else {
+          this.filter.key = ''
+          this.filter.active = false
+        }
       },
       openFiltered() {
         let result = [];
-        let byBoard = this.$store.state.filter.by == 'board'
+        let byBoard = this.filter.by == 'board'
 
         // for EVERY board
         for (var b in this.$store.state.boards) {
@@ -33,7 +48,7 @@
             for (var i = 0; i < board.links.length; i++) {
               let link = board.links[i];
               let self = byBoard ? board : link;
-              if (!this.$$.filtered(this.$store.state.filter, self, byBoard)) {
+              if (!this.$$.filtered(this.filter, self, byBoard)) {
                 result.push(link.link)
               }
             }

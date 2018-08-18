@@ -48,22 +48,33 @@ const sync = {
         } else {
           console.info("Syncing Data...")
           let fileId = data.result.files[0].id
-          gapi.client.drive.files.get({ alt: 'media',  fileId }).then((data) => {
-            let loaded = JSON.parse(data.body)
-            if (state.meta.updated > loaded.meta.updated) {
-              console.info("Syncing Local Data")
-              this.save(state).then(() => { resolve(true) })
-            } else if (state.meta.updated == loaded.meta.updated) {
-              console.info("Data In Sync.")
-            } else {
-              // commit('load_data', loaded)
-              console.log(state.meta.updated, loaded.meta.updated)
-              console.info("Data Synced.")
-              resolve(true)
-            }
+          gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
+            return this.handle(state, file).then(() => { resolve(true) })
           })
         }
       })
+    })
+  },
+
+  handle(state, data) {
+    return new Promise((resolve, reject) => {
+      let loaded = JSON.parse(data.body)
+      let cur = state.meta, got = loaded.meta
+
+      if (cur.created > got.created) {
+        // commit('load_data', loaded)
+        console.log(cur.updated, got.updated)
+        console.info("Data Synced.")
+        return resolve(true)
+      }
+      if (cur.updated > got.updated) {
+        console.info("Syncing Local Data")
+        this.save(state).then(() => { resolve(true) })
+      } else if (cur.updated == got.updated) {
+        console.info("Data In Sync.")
+      } else {
+        
+      }
     })
   },
 

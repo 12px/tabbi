@@ -58,9 +58,9 @@
       dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
     } },
     computed: {
-      filter()   { return this.$store.state.filter },
-      rows()     { return this.$store.state.view.rows },
-      overflow() { let over = this.self.links.length > this.rows 
+      filter()   { return this.$store.state._.filter },
+      links()     { return this.$store.state.view.links },
+      overflow() { let over = this.self.links.length > this.links 
         return over && !this.filter.active && !this.edit.active && !this.dragging 
       }
     },
@@ -70,7 +70,7 @@
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
       amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active },
       visible(key) { if (this.edit.active) return false
-        return this.show || key < this.rows || this.filter.active || this.dragging
+        return this.show || key < this.links || this.filter.active || this.dragging
       },
       openBoard()  { 
         return this.$$.openAll(this.self.links, this.$toast, this.$dialog) 

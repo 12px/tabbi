@@ -6,68 +6,55 @@ const actions = {
     if (state.view.tab != 'pinnd') return commit('switch_tab', 'pinnd')
   },
 
-  set_filter({commit}, data) {
-    let filter = { active: false, by: 'string', key: '' }
-    if (data.string) {
-      let by = data.string.charAt(0)
-      filter.by = by == ':' ? 'board' : by == '#' ? 'tag' : 'string'
-      filter.key = filter.by == 'string' ? data.string : data.string.substr(1)
-      filter.active = true
+  toggle_sync({dispatch, commit, state}, sync) {
+    if (!state.sync) {
+      sync.enable(state).then((s) => { commit('update_meta', { syncData: s }) })
+    } else {
+      sync.disable().then(() => { commit('update_meta', { syncData: false }) })
     }
-    commit('update_filter', filter)
   },
 
-  toggle_sync({dispatch, commit, state}, data) {
-    if (!state.sync) dispatch('enable_sync', data)
-    if (state.sync) dispatch('disable_sync', data)
-  },
-
-  enable_sync({commit, state}, sync) {
-    sync.enable(state).then((synced) => { commit('toggle_sync', synced) })
-  },
-
-  disable_sync({commit, state}, sync) {
-    sync.disable().then(() => { commit('toggle_sync', false) })
-  },
-
-  import_bookmarks({commit}, data) {
+  parse_bookmarks({commit, state}, data) {
     let file = data.target.files[0]
-    if (file) {
-      let r = new FileReader()
-      r.onload = function(e) {
-        // I hope I figure out a better way to do this.
-        let dummy = document.createElement('html')
-        dummy.innerHTML = e.target.result
-        let bookmarks = dummy.getElementsByTagName('a')
+    if (!file) return alert("No File Uploaded")
+    let r = new FileReader()
+    r.onload = function(e) {
+      // I hope I figure out a better way to do this
+      let boards = {}
 
-        let boards = {}
-        Array.prototype.forEach.call(bookmarks, (el) => {
-          let result = { tags: [] }
+      // render file as dummy DOM 
+      let dummy = document.createElement('html')
+      dummy.innerHTML = e.target.result
+      let bookmarks = dummy.getElementsByTagName('a')
 
-          let c = el.closest('DL').previousElementSibling
-          let cat = c.innerText
+      // process every link for import
+      Array.prototype.forEach.call(bookmarks, (el) => {
+        let result = { tags: [] }
+        let c = el.closest('DL').previousElementSibling
+        let cat = c.innerText
 
-          while (c.closest('DL')) {
-            c = c.closest('DL').previousElementSibling
-            if (c.innerText != "Bookmarks" && c.innerText != "Bookmarks Bar") {
-              result.tags.push(cat)
-              cat = c.innerText
-            }
+        // loop through all parent folders
+        // add the sub folders as tags
+        while (c.closest('DL')) {
+          c = c.closest('DL').previousElementSibling
+          if (c.innerText != "Bookmarks" && c.innerText != "Bookmarks Bar") {
+            result.tags.push(cat)
+            cat = c.innerText
           }
+        }
 
-          if (!boards[cat]) boards[cat] = { name: cat, links: [] }
+        // generate board if doesn't exist
+        if (!boards[cat]) boards[cat] = { name: cat, links: [] }
 
-          result.name = el.innerText ? el.innerText : el.href
-          result.link = el.href
+        // add link to board
+        result.name = el.innerText ? el.innerText : el.href
+        result.link = el.href
+        boards[cat].links.push(result)
+      })
 
-          boards[cat].links.push(result)
-        })
-
-        commit('import_links', boards)
-      }
-      r.readAsText(file)
-      commit('toggle_view_menu')
+      commit('import_bookmarks', boards)
     }
+    r.readAsText(file)
   }
 
 }

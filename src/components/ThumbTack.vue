@@ -3,7 +3,7 @@
 
     <div class="ctr row on-h">
       <div class="col link">
-        <div class="grab prefix fl-l bare">
+        <div class="grab prefix fl-l bare" v-if="!trash && trash !== 0">
           <icon :class="preclass" :name="prefix" 
             flip="horizontal" :scale="prescale">
           </icon>
@@ -11,13 +11,13 @@
         <a class="nice" :href="self.link">{{ self.name }}</a>
       </div>
 
-      <div class="col none is-h" v-if="!trash">
+      <div class="col none is-h" v-if="!trash && trash !== 0">
         <span class="opt bare" @click="$emit('editTack')">
           <icon name="pencil-alt" scale="0.7"></icon>
         </span>
       </div>
 
-      <div class="col trash none is-h" v-if="trash">
+      <div class="col trash none is-h" v-if="trash || trash === 0">
         <span class="opt bare" @click="$emit('remTack')">
           <icon name="trash-alt" scale="0.7"></icon>
         </span>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="showTags || trash">
+    <div class="row" v-if="showTags || trash || trash === 0">
       <div class="col tags">
         <span class="tag" v-if="trashed"><strong>{{ boardName }}</strong></span>
         <span class="tag" v-for="(tag, i) in self.tags" :key="i">
@@ -44,7 +44,7 @@
     props: ['self', 'trash'],
     computed: {
       trashed()  { return this.trash && this.trash == 'links' },
-      filter()   { return this.$store.state.filter },
+      filter()   { return this.$store.state._.filter },
       tagged()   { return this.self.tags && this.self.tags.length },
       prefix()   { return this.tagged ? 'tag' : 'sort' },
       prescale() { return this.tagged ? '0.65' : '1' },
@@ -55,6 +55,7 @@
       boardName() { return this.board.name ? this.board.name : 'Removed' }
     },
     methods: {
+      oh() { console.log(this.self) },
       filtered() { return this.$$.filtered(this.filter, this.self); }
     }
   }

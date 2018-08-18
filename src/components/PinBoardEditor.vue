@@ -63,6 +63,7 @@
       addTag()  { if (!this.lTag) return this.$$.toast("No Tag Specified.")
                   this.link.tags.push(this.lTag)
                   this.lTag = '' },
+
       trash()   { 
         if (this.item == 'board') this.$store.commit('trash_board', this.board)
         else this.$store.commit('trash_link', { board: this.board, item: this.item })

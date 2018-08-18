@@ -1,39 +1,28 @@
 <template>
-  <aside class="txt-c accent" @keyup.escape="close">
+  <aside :class="['txt-c accent', menu.active ? 'active' : '']" @keyup.escape="close">
+    
     <div class="abs" @click="close">
       <icon name="times" class="close"></icon>
     </div>
 
-    <h6 class="logo">
-      •pinnd•
-    </h6>
+    <h6 class="logo">•pinnd•</h6>
 
-    <button @click="$store.commit('toggle_create_new', 'board')">
-      New Board
-    </button>
-
-    <button @click="$store.commit('toggle_create_new', 'link')">
-      New Link
-    </button>
+    <button @click="newBoard()">New Board</button>
+    <button @click="newLink()">New Link</button>
 
     <div class="spacer"></div>
 
-    <button @click="$store.commit('toggle_view_rows')">
-      Links: {{ view.rows }}
-    </button>
+    <button @click="changeLinks()">Links: {{ view.links }}</button>
+    <button @click="changeGrid()">Grid: {{ view.grid }}</button>
 
-    <button @click="$store.commit('toggle_view_cols')">
-      Boards: {{ view.cols }}
-    </button>
-
-    <button @click="$store.commit('toggle_view_active')">
+    <button @click="changeTheme()">
       Theme: <span class="txtt-c">{{ view.theme }}</span>
     </button>
 
     <div class="spacer"></div>
 
     <button @click="$store.dispatch('toggle_sync', $sync)">
-      Sync: {{ $store.state.sync ? 'On' : 'Off' }}
+      Sync: {{ $store.state.meta.syncData ? 'On' : 'Off' }}
     </button>
 
     <input id="import" type="file" @change="loaded">
@@ -43,12 +32,32 @@
 
 <script>
   export default {
-    computed: { 
-      view()    { return this.$store.state.view }
-    },
+    props: ['view', 'menu', 'creator'],
     methods: {
-      close()   { return this.$store.commit('toggle_view_menu') },
-      loaded(e) { return this.$store.dispatch('import_bookmarks', e) }
+      close()   { return this.menu.active = false },
+      loaded(e) { this.close()
+        return this.$store.dispatch('parse_bookmarks', e) 
+      },
+
+      newLink() {
+        this.creator.active = true
+        this.creator.thing = 'link'
+        this.menu.active = false
+      },
+      newBoard() {
+        this.creator.active = true
+        this.creator.thing = 'board'
+        this.menu.active = false
+      },
+      changeLinks() {
+        this.view.links = this.view.links == 5 ? 10: this.view.links == 10 ? 25 : 5
+      },
+      changeGrid() { 
+        this.view.grid += this.view.grid < 4 ? 1 : -3 
+      },
+      changeTheme() {
+        this.view.theme = this.view.theme == 'day' ? 'night' : 'day'
+      }
     }
   }
 </script>

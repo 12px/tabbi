@@ -1,46 +1,46 @@
 const state = {
 
-  sync: false,
-
   meta: {
-    tackKey: 1,
-    boardKey: 2,
-    lastUsed: 1,
-    updated: 0
+    linkIndex:  1,
+    boardIndex: 2,
+    lastBoard:  1,
+    updatedAt:  0,
+    createdAt:  Date.now(),
+    syncData:   false
   },
 
   view: {
-    cols: 3,
-    rows: 5,
-    tab: "pinnd",
-    menu: false,
+    grid:  3,
+    links: 5,
+    tab:   "pinnd",
     theme: "day"
   },
 
-  filter: {
-    by: "string",
-    key: "string",
-    active: false
-  },
-
-  boards: [{
-    id: 1,
-    name: "Inbox",
-    links: []
-  }],
+  boards:   [ { id: 1, name: "Inbox", links: [] } ],
 
   sessions: [],
-
-  trash: {
+  
+  trash:    { 
     name: "Trash",
     links: [],
     boards: []
   },
 
-  // creating
-  create: {
-    active: false,
-    thing: "board"
+  // local
+  _: {
+    menu: {
+      active: false
+    },
+    filter: {
+      key:   "",
+      type:  "string",
+      active: false
+    },
+
+    create: {
+      active: false,
+      thing:  "board"
+    }
   }
 }
 

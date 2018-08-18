@@ -8,7 +8,7 @@
         </h6>
       </div>
       <div class="good col none on-h opt" 
-        v-if="!links || hasLinks" @click="restoreAll">
+        v-if="!id == 'links' || hasLinks" @click="restore">
         <span class="is-h hl">Restore</span>
         <icon name="history" scale="0.8"></icon>
       </div>
@@ -35,9 +35,10 @@
           </div>
         </div>
         <div class="bad col txt-r">
-          <div v-if="!links || hasLinks">
-            <span class="opt" v-show="links" @click="removeAll">Delete All</span>
-            <span class="opt" v-show="!links" @click="removeBoard">Delete Board</span>
+          <div v-if="!id == 'links' || hasLinks">
+            <span class="opt" @click="remove">
+              {{ id == 'links' ? 'Delete All' : 'Delete Board'}}
+            </span>
           </div>  
         </div>
       </div>
@@ -55,30 +56,46 @@
     } },
     computed: {
       trashed()  { return this.$store.state.trash.links },
-      links()    { return this.id == 'links' },
       hasLinks() { return this.self.links.length },
-      filter()   { return this.$store.state.filter },
-      rows()     { return this.$store.state.view.rows },
-      overflow() { return this.self.links.length > this.rows && !this.filter.active }
+      filter()   { return this.$store.state._.filter },
+      links()    { return this.$store.state.view.links },
+      overflow() { return this.self.links.length > this.links && !this.filter.active }
     },
     methods: {
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
-      visible(key) { return this.show || key < this.rows || this.filter.active },
+      visible(key) { return this.show || key < this.links || this.filter.active },
 
-      removeAll()    { this.$store.commit('remove_all_tacks') },
-      removeTack(id) { this.$store.commit('remove_tack', id) },
-      removeBoard()  { this.$store.commit('remove_board', this.id) },
-      restoreAll() { 
-        // restore board
-        if (!this.links) return this.$store.commit('restore_board', this.id)
-        // restore all links
-        let t = this.trashed
-        for (var i = t.length - 1; i >= 0; i--) this.restoreTack(t[i])
+      remove() {
+        if (this.id == 'links') this.self.links = []
+        else this.$store.state.trash.boards.splice(this.id, 1)
+        this.$store.commit('refresh')
       },
+
+      removeTack(id) {
+        this.self.links.splice(id, 1)
+        this.$store.commit('refresh')
+      },
+
+      restore() {
+        if (this.id == 'links') {
+          for (var i = this.trashed.length - 1; i >= 0; i--) {
+            this.restoreTack(this.trashed[i], i)
+          }
+        }
+        else {
+          this.$store.state.boards.push(this.$store.state.trash.boards[this.id])
+          this.$store.state.trash.boards.splice(this.id, 1)
+        }
+        this.$store.commit('refresh')
+      },
+
       restoreTack(tack, key) {
         let board = this.$$.xById(this.$store.state.boards, tack.board)
-        if (board < 0) return this.$toast.open(this.$$.toast('Unknown Board'))
-        this.$store.commit('restore_tack', { link: tack, id: key, board })
+        if (board < 0) return this.$$.toast('Unknown Board')
+        delete tack.board
+        this.$store.state.boards[board].links.push(tack)
+        this.$store.state.trash.links.splice(key, 1)
+        this.$store.commit('refresh')
       }
     },
     components: { ThumbTack }
