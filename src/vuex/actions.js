@@ -6,12 +6,22 @@ const actions = {
     if (state.view.tab != 'pinnd') return commit('switch_tab', 'pinnd')
   },
 
-  toggle_sync({dispatch, commit, state}, sync) {
-    if (!state.sync) {
-      sync.enable(state).then((s) => { commit('update_meta', { syncData: s }) })
-    } else {
-      sync.disable().then(() => { commit('update_meta', { syncData: false }) })
-    }
+  enable_sync({commit, state}, sync) {
+    sync.enable(state).then((data) => { 
+      if (data.state) {
+        commit('update_meta', data.state.meta)
+        commit('update_view', data.state.view)
+        commit('update_trash', data.state.trash)
+        //TODO: Merge instead of replace boards/sessions
+        commit('update_boards', data.state.boards)
+        commit('update_sessions', data.state.sessions)
+      }
+      else commit('update_meta', { syncData: data.sync }) 
+    })
+  },
+
+  disable_sync({commit, state}, sync) {
+    sync.disable().then(() => { commit('update_meta', { syncData: false }) })
   },
 
   parse_bookmarks({commit, state}, data) {

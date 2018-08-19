@@ -21,59 +21,62 @@ const sync = {
     })
   },
 
-  enable(state) {
+  enable(state, commit) {
     console.info("Enabling Sync.")
     return new Promise((resolve, reject) => {
       Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
         gapi.client.init(params).then(() => {
           let auth = gapi.auth2.getAuthInstance()
-          if (!auth.isSignedIn.get()) {
+          if (auth.isSignedIn.get()) {
+            return this.fetch(state).then((data) => { resolve(data) })
+          } else {
+            // sign in with google if not authenticated
             return Promise.resolve(auth.signIn()).then(() => {
-              this.fetch(state).then(state).then((on) => { resolve(on) })
+              this.fetch(state).then((data) => { resolve(data) })
             })
-          } else return this.fetch(state).then(state).then((on) => { resolve(on) })
+          }
         })
       })
     })
   },
 
-  fetch(state) {
+  fetch(state, commit) {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.list(list).then((data) => {
         if (!data.result.files.length) {
           console.info("No Sync Data Found.")
           this.create().then(() => { 
-            this.save(state).then(() => { resolve(true) })
+            this.save(state).then(() => { resolve({ sync: true }) })
           })
         } else {
           console.info("Syncing Data...")
           let fileId = data.result.files[0].id
           gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
-            return this.handle(state, file).then(() => { resolve(true) })
+            return this.handle(state, commit, file).then((data) => { resolve(data) })
           })
         }
       })
     })
   },
 
-  handle(state, data) {
+  handle(state, commit, data) {
     return new Promise((resolve, reject) => {
       let loaded = JSON.parse(data.body)
       let cur = state.meta, got = loaded.meta
-
-      if (cur.created > got.created) {
-        // commit('load_data', loaded)
-        console.log(cur.updated, got.updated)
-        console.info("Data Synced.")
-        return resolve(true)
-      }
-      if (cur.updated > got.updated) {
+      // Local data is newer, save that
+      if (cur.updatedAt > got.updatedAt || cur.ver != got.ver) {
         console.info("Syncing Local Data")
-        this.save(state).then(() => { resolve(true) })
-      } else if (cur.updated == got.updated) {
+        return this.save(state).then(() => { resolve({ sync: true }) })
+      }
+      // Sync'd Data is newer, use that
+      if (cur.createdAt > got.createdAt || cur.updatedAt < got.updatedAt) {
+        console.info("Data Synced.")
+        return resolve({ sync: true, state: loaded })
+      }
+      // Data is in sync
+      if (cur.updatedAt == got.updatedAt) {
         console.info("Data In Sync.")
-      } else {
-        
+        return resolve({ sync: true })
       }
     })
   },
@@ -83,7 +86,7 @@ const sync = {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
         fields: 'id', resource: { name: 'pinnd.json', parents: ['appDataFolder'] }
-      }).then((response) => { resolve(response.result.id) })
+      }).then((response) => { resolve() })
     })
   },
 

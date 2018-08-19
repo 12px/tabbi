@@ -1,6 +1,7 @@
 const state = {
 
   meta: {
+    ver:        1,
     linkIndex:  1,
     boardIndex: 2,
     lastBoard:  1,

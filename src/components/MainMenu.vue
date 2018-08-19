@@ -7,21 +7,21 @@
 
     <h6 class="logo">•pinnd•</h6>
 
-    <button @click="newBoard()">New Board</button>
-    <button @click="newLink()">New Link</button>
+    <button @click="newBoard">New Board</button>
+    <button @click="newLink">New Link</button>
 
     <div class="spacer"></div>
 
-    <button @click="changeLinks()">Links: {{ view.links }}</button>
-    <button @click="changeGrid()">Grid: {{ view.grid }}</button>
+    <button @click="changeLinks">Links: {{ view.links }}</button>
+    <button @click="changeGrid">Grid: {{ view.grid }}</button>
 
-    <button @click="changeTheme()">
+    <button @click="changeTheme">
       Theme: <span class="txtt-c">{{ view.theme }}</span>
     </button>
 
     <div class="spacer"></div>
 
-    <button @click="$store.dispatch('toggle_sync', $sync)">
+    <button @click="toggleSync">
       Sync: {{ $store.state.meta.syncData ? 'On' : 'Off' }}
     </button>
 
@@ -38,7 +38,6 @@
       loaded(e) { this.close()
         return this.$store.dispatch('parse_bookmarks', e) 
       },
-
       newLink() {
         this.creator.active = true
         this.creator.thing = 'link'
@@ -57,6 +56,13 @@
       },
       changeTheme() {
         this.view.theme = this.view.theme == 'day' ? 'night' : 'day'
+      },
+      toggleSync() {
+        if (!this.$store.state.meta.syncData) {
+          this.$store.dispatch('enable_sync', this.$sync)
+        } else {
+          this.$store.dispatch('disable_sync', this.$sync)
+        }
       }
     }
   }

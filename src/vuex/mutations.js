@@ -1,21 +1,18 @@
+
+
 const mutations = {
 
   refresh(state) { return state = state },
-
-  updated(state) { return state.meta.updated = Date.now() },
-
 
   update_meta(state, data) { return state.meta = { ...state.meta, ...data } },
 
   update_view(state, data) { return state.view = { ...state.view, ...data } },
 
-  update_boards(state, data) { return state.boards = { ...state.boards, ...data } },
-
   update_trash(state, data) { return state.trash = { ...state.trash, ...data } },
 
-  update_sessions(state, data) { 
-    return state.sessions = { ...state.sessions, ...data } 
-  },
+  update_boards(state, data) { return state.boards = data },
+
+  update_sessions(state, data) { return state.sessions = data  },
 
   // creator
   toggle_creator(state, data) { return state._.create.active = true },
@@ -75,7 +72,9 @@ const mutations = {
       }
       state.boards.push(data[board])
     }
-  }
+  },
+
+  sync(state, sync) { return sync.save(state) }
 }
 
 export default mutations
