@@ -44,7 +44,7 @@ const sync = {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.list(list).then((data) => {
         if (!data.result.files.length) {
-          console.info("No Sync Data Found.")
+          console.info("No Sync Data Found, Creating...")
           this.create().then(() => { 
             this.save(state).then(() => { resolve({ sync: true }) })
           })
@@ -82,7 +82,6 @@ const sync = {
   },
 
   create() {
-    console.info("Creating Data...")
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
         fields: 'id', resource: { name: 'pinnd.json', parents: ['appDataFolder'] }
@@ -91,7 +90,6 @@ const sync = {
   },
 
   save(data) {
-    console.info("Saving Data...")
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.list(list).then((found) => {
         gapi.client.request({
@@ -100,7 +98,6 @@ const sync = {
           params: { uploadType: 'media' },
           body: JSON.stringify(data)
         }).then((result) => { 
-          console.info("Saved Data")
           resolve(result) 
         })
       })
