@@ -110,6 +110,7 @@ const sync = {
 }
 
 export default {
+  sync: sync,
   install: function(Vue) {
     Vue.prototype.$sync = sync
   }

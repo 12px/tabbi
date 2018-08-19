@@ -35,9 +35,6 @@
     props: ['view', 'menu', 'creator'],
     methods: {
       close()   { return this.menu.active = false },
-      loaded(e) { this.close()
-        return this.$store.dispatch('parse_bookmarks', e) 
-      },
       newLink() {
         this.creator.active = true
         this.creator.thing = 'link'
@@ -49,13 +46,17 @@
         this.menu.active = false
       },
       changeLinks() {
-        this.view.links = this.view.links == 5 ? 10: this.view.links == 10 ? 25 : 5
+        this.$store.commit('update_view', { 
+          links: this.view.links == 5 ? 10: this.view.links == 10 ? 25 : 5 
+        })
       },
       changeGrid() { 
-        this.view.grid += this.view.grid < 4 ? 1 : -3 
+        this.$store.commit('update_view', { grid: this.view.grid < 4 ? 1 : -3 })
       },
       changeTheme() {
-        this.view.theme = this.view.theme == 'day' ? 'night' : 'day'
+        this.$store.commit('update_view', { 
+          theme: this.view.theme == 'day' ? 'night' : 'day' 
+        })
       },
       toggleSync() {
         if (!this.$store.state.meta.syncData) {
@@ -63,6 +64,9 @@
         } else {
           this.$store.dispatch('disable_sync', this.$sync)
         }
+      },
+      loaded(e) { this.close()
+        return this.$store.dispatch('parse_bookmarks', e) 
       }
     }
   }

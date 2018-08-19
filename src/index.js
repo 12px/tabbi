@@ -29,6 +29,7 @@ const persist = store => {
   store.subscribe((mutations, state) => {
     state.meta.updatedAt = Date.now()
     LocalForage.setItem('state', state)
+    if (state.meta.syncData) sync.sync.save(state)
   })
 }
 
