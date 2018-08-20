@@ -11,54 +11,46 @@
     <div style="height: 2em"></div>
 
     <div class="menu">
-      <side-link 
-        badge="plus-square" 
-        label="New Board" 
-        @click.native="newBoard()">
+      <side-link @click.native="newBoard()"
+        badge="plus-square" label="New Board">
       </side-link>
 
-      <side-link 
-        badge="plus-circle" 
-        label="New Link" 
-        @click.native="newLink()">
+      <side-link @click.native="newLink()"
+        badge="plus-circle" label="New Link">
       </side-link>
 
       <div style="height: 1em"></div>
 
-      <side-link 
-        :class="active('pinnd')" 
-        badge="thumbtack" 
-        label="Links" 
+      <side-link :class="active('pinnd')" 
+        badge="thumbtack" label="Boards" 
         @click.native="switchTab('pinnd')">
       </side-link>
 
-      <side-link 
-        :class="active('sessions')" 
-        badge="bookmark" 
-        label="Sessions" 
+      <side-link :class="active('sessions')" 
+        badge="book-open" label="Sessions" 
         @click.native="switchTab('sessions')">
+      </side-link>
+
+      <side-link :class="active('trash')" 
+        badge="trash-alt" label="Trash" 
+        @click.native="switchTab('trash')">
       </side-link>
     </div>
 
     <div class="foot">
       <div class="settings" v-if="config.active">
 
-        <side-link 
-          badge="columns" 
-          :label="`Grid: ${view.grid}`" 
-          @click.native="toggleGrid()">
+        <side-link @click.native="toggleGrid()"
+          badge="columns" :label="`Grid: ${view.grid}`">
         </side-link>
 
-        <side-link 
-          badge="th-list" 
-          :label="`Links: ${view.links}`" 
-          @click.native="toggleLinks()">
+        <side-link @click.native="toggleLinks()"
+          badge="th-list" :label="`Links: ${view.links}`">
         </side-link>
 
-        <side-link 
+        <side-link @click.native="toggleSync()"
           :badge="inSync ? 'sync-alt' : 'exclamation-circle'" 
-          :label="`Sync: ${inSync ? 'On' : 'Off'}`" 
-          @click.native="toggleSync()">
+          :label="`Sync: ${inSync ? 'On' : 'Off'}`">
         </side-link>
 
         <input id="import" type="file" @change="loaded">
@@ -71,10 +63,8 @@
       </div>
 
 
-      <side-link 
-        :class="footer"
-        badge="ellipsis-h" 
-        label="Options" 
+      <side-link :class="footer"
+        badge="ellipsis-h" label="Options" 
         @click.native="togCfg()">
       </side-link>
     </div>
