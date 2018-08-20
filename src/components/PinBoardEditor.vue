@@ -34,6 +34,11 @@
 
     <div class="bottom row">
       <div class="col txt-c">
+        <span class="mute opt" @click="finish">
+          <icon name="times"></icon>
+        </span>
+      </div>
+      <div class="col txt-c">
         <span class="bad opt" @click="trash">
           <icon name="trash-alt"></icon>
         </span>
