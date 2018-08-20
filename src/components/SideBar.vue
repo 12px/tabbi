@@ -19,7 +19,7 @@
         badge="plus-circle" label="New Link">
       </side-link>
 
-      <div style="height: 1em"></div>
+      <div style="height: 2em"></div>
 
       <side-link :class="active('pinnd')" 
         badge="thumbtack" label="Boards" 
