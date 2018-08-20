@@ -13,8 +13,6 @@
   export default {
     props: ['view', 'filter', 'menu'],
     methods: {
-      toggleMenu() {  this.menu.active = !this.menu.active },
-
       runFilter(e) {
         let keyword = e.target.value
         if (e.key == 'Enter') this.openFiltered()
