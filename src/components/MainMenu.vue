@@ -73,6 +73,7 @@
 </script>
 
 <style scoped>
+  aside    { max-width: 200px; }
   a {
     border: none;
   }

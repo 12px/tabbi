@@ -1,3 +1,5 @@
+@import '~morr/src/morr.less';
+
 @border-radius: .5em;
 
 body {
@@ -12,7 +14,12 @@ body {
   position: fixed;
 }
 
-aside    { max-width: 200px; }
+.contain {
+  padding: 0 5vw;
+}
+.contain.closed { padding-left: calc(65px + 5vw); }
+.contain.open { padding-left: calc(200px + 5vw); }
+
 .opt     { cursor: pointer; }
 .grab    { cursor: move; }
 .fa-icon { vertical-align: middle; }
@@ -44,4 +51,6 @@ aside    { max-width: 200px; }
   }
 }
 
-#toast code { background: mix(@color-main, @color-bg, 10%); }
+#toast code { 
+  background: mix(@color-nice, @color-bg, 10%); 
+}

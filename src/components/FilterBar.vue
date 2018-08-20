@@ -1,11 +1,6 @@
 <template>
   <div id="filterBar">
     <div class="ctr row sm">
-      <div class="menu col none">
-        <a class="main" href="#" @click="toggleMenu()">
-          <icon name="bars"></icon>
-        </a>
-      </div>
       <div class="filter col">
         <input type="text" id="filter" v-focus
           placeholder="Type to filter / search" @keyup="runFilter">
@@ -63,7 +58,7 @@
 
 <style scoped>
   #filterBar {
-    padding: 1em 10vw 0;
+    padding: 1em 0 0;
   }
   #filter {
     border-radius: 1.5em;

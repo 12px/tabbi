@@ -1,5 +1,5 @@
 <template>
-  <div class="accent container" id="creator" 
+  <div class="accent" id="creator" 
     @keyup.escape="clear" v-if="creator.active">
 
     <div class="ctr row tabs p-t">
@@ -101,6 +101,10 @@
 </script>
 
 <style scoped>
+  #creator {
+    margin: 0 -5vw;
+    padding: 0 5vw;
+  }
   .row {
     margin-bottom: 0;
   }

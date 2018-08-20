@@ -80,13 +80,11 @@
   }
 </script>
 
-<style lang="less">
-  .pin-board {
-    h6 { font-weight: 400; }
-    .name .col {
-      padding-top: 0;
-      padding-bottom: 0;
-      margin-bottom: -0.5rem;
-    }
+<style scoped>
+  .pin-board h6 { font-weight: 400; }
+  .pin-board .name .col {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -0.5rem;
   }
 </style>

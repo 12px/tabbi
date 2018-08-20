@@ -1,7 +1,7 @@
 const state = {
 
   meta: {
-    ver:        1,
+    ver:        2,
     linkIndex:  1,
     boardIndex: 2,
     lastBoard:  1,
@@ -11,10 +11,11 @@ const state = {
   },
 
   view: {
-    grid:  3,
-    links: 5,
-    tab:   "pinnd",
-    theme: "day"
+    grid:    3,
+    links:   5,
+    sidebar: true,
+    tab:     "pinnd",
+    theme:   "day"
   },
 
   boards:   [ { id: 1, name: "Inbox", links: [] } ],
@@ -29,7 +30,7 @@ const state = {
 
   // local
   _: {
-    menu: {
+    cfg: {
       active: false
     },
     filter: {

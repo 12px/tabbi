@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "localforage": "^1.7.2",
-    "morr": "^0.2.5",
+    "morr": "^0.2.6",
     "vue": "^2.5.16",
     "vue-awesome": "^3.0.3",
     "vuedraggable": "^2.16.0",

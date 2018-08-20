@@ -1,15 +1,13 @@
 <template>
   <div id="pinnd" :class="view.theme" @keyup.escape="$store.dispatch('escape')">
 
-    <main-menu :view="view" :menu="menu" :creator="creator"></main-menu>
+    <side-bar :view="view" :menu="menu" :creator="creator"></side-bar>
 
-    <filter-bar :view="view" :menu="menu" :filter="filter"></filter-bar>
+    <div :class="['contain', view.sidebar ? 'open' : 'closed']">
 
-    <tab-list></tab-list>
+      <filter-bar :view="view" :menu="menu" :filter="filter"></filter-bar>
 
-    <create-new :creator="creator"></create-new>
-
-    <div class="container">
+      <create-new :creator="creator"></create-new>
 
       <draggable class="row sm" v-if="view.tab == 'pinnd'"
         v-model="sortBoards" :options="{ handle: '.grab' }">
@@ -66,9 +64,8 @@
 
 <script>
   import Draggable from 'vuedraggable'
+  import SideBar  from './components/SideBar.vue'
   import FilterBar from './components/FilterBar.vue'
-  import MainMenu  from './components/MainMenu.vue'
-  import TabList   from './components/TabList.vue'
   import CreateNew from './components/CreateNew.vue'
   import PinBoard  from './components/PinBoard.vue'
   import TrashBin  from './components/TrashBin.vue'
@@ -104,12 +101,11 @@
       }
     },
     components: { 
-      FilterBar, MainMenu, TabList, CreateNew, PinBoard, TrashBin, Draggable 
+      SideBar, FilterBar, CreateNew, PinBoard, TrashBin, Draggable 
     }
   }
 </script>
 
 <style lang="less">
-  @import '../../morr/src/morr.less';
   @import './app.less';
 </style>
