@@ -21,9 +21,9 @@
 
       <div style="height: 2em"></div>
 
-      <side-link :class="active('pinnd')" 
+      <side-link :class="active('boards')" 
         badge="thumbtack" label="Boards" 
-        @click.native="switchTab('pinnd')">
+        @click.native="switchTab('boards')">
       </side-link>
 
       <side-link :class="active('sessions')" 

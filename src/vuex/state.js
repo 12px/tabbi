@@ -14,7 +14,7 @@ const state = {
     grid:    3,
     links:   5,
     sidebar: true,
-    tab:     "pinnd",
+    tab:     "boards",
     theme:   "day"
   },
 
