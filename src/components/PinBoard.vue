@@ -1,23 +1,24 @@
 <template>
   <div class="pin-board" v-show="!filtered()">
-    
-    <div class="grab mute name ctr row">
-      <div class="col">
-        <h6 class="grab m-0 on-h">
-          {{ self.name }}
-          <span class="opt is-h hr" @click="amend('board')">
-            <icon name="pencil-alt" scale="0.7"></icon>
-          </span>
-        </h6>
-      </div>
-      <div class="bare col none on-h opt" @click="openBoard">
-        <span class="is-h hl">Open {{ self.links.length }}</span>
-        <icon name="external-link-alt" scale="0.8"></icon>
-      </div>
-    </div>
 
     <div class="card">
-      <div class="mute txt-c" v-if="!self.links.length && !edit.active">
+      <div class="header">
+        <div class="ctr row m-0">
+          <div class="mute col p-0">
+            <h6 class="grab m-0 on-h">
+              {{ self.name }}
+              <span class="opt is-h hr" @click="amend('board')">
+                <icon name="pencil-alt" scale="0.8"></icon>
+              </span>
+            </h6>
+          </div>
+          <div class="bare col none p-0 on-h opt" @click="openBoard">
+            <span class="is-h hl">Open {{ self.links.length }}</span>
+            <icon name="external-link-alt"></icon>
+          </div>
+        </div>
+      </div>
+      <div class="mute empty txt-c" v-if="!self.links.length && !edit.active">
         This board is empty.
       </div>
 
@@ -39,7 +40,9 @@
 
       <div class="show mute txt-c" v-if="overflow">
         <span class="opt" v-show="show" @click="show = false">Show Less</span>
-        <span class="opt" v-show="!show" @click="show = true">Show More</span>
+        <span class="opt" v-show="!show" @click="show = true">
+          Show More ({{ self.links.length - links }})
+        </span>
       </div>
     </div>
   </div>
@@ -81,10 +84,8 @@
 </script>
 
 <style scoped>
-  .pin-board h6 { font-weight: 400; }
-  .pin-board .name .col {
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-bottom: -0.5rem;
+  h6 { font-weight: 400; }
+  .empty {
+    padding: 1em 0;
   }
 </style>
