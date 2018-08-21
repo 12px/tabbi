@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import Draggable from 'vuedraggable'
   import PinBoard  from '../components/PinBoard.vue'
 
   export default {
@@ -37,7 +38,7 @@
       showCreator() { this.create.active = true }
     },
     components: {
-      PinBoard
+      PinBoard, Draggable
     }
   }
 </script>
