@@ -1,8 +1,8 @@
 <template>
   <div class="pin-board" v-show="!filtered()">
 
-    <div class="card on-h">
-      <div class="header">
+    <div class="card">
+      <div class="header on-h">
         <div class="ctr row">
           <div class="mute col">
             <h6 class="grab m-0">
