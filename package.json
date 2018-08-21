@@ -20,6 +20,6 @@
   "devDependencies": {
     "less": "^3.8.0",
     "less-loader": "^4.1.0",
-    "poi": "^10.2.9"
+    "poi": "^10.2.10"
   }
 }
