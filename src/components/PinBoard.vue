@@ -3,8 +3,8 @@
 
     <div class="card on-h">
       <div class="header">
-        <div class="ctr row m-0">
-          <div class="mute col p-0">
+        <div class="ctr row">
+          <div class="mute col">
             <h6 class="grab m-0">
               {{ self.name }}
               <span class="bare opt is-h hr" @click="amend('board')">
@@ -12,7 +12,7 @@
               </span>
             </h6>
           </div>
-          <div class="bare col none p-0 opt" @click="openBoard">
+          <div class="bare col none opt" @click="openBoard">
             <span class="is-h hl">Open {{ self.links.length }}</span>
             <icon name="external-link-alt" scale="0.9"></icon>
           </div>
@@ -38,11 +38,26 @@
         v-on:finished="finished">
       </pin-board-editor>
 
+      <div class="footer on-h">
+        <div class="ctr row">
+          <div class="bare col is-h txt-c">
+            <span v-if="self.links.length > links">
+              {{ show ? 'Hide' : 'Show'}} {{ self.links.length - links }}
+            </span>
+          </div>
+          <div :class="more" @click="show = !show">
+            <icon name="ellipsis-h"></icon>
+          </div>
+          <div class="main col txt-c is-h">
+            <span class="opt">
+              New
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div class="show mute txt-c" v-if="overflow">
-        <span class="opt" v-show="show" @click="show = false">Show Less</span>
-        <span class="opt" v-show="!show" @click="show = true">
-          Show More ({{ self.links.length - links }})
-        </span>
+        
       </div>
     </div>
   </div>
@@ -61,6 +76,9 @@
       dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
     } },
     computed: {
+      more()     { return { 
+        'bare col none txt-c': 1, 'opt': this.self.links.length > this.links } 
+      },
       filter()   { return this.$store.state._.filter },
       links()     { return this.$store.state.view.links },
       overflow() { let over = this.self.links.length > this.links 
