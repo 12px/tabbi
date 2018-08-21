@@ -4,6 +4,10 @@
       <div class="filter col">
         <input type="text" id="filter" v-focus
           placeholder="Type to filter / search" @keyup="runFilter">
+        <div class="main hint txt-r p-r">
+          <strong>:key</strong> - searches boards /
+          <strong>#key</strong> - searches tags
+        </div>
       </div>
     </div>
   </div>
@@ -70,5 +74,11 @@
   }
   .fa-icon {
     margin-top: -0.1em;
+  }
+  .hint {
+    margin-bottom: -1.6em;
+  }
+  input:not(:focus) + .hint {
+    display: none;
   }
 </style>
