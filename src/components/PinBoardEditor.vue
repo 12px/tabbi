@@ -34,7 +34,7 @@
 
     <div class="bottom row">
       <div class="col txt-c">
-        <span class="mute opt" @click="finish">
+        <span class="mute opt" v-if="!isNew" @click="finish">
           <icon name="times"></icon>
         </span>
       </div>
@@ -61,7 +61,11 @@
     } },
     computed: {
       self() { return this.$store.state.boards[this.board] },
-      link() { return this.self.links[this.item] }
+      link() { return this.self.links[this.item] },
+      isNew() {
+        if (this.item == 'board') return !this.self.links.length
+        else return this.link.name == ''
+      }
     },
     methods: {
       remTag(i) { this.link.tags.splice(i, 1) },
