@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="mute empty txt-c" v-if="!self.links.length && !edit.active">
+      <div class="mute empty tack txt-c" v-if="!self.links.length && !edit.active">
         This board is empty.
       </div>
 
@@ -76,9 +76,9 @@
       dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
     } },
     watch: {
-      show:      function() { this.$emit('updateSize') },
-      dragging:  function() { this.$emit('updateSize') },
-      edit:     { handler() { this.$emit('updateSize') }, deep: true }
+      show:      function() { this.$emit('layout') },
+      dragging:  function() { this.$emit('layout') },
+      edit:     { handler() { this.$emit('layout') }, deep: true }
     },
     computed: {
       more()     { return { 

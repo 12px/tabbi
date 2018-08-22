@@ -3,8 +3,8 @@
     v-packery="packery"
     :options="{ handle: '.grab' }"
     v-model="sortBoards"
-    @start="StartLiveUpdate"
-    @end="EndLiveUpdate">
+    @start="startDrag"
+    @end="endDrag">
       
     <pin-board
       v-packery-item
@@ -13,7 +13,7 @@
       :id="i"
       :key="board.id"
       :self="board"
-      v-on:updateSize="updateSize">
+      v-on:layout="layout">
     </pin-board>
 
     <div :class="column" v-if="!boards.length">
@@ -48,19 +48,22 @@
       },
       packery() {
         return {
-          stagger: 30,
           scroll: true,
+          transitionDuration: 10,
           itemSelector: '.pin-board'
         }
       }
     },
     methods: {
       showCreator() { this.create.active = true },
-      updateSize()  { packeryEvents.$emit('layout', this.$el) },
+      layout()  { packeryEvents.$emit('layout', this.$el) },
 
-      StartLiveUpdate() { this.live = setInterval(() => { this.updateSize() }, 100) },
-      EndLiveUpdate() { 
-        clearInterval(this.live)
+      startDrag() { 
+        this.layout()
+        this.live = setInterval(() => { this.layout() }, 50) 
+      },
+      endDrag() { 
+        this.layout()
         this.live = false
       }
     },
