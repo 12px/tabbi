@@ -53,10 +53,6 @@
           </div>
         </div>
       </div>
-
-      <div class="show mute txt-c" v-if="overflow">
-        
-      </div>
     </div>
   </div>
 </template>
@@ -83,10 +79,7 @@
         'bare col none txt-c': 1, 'opt': this.self.links.length > this.links } 
       },
       filter()   { return this.$store.state._.filter },
-      links()     { return this.$store.state.view.links },
-      overflow() { let over = this.self.links.length > this.links 
-        return over && !this.filter.active && !this.edit.active && !this.dragging 
-      }
+      links()     { return this.$store.state.view.links }
     },
     methods: {
       dr(val)      { this.dragging = val },
