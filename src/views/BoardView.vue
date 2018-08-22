@@ -36,8 +36,13 @@
       create() { return this.$store.state.create },
       boards() { return this.$store.state.boards },
       column() {
+        let width = ''
         let c = this.view.grid
-        let width = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
+        if (c == 5) width = 'w-20'
+        if (c == 4) width = 'w-25'
+        if (c == 3) width = 'w-33'
+        if (c == 2) width = 'w-50'
+        if (c == 1) width = 'w-100'
         return `col m-0 ${width}`
       },
       sortBoards: {

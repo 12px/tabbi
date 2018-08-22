@@ -101,7 +101,7 @@
 
       toggleGrid() { 
         let grid = this.view.grid
-        grid += this.view.grid < 4 ? 1 : -3
+        grid += this.view.grid < 5 ? 1 : -4
         this.$store.commit('update_view', { grid: grid })
       },
       toggleLinks() {
