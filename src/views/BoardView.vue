@@ -1,7 +1,6 @@
 <template>
   <draggable 
     class="board-view"
-    v-packery="packery"
     :options="{ handle: '.grab' }"
     v-model="sortBoards"
     @start="startDrag"
@@ -14,13 +13,12 @@
       :id="i"
       :key="board.id"
       :self="board"
-      v-on:updateGrid="updateGrid">
+      v-on:updateGrid="$emit('updateGrid')">
     </pin-board>
 
     <div :class="column" v-if="!boards.length">
       <div class="card txt-c">
         You don't have any boards yet! <br>
-        <button @click="$store.state._.create.active = true">Create</button>
       </div>
     </div>
 
@@ -45,30 +43,19 @@
       sortBoards: {
         get()     { return this.boards },
         set(data) { this.$store.commit('update_boards', data) }
-      },
-      packery() {
-        return {
-          scroll: true,
-          transitionDuration: 0,
-          itemSelector: '.pin-board'
-        }
       }
     },
     methods: {
-      updateGrid() { this.$emit('updateGrid', this.$el) },
-
       startDrag() { 
-        this.updateGrid()
-        this.live = setInterval(() => { this.updateGrid() }, 50) 
+        this.$emit('updateGrid')
+        this.live = setInterval(() => { this.$emit('updateGrid') }, 50) 
       },
       endDrag() { 
-        this.updateGrid()
+        this.$emit('updateGrid')
         this.live = false
       }
     },
-    components: {
-      Draggable, PinBoard
-    }
+    components: { Draggable, PinBoard }
   }
 </script>
 

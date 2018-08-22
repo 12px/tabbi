@@ -22,19 +22,26 @@
         This board is empty.
       </div>
 
-      <draggable v-model="self.links" :options="drOpt" @start="dr(1)" @end="dr(0)">
+      <draggable 
+        v-model="self.links"
+        :options="dragOpt"
+        @start="drag(true)" 
+        @end="drag(0)">
 
         <thumb-tack 
           v-for="(tack, key) in self.links" 
-          :key="tack.id" :self="tack"
-          v-show="visible(key)" v-on:editTack="amend(key)">
+          :key="tack.id" 
+          :self="tack"
+          v-show="visible(key)"
+          v-on:editTack="amend(key)">
         </thumb-tack>
 
       </draggable>
 
       <pin-board-editor 
         v-if="edit.active" 
-        :board="id" :item="edit.item"
+        :board="id"
+        :item="edit.item"
         v-on:finished="finished">
       </pin-board-editor>
 
@@ -42,7 +49,8 @@
         <div class="ctr row">
           <div class="bare col is-h txt-c">
             <span v-if="self.links.length > links">
-              {{ show ? 'Hide' : 'Show'}} {{ self.links.length - links }}
+              {{ show ? 'Hide' : 'Show'}} 
+              {{ self.links.length - links }}
             </span>
           </div>
           <div :class="more" @click="show = !show">
@@ -67,7 +75,8 @@
     data() { return { 
       show: false,
       edit: { item: false, active: false },
-      dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
+      dragging: 0, 
+      dragOpt: { handle: '.grab', group: 'tacks' }
     } },
     watch: {
       show:     function() { this.$emit('updateGrid') },
@@ -82,7 +91,7 @@
       links()     { return this.$store.state.view.links }
     },
     methods: {
-      dr(val)      { this.dragging = val },
+      drag(val)    { this.dragging = val },
       finished()   { return this.edit.active = false },
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
       amend(thing) { this.edit.item = thing, this.edit.active = !this.edit.active },

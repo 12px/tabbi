@@ -1,15 +1,25 @@
 <template>
-  <draggable v-model="sortSessions" :options="{ handle: '.grab' }">
+  <draggable 
+    class="session-view"
+    :options="{ handle: '.grab' }"
+    v-model="sortSessions"
+    @start="startDrag"
+    @end="endDrag">
       
-    <pin-board :class="cols"
-      v-for="(session, i) in sessions" 
-      :id="i" :key="session.id" :self="session">
+    <pin-board
+      v-packery-item
+      :class="column"
+      v-for="(session, i) in sessions"
+      :id="i"
+      :key="session.id"
+      :self="session"
+      v-on:updateGrid="$emit('updateGrid')">
     </pin-board>
 
     <div class="col m-0 w-50" v-if="!sessions.length">
       <div class="card txt-c">
         You don't have any sessions yet! <br>
-        Add some with the chrome extension!
+        You'll need the chrome extension to add some!
       </div>
     </div>
 
@@ -21,9 +31,11 @@
   import PinBoard  from '../components/PinBoard.vue'
 
   export default {
+    data() { return { live: false } },
     computed: {
-      view()      { return this.$store.state.view },
-      sessions()    { return this.$store.state.sessions },
+      view()   { return this.$store.state.view },
+      create() { return this.$store.state.create },
+      sessions() { return this.$store.state.sessions },
       column() {
         let c = this.view.grid
         let width = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
@@ -35,13 +47,18 @@
       }
     },
     methods: {
-      showCreator() { this.create.active = true }
+      startDrag() { 
+        this.$emit('updateGrid')
+        this.live = setInterval(() => { this.$emit('updateGrid') }, 50) 
+      },
+      endDrag() { 
+        this.$emit('updateGrid')
+        this.live = false
+      }
     },
-    components: {
-      PinBoard, Draggable
-    }
+    components: { Draggable, PinBoard }
   }
 </script>
 
-<style scoped>
+<style>
 </style>

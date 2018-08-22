@@ -2,9 +2,7 @@
   <aside :class="isOpen">
 
     <a href="#" class="item" @click="togSidebar()">
-      <span class="icon">
-        <icon name="bars" scale="1.2"></icon>
-      </span>
+      <span class="icon"><icon name="bars" scale="1.2"></icon></span>
       <strong class="label logo">pinnd</strong>
     </a>
 
@@ -57,7 +55,6 @@
           <strong class="label">Import</strong>
         </label>
       </div>
-
 
       <side-link :class="footer"
         badge="ellipsis-h" label="Options" 

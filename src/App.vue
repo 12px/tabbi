@@ -6,7 +6,6 @@
       v-on:newBoard="newBoard">
     </side-bar>
 
-
     <div :class="['contain', view.sidebar ? 'open' : 'closed']">
 
       <filter-bar 
@@ -15,20 +14,25 @@
         v-on:updateGrid="updateGrid('boardView')">
       </filter-bar>
 
-      <board-view v-if="view.tab == 'boards'"
-        ref="boardView" 
-        class="row sm" 
+      <board-view v-if="view.tab == 'boards' || filter.active"
+        ref="boardView"
+        class="row sm"
+        v-packery="packery"
         v-on:updateGrid="updateGrid('boardView')">
       </board-view>
 
-      <session-view v-if="view.tab == 'sessions'"
+      <session-view v-if="view.tab == 'sessions' || filter.active"
         ref="sessionView"
-        class="row sm">
+        class="row sm"
+        v-packery="packery"
+        v-on:updateGrid="updateGrid('sessionView')">
       </session-view>
 
       <trash-view v-if="view.tab == 'trash'"
         ref="trashView"
-        class="row sm">
+        class="row sm"
+        v-packery="packery"
+        v-on:updateGrid="updateGrid('trashView')">
       </trash-view>
 
     </div>
@@ -62,17 +66,22 @@
         return `col m-0 ${cols}`
       },
 
-      sortSessions: {
-        get()     { return this.sessions },
-        set(data) { this.$store.commit('update_sessions', data) }
+      packery() {
+        return {
+          scroll: true,
+          transitionDuration: 0,
+          itemSelector: '.pin-board'
+        }
       }
     },
     methods: {
       newBoard() {
         this.$store.commit('update_view', { tab: 'boards' })
         this.$store.commit('create_board')
-        let boards = this.$refs.boardView.$children[0].$children
-        setTimeout(() => boards[boards.length - 1].amend('board'), 100)   
+        this.$nextTick().then(() => {
+          let boards = this.$refs.boardView.$children[0].$children
+          boards[boards.length - 1].amend('board')
+        })
       },
       updateGrid(el) { packeryEvents.$emit('layout', this.$refs[el].$el) }
     },

@@ -1,7 +1,7 @@
 const state = {
 
   meta: {
-    ver:        2,
+    ver:        1,
     linkIndex:  1,
     boardIndex: 2,
     lastBoard:  1,
@@ -37,11 +37,6 @@ const state = {
       key:   "",
       type:  "string",
       active: false
-    },
-
-    create: {
-      active: false,
-      thing:  "board"
     }
   }
 }
