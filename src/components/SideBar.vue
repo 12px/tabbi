@@ -1,5 +1,5 @@
 <template>
-  <aside :class="isOpen">
+  <aside :class="['accent active', isOpen]">
 
     <a href="#" class="item" @click="togSidebar()">
       <span class="icon"><icon name="bars" scale="1.2"></icon></span>
@@ -84,7 +84,7 @@
     computed: {
       config() { return this.$store.state._.cfg },
       inSync() { return this.$store.state.meta.syncData },
-      isOpen() { return ['accent active', { open: this.view.sidebar }] },
+      isOpen() { return { open: this.view.sidebar || this.config.active } },
       header() { return this.view.sidebar ? 'txt-r' : 'txt-c' },
       footer() { return this.$store.state._.cfg.active ? 'active' : '' },
       trashed() {
