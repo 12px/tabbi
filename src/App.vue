@@ -74,14 +74,7 @@
         let boards = this.$refs.boardView.$children[0].$children
         setTimeout(() => boards[boards.length - 1].amend('board'), 100)   
       },
-      updateGrid(el) { 
-        this.$nextTick().then(() => {
-          packeryEvents.$emit('layout', this.$refs[el].$el)
-          this.$nextTick().then(() => {
-            packeryEvents.$emit('layout', this.$refs[el].$el)
-          })
-        })
-      }
+      updateGrid(el) { packeryEvents.$emit('layout', this.$refs[el].$el) }
     },
     created() {
       if (this.$store.state.meta.syncData) {
