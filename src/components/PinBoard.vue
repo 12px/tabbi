@@ -47,7 +47,7 @@
 
       <div class="footer on-h">
         <div class="ctr row">
-          <div class="bare col is-h txt-c">
+          <div class="bare opt col is-h txt-c" @click="show = !show">
             <span v-if="self.links.length > links">
               {{ show ? 'Hide' : 'Show'}} 
               {{ self.links.length - links }}
