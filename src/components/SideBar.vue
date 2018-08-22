@@ -26,7 +26,7 @@
       </side-link>
 
       <side-link :class="active('trash')" 
-        badge="trash-alt" label="Trash" 
+        badge="trash-alt" :label="`Trash (${trashed})`" 
         @click.native="switchTab('trash')">
       </side-link>
     </div>
@@ -86,7 +86,11 @@
       inSync() { return this.$store.state.meta.syncData },
       isOpen() { return ['accent active', { open: this.view.sidebar }] },
       header() { return this.view.sidebar ? 'txt-r' : 'txt-c' },
-      footer() { return this.$store.state._.cfg.active ? 'active' : '' }
+      footer() { return this.$store.state._.cfg.active ? 'active' : '' },
+      trashed() {
+        let trash = this.$store.state.trash
+        return trash.links.length + trash.boards.length
+      }
     },
     methods: {
       active(tab) { return this.view.tab == tab ? 'active' : '' },
