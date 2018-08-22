@@ -18,7 +18,11 @@ const mutations = {
   toggle_creator(state, data) { return state._.create.active = true },
 
   create_board(state, data) {
-    state.boards.push({ id: state.meta.boardIndex, name: data, links: [] })
+    state.boards.unshift({ 
+      id: state.meta.boardIndex, 
+      name: data ? data : '', 
+      links: [] 
+    })
     state.meta.boardIndex += 1
   },
 
@@ -26,8 +30,8 @@ const mutations = {
     let b = data.board ? data.board : 0
     state.boards[b].links.push({  
       id: state.meta.linkIndex, 
-      name: data.name ? data.name : 'New Link',
-      link: data.link ? data.link : '#', 
+      name: data.name ? data.name : '',
+      link: data.link ? data.link : '', 
       tags: data.tags ? data.tags : []
     })
     state.meta.linkIndex += 1
@@ -62,7 +66,7 @@ const mutations = {
     let board = state.boards[data.board]
     let item = board.links[data.item]
     // if not 'empty', trash, otherwise delete
-    if (item.name != 'New Link' || item.link != '#' || item.tags.length) {
+    if (item.name != '' || item.link != '' || item.tags.length) {
       state.trash.links.push({ ...item, board: board.id })
     }
     state.boards[data.board].links.splice(data.item, 1)

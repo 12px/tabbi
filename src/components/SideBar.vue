@@ -11,12 +11,8 @@
     <div style="height: 2em"></div>
 
     <div class="menu">
-      <side-link @click.native="newBoard()"
+      <side-link @click.native="$emit('newBoard')"
         badge="plus-square" label="New Board">
-      </side-link>
-
-      <side-link @click.native="newLink()"
-        badge="plus-circle" label="New Link">
       </side-link>
 
       <div style="height: 2em"></div>
@@ -100,15 +96,6 @@
 
       togSidebar() { 
         this.$store.commit('update_view', { sidebar: !this.view.sidebar }) 
-      },
-
-      newBoard() {
-        this.creator.active = !this.creator.active
-        this.creator.thing = 'board'
-      },
-      newLink() {
-        this.creator.active = !this.creator.active
-        this.creator.thing = 'link'
       },
 
       toggleGrid() { 

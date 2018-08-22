@@ -1,21 +1,36 @@
 <template>
   <div id="pinnd" :class="view.theme">
 
-    <side-bar :view="view" :creator="creator"></side-bar>
+    <side-bar 
+      :view="view" 
+      v-on:newBoard="newBoard">
+    </side-bar>
 
 
     <div :class="['contain', view.sidebar ? 'open' : 'closed']">
 
-      <filter-bar :view="view" :filter="filter"></filter-bar>
+      <filter-bar 
+        :view="view"
+        :filter="filter">
+      </filter-bar>
 
-      <create-new :creator="creator"></create-new>
+      <board-view 
+        ref="boardView" 
+        class="vw row sm" 
+        v-if="view.tab == 'boards'">
+      </board-view>
 
+      <session-view
+        ref="sessionView"
+        class="vw row sm"
+        v-if="view.tab == 'sessions'">
+      </session-view>
 
-      <board-view class="vw row sm" v-if="view.tab == 'boards'"></board-view>
-
-      <session-view class="vw row sm" v-if="view.tab == 'sessions'"></session-view>
-
-      <trash-view class="vw row sm" v-if="view.tab == 'trash'"></trash-view>
+      <trash-view 
+        ref="trashView"
+        class="vw row sm"
+        v-if="view.tab == 'trash'">
+      </trash-view>
 
     </div>
 
@@ -32,7 +47,6 @@
 
   import SideBar   from './components/SideBar.vue'
   import FilterBar from './components/FilterBar.vue'
-  import CreateNew from './components/CreateNew.vue'
 
   export default {
     computed: {
@@ -40,7 +54,6 @@
       trash()    { return this.$store.state.trash },
       sessions() { return this.$store.state.sessions },
       filter()   { return this.$store.state._.filter },
-      creator()  { return this.$store.state._.create },
 
       cols() {
         let c = this.view.grid
@@ -48,11 +61,18 @@
         return `col m-0 ${cols}`
       },
 
-      
       sortSessions: {
         get()     { return this.sessions },
         set(data) { this.$store.commit('update_sessions', data) }
       }
+    },
+    methods: {
+      newBoard() {
+        this.$store.commit('update_view', { tab: 'boards' })
+        this.$store.commit('create_board')
+        let boards = this.$refs.boardView.$children[0].$children
+        setTimeout(() => boards[boards.length - 1].amend('board'), 100)   
+      },
     },
     created() {
       if (this.$store.state.meta.syncData) {
@@ -60,7 +80,7 @@
       }
     },
     components: { 
-      BoardView, SessionView, TrashView, SideBar, FilterBar, CreateNew, 
+      BoardView, SessionView, TrashView, SideBar, FilterBar 
     }
   }
 </script>
