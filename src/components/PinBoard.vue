@@ -70,9 +70,9 @@
       dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
     } },
     watch: {
-      show:      function() { this.$emit('layout') },
-      dragging:  function() { this.$emit('layout') },
-      edit:     { handler() { this.$emit('layout') }, deep: true }
+      show:     function() { this.$emit('updateGrid') },
+      dragging: function() { this.$emit('updateGrid') },
+      edit:    { handler() { this.$emit('updateGrid') }, deep: true }
     },
     computed: {
       more()     { return { 

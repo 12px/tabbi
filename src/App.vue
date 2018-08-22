@@ -11,25 +11,24 @@
 
       <filter-bar 
         :view="view"
-        :filter="filter">
+        :filter="filter"
+        v-on:updateGrid="updateGrid('boardView')">
       </filter-bar>
 
-      <board-view 
+      <board-view v-if="view.tab == 'boards'"
         ref="boardView" 
-        class="vw row sm" 
-        v-if="view.tab == 'boards'">
+        class="row sm" 
+        v-on:updateGrid="updateGrid('boardView')">
       </board-view>
 
-      <session-view
+      <session-view v-if="view.tab == 'sessions'"
         ref="sessionView"
-        class="vw row sm"
-        v-if="view.tab == 'sessions'">
+        class="row sm">
       </session-view>
 
-      <trash-view 
+      <trash-view v-if="view.tab == 'trash'"
         ref="trashView"
-        class="vw row sm"
-        v-if="view.tab == 'trash'">
+        class="row sm">
       </trash-view>
 
     </div>
@@ -47,6 +46,8 @@
 
   import SideBar   from './components/SideBar.vue'
   import FilterBar from './components/FilterBar.vue'
+
+  import { packeryEvents } from 'vue-packery-plugin'
 
   export default {
     computed: {
@@ -73,6 +74,14 @@
         let boards = this.$refs.boardView.$children[0].$children
         setTimeout(() => boards[boards.length - 1].amend('board'), 100)   
       },
+      updateGrid(el) { 
+        this.$nextTick().then(() => {
+          packeryEvents.$emit('layout', this.$refs[el].$el)
+          this.$nextTick().then(() => {
+            packeryEvents.$emit('layout', this.$refs[el].$el)
+          })
+        })
+      }
     },
     created() {
       if (this.$store.state.meta.syncData) {

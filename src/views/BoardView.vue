@@ -1,5 +1,6 @@
 <template>
   <draggable 
+    class="board-view"
     v-packery="packery"
     :options="{ handle: '.grab' }"
     v-model="sortBoards"
@@ -13,7 +14,7 @@
       :id="i"
       :key="board.id"
       :self="board"
-      v-on:layout="layout">
+      v-on:updateGrid="updateGrid">
     </pin-board>
 
     <div :class="column" v-if="!boards.length">
@@ -29,7 +30,6 @@
 <script>
   import Draggable from 'vuedraggable'
   import PinBoard  from '../components/PinBoard.vue'
-  import { packeryEvents } from 'vue-packery-plugin'
 
   export default {
     data() { return { live: false } },
@@ -49,21 +49,20 @@
       packery() {
         return {
           scroll: true,
-          transitionDuration: 10,
+          transitionDuration: 0,
           itemSelector: '.pin-board'
         }
       }
     },
     methods: {
-      showCreator() { this.create.active = true },
-      layout()  { packeryEvents.$emit('layout', this.$el) },
+      updateGrid() { this.$emit('updateGrid', this.$el) },
 
       startDrag() { 
-        this.layout()
-        this.live = setInterval(() => { this.layout() }, 50) 
+        this.updateGrid()
+        this.live = setInterval(() => { this.updateGrid() }, 50) 
       },
       endDrag() { 
-        this.layout()
+        this.updateGrid()
         this.live = false
       }
     },
