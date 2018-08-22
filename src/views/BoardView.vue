@@ -1,9 +1,19 @@
 <template>
-  <draggable v-model="sortBoards" :options="{ handle: '.grab' }">
+  <draggable 
+    v-packery="packery"
+    :options="{ handle: '.grab' }"
+    v-model="sortBoards"
+    @start="StartLiveUpdate"
+    @end="EndLiveUpdate">
       
-    <pin-board :class="column"
-      v-for="(board, i) in boards" 
-      :id="i" :key="board.id" :self="board">
+    <pin-board
+      v-packery-item
+      :class="column"
+      v-for="(board, i) in boards"
+      :id="i"
+      :key="board.id"
+      :self="board"
+      v-on:updateSize="updateSize">
     </pin-board>
 
     <div :class="column" v-if="!boards.length">
@@ -19,12 +29,14 @@
 <script>
   import Draggable from 'vuedraggable'
   import PinBoard  from '../components/PinBoard.vue'
+  import { packeryEvents } from 'vue-packery-plugin'
 
   export default {
+    data() { return { live: false } },
     computed: {
-      view()      { return this.$store.state.view },
-      create()    { return this.$store.state.create },
-      boards()    { return this.$store.state.boards },
+      view()   { return this.$store.state.view },
+      create() { return this.$store.state.create },
+      boards() { return this.$store.state.boards },
       column() {
         let c = this.view.grid
         let width = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
@@ -33,10 +45,24 @@
       sortBoards: {
         get()     { return this.boards },
         set(data) { this.$store.commit('update_boards', data) }
+      },
+      packery() {
+        return {
+          stagger: 30,
+          scroll: true,
+          itemSelector: '.pin-board'
+        }
       }
     },
     methods: {
-      showCreator() { this.create.active = true }
+      showCreator() { this.create.active = true },
+      updateSize()  { packeryEvents.$emit('layout', this.$el) },
+
+      StartLiveUpdate() { this.live = setInterval(() => { this.updateSize() }, 100) },
+      EndLiveUpdate() { 
+        clearInterval(this.live)
+        this.live = false
+      }
     },
     components: {
       Draggable, PinBoard
@@ -44,5 +70,5 @@
   }
 </script>
 
-<style scoped>
+<style>
 </style>

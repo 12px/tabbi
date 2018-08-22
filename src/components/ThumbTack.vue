@@ -55,7 +55,6 @@
       boardName() { return this.board.name ? this.board.name : 'Removed' }
     },
     methods: {
-      oh() { console.log(this.self) },
       filtered() { return this.$$.filtered(this.filter, this.self); }
     }
   }

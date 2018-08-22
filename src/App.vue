@@ -1,21 +1,21 @@
 <template>
-  <div id="pinnd" :class="view.theme" @keyup.escape="$store.dispatch('escape')">
+  <div id="pinnd" :class="view.theme">
 
-    <side-bar :view="view" :menu="menu" :creator="creator"></side-bar>
+    <side-bar :view="view" :creator="creator"></side-bar>
 
 
     <div :class="['contain', view.sidebar ? 'open' : 'closed']">
 
-      <filter-bar :view="view" :menu="menu" :filter="filter"></filter-bar>
+      <filter-bar :view="view" :filter="filter"></filter-bar>
 
       <create-new :creator="creator"></create-new>
 
 
-      <board-view class="row sm" v-if="view.tab == 'boards'"></board-view>
+      <board-view class="vw row sm" v-if="view.tab == 'boards'"></board-view>
 
-      <session-view class="row sm" v-if="view.tab == 'sessions'"></session-view>
+      <session-view class="vw row sm" v-if="view.tab == 'sessions'"></session-view>
 
-      <trash-view class="row sm" v-if="view.tab == 'trash'"></trash-view>
+      <trash-view class="vw row sm" v-if="view.tab == 'trash'"></trash-view>
 
     </div>
 
@@ -37,7 +37,6 @@
   export default {
     computed: {
       view()     { return this.$store.state.view },
-      menu()     { return this.$store.state._.menu },
       trash()    { return this.$store.state.trash },
       sessions() { return this.$store.state.sessions },
       filter()   { return this.$store.state._.filter },

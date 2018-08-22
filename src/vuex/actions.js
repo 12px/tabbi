@@ -1,11 +1,5 @@
 const actions = {
 
-  escape({commit, state}, data) {
-    if (state.view.menu) return commit('toggle_view_menu')
-    if (state.create.active) return commit('toggle_create_new')
-    if (state.view.tab != 'pinnd') return commit('switch_tab', 'pinnd')
-  },
-
   enable_sync({commit, state}, sync) {
     sync.enable(state).then((data) => { 
       if (data.state) {

@@ -75,6 +75,11 @@
       edit: { item: false, active: false },
       dragging: 0, drOpt: { handle: '.grab', group: 'tacks' }
     } },
+    watch: {
+      show:      function() { this.$emit('updateSize') },
+      dragging:  function() { this.$emit('updateSize') },
+      edit:     { handler() { this.$emit('updateSize') }, deep: true }
+    },
     computed: {
       more()     { return { 
         'bare col none txt-c': 1, 'opt': this.self.links.length > this.links } 
