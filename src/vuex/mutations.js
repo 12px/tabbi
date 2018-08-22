@@ -23,8 +23,13 @@ const mutations = {
   },
 
   create_link(state, data) {
-    state.boards[data.board].links.push({  id: state.meta.linkIndex, 
-      name: data.name,  link: data.link, tags: data.tags })
+    let b = data.board ? data.board : 0
+    state.boards[b].links.push({  
+      id: state.meta.linkIndex, 
+      name: data.name ? data.name : 'New Link',
+      link: data.link ? data.link : '#', 
+      tags: data.tags ? data.tags : []
+    })
     state.meta.linkIndex += 1
   },
 
@@ -56,7 +61,10 @@ const mutations = {
   trash_link(state, data) {
     let board = state.boards[data.board]
     let item = board.links[data.item]
-    state.trash.links.push({ ...item, board: board.id })
+    // if not 'empty', trash, otherwise delete
+    if (item.name != 'New Link' || item.link != '#' || item.tags.length) {
+      state.trash.links.push({ ...item, board: board.id })
+    }
     state.boards[data.board].links.splice(data.item, 1)
   },
 

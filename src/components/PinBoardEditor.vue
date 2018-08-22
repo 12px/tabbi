@@ -72,7 +72,6 @@
       trash()   { 
         if (this.item == 'board') this.$store.commit('trash_board', this.board)
         else this.$store.commit('trash_link', { board: this.board, item: this.item })
-        this.$$.toast("Moved to Trash")
         this.finish()
       },
       finish() { 

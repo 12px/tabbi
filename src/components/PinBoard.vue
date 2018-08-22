@@ -48,10 +48,8 @@
           <div :class="more" @click="show = !show">
             <icon name="ellipsis-h"></icon>
           </div>
-          <div class="main col txt-c is-h">
-            <span class="opt">
-              New
-            </span>
+          <div class="main col txt-c is-h" @click="create">
+            <span class="opt">New</span>
           </div>
         </div>
       </div>
@@ -94,13 +92,16 @@
       dr(val)      { this.dragging = val },
       finished()   { return this.edit.active = false },
       filtered()   { return this.$$.filtered(this.filter, this.self, true) },
-      amend(thing)  { this.edit.item = thing, this.edit.active = !this.edit.active },
-      visible(key) { if (this.edit.active) return false
+      amend(thing) { this.edit.item = thing, this.edit.active = !this.edit.active },
+      openBoard()  { return this.$$.openAll(this.self.links) },
+      visible(key) { 
+        if (this.edit.active) return false
         return this.show || key < this.links || this.filter.active || this.dragging
       },
-      openBoard()  { 
-        return this.$$.openAll(this.self.links, this.$toast, this.$dialog) 
-      },
+      create() {
+        this.$store.commit('create_link', { board: this.id })
+        this.amend(this.self.links.length - 1)
+      }
     },
     components: { ThumbTack, PinBoardEditor, Draggable }
   }

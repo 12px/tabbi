@@ -75,7 +75,7 @@ let pd_util = {
   },
 
   // link opener
-  openAll(links, alert, confirm) {
+  openAll(links) {
     let allow = "You'll need to allow popups to use this feature!";
     let prefix = `You're trying to open ${links.length} links`;
     let tooMany = `${prefix}, try refining your search.`;
