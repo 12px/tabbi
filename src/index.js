@@ -45,15 +45,20 @@ Vue.config.productionTip = false
 // initialize the app
 async function initializeApp() {
   // get state from storage, if any
-  const loaded = await LocalForage.getItem('state')
-  let data = loaded ? {...state, ...loaded} : state
+  const local = await LocalForage.getItem('state')
 
-  // don't load local
-  data._ = state._
+  // if storage, merge it
+  if (local) {
+    state.boards = local.boards
+    state.sessions = local.sessions
+    state.trash = local.trash
+    for (var opt in local.meta) state.meta[opt] = local.meta[opt]
+    for (var opt in local.view) state.view[opt] = local.view[opt]
+  }
 
   // set up store
   const store = new Vuex.Store({ 
-    state: data, mutations, actions, plugins: [persist]
+    state, mutations, actions, plugins: [persist]
   })
 
   // define app
