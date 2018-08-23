@@ -33,7 +33,9 @@
             <icon name="upload"></icon> Import Bookmarks
           </label>
           <div class="txt-c">
-            Upload a .html 
+            <small>
+              Upload a bookmarks file (html).
+            </small>
           </div>
         </div>
 
