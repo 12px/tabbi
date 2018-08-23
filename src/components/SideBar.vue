@@ -1,5 +1,5 @@
 <template>
-  <aside :class="['accent active', isOpen]">
+  <aside :class="['accent active', { open: this.view.sidebar }]">
 
     <a href="#" class="item" @click="togSidebar()">
       <span class="icon"><icon name="bars" scale="1.2"></icon></span>
@@ -32,33 +32,9 @@
     </div>
 
     <div class="foot">
-      <div class="settings" v-if="config.active">
-
-        <side-link @click.native="toggleGrid()"
-          badge="columns" :label="`Grid: ${view.grid}`">
-        </side-link>
-
-        <side-link @click.native="toggleLinks()"
-          badge="th-list" :label="`Links: ${view.links}`">
-        </side-link>
-
-        <side-link @click.native="toggleSync()"
-          :badge="inSync ? 'sync-alt' : 'exclamation-circle'" 
-          :label="`Sync: ${inSync ? 'On' : 'Off'}`">
-        </side-link>
-
-        <input id="import" type="file" @change="loaded">
-        <label class="opt item" for="import" alt="Import Bookmarks">
-          <span class="icon">
-            <icon name="upload" scale="1.2"></icon>
-          </span>
-          <strong class="label">Import</strong>
-        </label>
-      </div>
-
       <side-link :class="footer"
         badge="ellipsis-h" label="Options" 
-        @click.native="togCfg()">
+        @click.native="togInfo()">
       </side-link>
     </div>
 
@@ -82,11 +58,9 @@
   export default {
     props: ['view', 'menu', 'creator'],
     computed: {
-      config() { return this.$store.state._.cfg },
       inSync() { return this.$store.state.meta.syncData },
-      isOpen() { return { open: this.view.sidebar || this.config.active } },
       header() { return this.view.sidebar ? 'txt-r' : 'txt-c' },
-      footer() { return this.$store.state._.cfg.active ? 'active' : '' },
+      footer() { return this.view.info ? 'active' : '' },
       trashed() {
         let trash = this.$store.state.trash
         return trash.links.length + trash.boards.length
@@ -99,27 +73,9 @@
         this.$store.commit('update_view', { sidebar: !this.view.sidebar }) 
       },
 
-      toggleGrid() { 
-        let grid = this.view.grid
-        grid += this.view.grid < 5 ? 1 : -4
-        this.$store.commit('update_view', { grid: grid })
-      },
-      toggleLinks() {
-        this.$store.commit('update_view', { 
-          links: this.view.links == 5 ? 10: this.view.links == 10 ? 25 : 5 
-        })
-      },
-
       switchTab(tab) { this.$store.commit('update_view', { tab: tab }) },
 
-      toggleSync() {
-        let sync = this.$store.state.meta.syncData
-        this.$store.dispatch(sync ? 'disable_sync' : 'enable_sync', this.$sync)
-      },
-
-      loaded(e) { this.$store.dispatch('parse_bookmarks', e) },
-
-      togCfg() { this.config.active = !this.config.active }
+      togInfo() { this.view.info = !this.view.info }
     },
     components: { 'side-link': SideLink }
   }

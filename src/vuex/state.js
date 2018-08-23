@@ -15,7 +15,8 @@ const state = {
     links:   5,
     sidebar: true,
     tab:     "boards",
-    theme:   "day"
+    theme:   "day",
+    info:    true
   },
 
   boards:   [ { id: 1, name: "Inbox", links: [] } ],
@@ -30,9 +31,6 @@ const state = {
 
   // local
   _: {
-    cfg: {
-      active: false
-    },
     filter: {
       key:   "",
       type:  "string",

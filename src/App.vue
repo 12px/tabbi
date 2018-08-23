@@ -14,6 +14,8 @@
         v-on:updateGrid="updateGrid('boardView')">
       </filter-bar>
 
+      <info-view v-if="view.info"></info-view>
+
       <board-view v-if="view.tab == 'boards' || filter.active"
         ref="boardView"
         class="row sm"
@@ -47,9 +49,10 @@
   import BoardView   from './views/BoardView.vue'
   import SessionView from './views/SessionView.vue'
   import TrashView   from './views/TrashView.vue'
+  import InfoView    from './views/InfoView.vue'
 
-  import SideBar   from './components/SideBar.vue'
-  import FilterBar from './components/FilterBar.vue'
+  import SideBar     from './components/SideBar.vue'
+  import FilterBar   from './components/FilterBar.vue'
 
   import { packeryEvents } from 'vue-packery-plugin'
 
@@ -91,7 +94,7 @@
       }
     },
     components: { 
-      BoardView, SessionView, TrashView, SideBar, FilterBar 
+      BoardView, SessionView, TrashView, InfoView, SideBar, FilterBar 
     }
   }
 </script>
