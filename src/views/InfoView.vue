@@ -8,7 +8,7 @@
         </div>
 
         <div class="option">
-          <strong>Columns:</strong>
+          <strong>Grid Columns:</strong>
           <select :value="view.grid" @change="setGrid">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="option">
-          <strong>Links:</strong>
+          <strong>Hide Links After:</strong>
           <select :value="view.links" @change="setLinks">
             <option value="5">5</option>
             <option value="10">10</option>
