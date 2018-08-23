@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class="wide col">
+    <div class="col about">
       <h5 class="main m-0">hello world.</h5>
 
       <p>Welcome to <strong class="main">pnnd</strong>, a new tab replacement.</p>
@@ -64,8 +64,10 @@
         <strong>Sessions take it to the next level</strong> - using the chrome extension, you can save all of your tabs at once into a new board, called a "session". You can easily re-open all of theses tabs at a later date, carrying on where you left off! Need to leave in the middle of research? Save your tabs as a session, and come back to them later. 
       </p>
 
-      <a class="btn otln" href="https://github.com/12px/pinnd">View On Github</a> <br>
+      <a class="btn otln" href="https://github.com/12px/pinnd">View On Github</a>
       <a class="btn otln" href="https://github.com/12px/pinnd">Chrome Extension</a>
+
+      <a class="nice close" href="#" @click="close">Close</a>
     </div>
 
   </div>
@@ -79,6 +81,7 @@
       badge()  { return this.synced ? 'sync-alt' : 'exclamation-circle' }
     },
     methods: {
+      close()      { this.view.info = false },
       getImport(e) { this.$store.dispatch('parse_bookmarks', e) },
 
       setGrid(e)   { this.$store.commit('update_view', { grid:  e.target.value }) },
@@ -113,6 +116,12 @@
     font-weight: 400;
     text-transform: capitalize;
   }
+  .about .btn {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0 2rem;
+    margin-right: 1em;
+  }
   .fa-icon {
     margin-top: 4px;
     margin-right: .5em;
@@ -120,5 +129,8 @@
   }
   .btn .fa-icon {
     margin-top: 8px;
+  }
+  .close {
+    border: none;
   }
 </style>
