@@ -1,5 +1,5 @@
 <template>
-  <div id="pinnd" :class="view.theme">
+  <div id="pinnd" :class="view.theme" @keyup.escape="$store.dispatch('esc')">
 
     <side-bar 
       :view="view" 

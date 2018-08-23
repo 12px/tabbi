@@ -1,5 +1,12 @@
 const actions = {
 
+  esc({commit, state}) {
+    if (state._.filter.active) {
+      return commit('update_local', { filter: { key: '', active: false } } )
+    }
+    if (state.view.info) return commit('update_view', { info: false })
+  },
+
   enable_sync({commit, state}, sync) {
     sync.enable(state).then((data) => { 
       if (data.state) {

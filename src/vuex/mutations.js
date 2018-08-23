@@ -4,6 +4,8 @@ const mutations = {
 
   refresh(state) { return state = state },
 
+  update_local(state, data) { return state._ = { ...state._, ...data } },
+
   update_meta(state, data) { return state.meta = { ...state.meta, ...data } },
 
   update_view(state, data) { return state.view = { ...state.view, ...data } },
