@@ -2,7 +2,7 @@
   <div id="filterBar">
     <div class="ctr row sm">
       <div class="filter col">
-        <input v-model="filter.key" type="text" id="filter" v-focus
+        <input type="text" id="filter" v-focus
           placeholder="Type to filter / search" @keyup="runFilter">
         <div class="main hint txt-r p-r">
           <strong>:key</strong> - searches boards,

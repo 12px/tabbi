@@ -37,36 +37,36 @@ body {
     font-size: 0.8em;
   }
 
+  .row { margin: 0; }
+  .col { padding: 0; }
+
   .header {
     margin-bottom: 1em;
     border-bottom: 1px solid @color-border;
     .fa-icon {
       margin-top: -4px;
     }
+    h6 {
+      font-weight: 400;
+    }
   }
   .header, .footer {
-    .row { margin: 0; }
-    .col { padding: 0; }
     .fa-icon + strong {
       margin-bottom: -1px;
       vertical-align: bottom;
       display: inline-block;
     }
   }
+  .empty {
+    padding: 1em 0;
+  }
 }
 
 .tag {
-  font-size: 0.8em;
-  padding: 0.25em 1em;
-  margin: 0 .5em .5em 0;
-  letter-spacing: 0.1em;
-  background: @color-border;
-  border-radius: @border-radius;
-
-  .fa-icon {
-    cursor: pointer;
-    margin-left: 0.5em;
-  }
+  font-size: 0.7em;
+  vertical-align: top;
+  display: inline-block;
+  margin: -0.3em 0.5em 0.75em 0;
 }
 
 .sortable-ghost .card { border-color: @color-main; }

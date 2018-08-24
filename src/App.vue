@@ -1,41 +1,49 @@
 <template>
-  <div id="pinnd" :class="view.theme" @keyup.escape="$store.dispatch('esc')">
+  <div id="pinnd" 
+    :class="view.theme" 
+    @keyup.escape="$store.dispatch('esc')">
 
     <side-bar 
       :view="view" 
-      v-on:newBoard="newBoard">
+      @newBoard="newBoard()">
     </side-bar>
 
-    <div :class="['contain', view.sidebar ? 'open' : 'closed']">
+    <div :class="content">
 
       <filter-bar 
         :view="view"
         :filter="filter"
-        v-on:updateGrid="updateGrid('boardView')">
+        @shuffle="shuffle('boardPanel')">
       </filter-bar>
 
-      <info-view v-if="view.info"></info-view>
+      <config-panel 
+        v-if="view.info">
+      </config-panel>
 
-      <board-view v-if="view.tab == 'boards' || filter.active"
-        ref="boardView"
-        class="row sm"
-        v-packery="packery"
-        v-on:updateGrid="updateGrid('boardView')">
-      </board-view>
+      <content-panel :name="'board'"
+        v-if="view.tab == 'boards' || filter.active"
+        ref="boardPanel"
+        :boards="boards"
+        :columns="columns"
+        @shuffle="shuffle('boardPanel')">
+      </content-panel>
 
-      <session-view v-if="view.tab == 'sessions' || filter.active"
-        ref="sessionView"
-        class="row sm"
-        v-packery="packery"
-        v-on:updateGrid="updateGrid('sessionView')">
-      </session-view>
+      <content-panel :name="'session'"
+        v-if="view.tab == 'sessions' || filter.active"
+        ref="sessionPanel"
+        :boards="sessions"
+        :columns="columns"
+        @shuffle="shuffle('sessionPanel')">
+      </content-panel>
 
-      <trash-view v-if="view.tab == 'trash'"
-        ref="trashView"
-        class="row sm"
-        v-packery="packery"
-        v-on:updateGrid="updateGrid('trashView')">
-      </trash-view>
+      <content-panel :name="'trash'"
+        v-if="view.tab == 'trash'"
+        ref="trashPanel"
+        :boards="trash.boards"
+        :trash="trash"
+        :columns="columns"
+        @shuffle="shuffle('trashPanel')">
+      </content-panel>
 
     </div>
 
@@ -46,13 +54,10 @@
 </template>
 
 <script>
-  import BoardView   from './views/BoardView.vue'
-  import SessionView from './views/SessionView.vue'
-  import TrashView   from './views/TrashView.vue'
-  import InfoView    from './views/InfoView.vue'
-
-  import SideBar     from './components/SideBar.vue'
-  import FilterBar   from './components/FilterBar.vue'
+  import SideBar      from './components/SideBar.vue'
+  import FilterBar    from './components/FilterBar.vue'
+  import ConfigPanel  from './components/ConfigPanel.vue'
+  import ContentPanel from './components/ContentPanel.vue'
 
   import { packeryEvents } from 'vue-packery-plugin'
 
@@ -60,21 +65,19 @@
     computed: {
       view()     { return this.$store.state.view },
       trash()    { return this.$store.state.trash },
+      boards()   { return this.$store.state.boards },
       sessions() { return this.$store.state.sessions },
       filter()   { return this.$store.state._.filter },
+      content()  { return ['contain', this.view.sidebar ? 'open' : 'closed'] },
 
-      cols() {
-        let c = this.view.grid
-        let cols = c > 3 ? 'w-25' : c > 2 ? 'w-33' : c > 1 ? 'w-50' : 'w-100'
-        return `col m-0 ${cols}`
-      },
-
-      packery() {
-        return {
-          scroll: true,
-          transitionDuration: 0,
-          itemSelector: '.pin-board'
-        }
+      columns() {
+        let width, cols = this.view.grid
+        if (cols == 5) width = 'w-20'
+        if (cols == 4) width = 'w-25'
+        if (cols == 3) width = 'w-33'
+        if (cols == 2) width = 'w-50'
+        if (cols == 1) width = 'w-100'
+        return `col m-0 ${width}`
       }
     },
     methods: {
@@ -82,11 +85,11 @@
         this.$store.commit('update_view', { tab: 'boards' })
         this.$store.commit('create_board')
         this.$nextTick().then(() => {
-          let boards = this.$refs.boardView.$children[0].$children
+          let boards = this.$refs.boardPanel.$children[0].$children
           boards[boards.length - 1].amend('board')
         })
       },
-      updateGrid(el) { packeryEvents.$emit('layout', this.$refs[el].$el) }
+      shuffle(el) { packeryEvents.$emit('layout', this.$refs[el].$el) }
     },
     created() {
       if (this.$store.state.meta.syncData) {
@@ -94,7 +97,7 @@
       }
     },
     components: { 
-      BoardView, SessionView, TrashView, InfoView, SideBar, FilterBar 
+      SideBar, FilterBar, ConfigPanel, ContentPanel
     }
   }
 </script>

@@ -67,15 +67,12 @@
       }
     },
     methods: {
-      active(tab) { return this.view.tab == tab ? 'active' : '' },
+      active(tab)     { return this.view.tab == tab ? 'active' : '' },
+      updateView(obj) { this.$store.commit('update_view', obj) },
 
-      togSidebar() { 
-        this.$store.commit('update_view', { sidebar: !this.view.sidebar }) 
-      },
-
-      switchTab(tab) { this.$store.commit('update_view', { tab: tab }) },
-
-      togInfo() { this.view.info = !this.view.info }
+      togSidebar()   { this.updateView({ sidebar: !this.view.sidebar }) },
+      switchTab(tab) { this.updateView({ tab: tab }) },
+      togInfo()      { this.updateView({ info: !this.view.info }) }
     },
     components: { 'side-link': SideLink }
   }
