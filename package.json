@@ -7,7 +7,8 @@
   "author": "12px <dalton@12px.io>",
   "license": "MIT",
   "scripts": {
-    "start": "poi"
+    "local": "poi",
+    "build": "poi build"
   },
   "dependencies": {
     "localforage": "^1.7.2",
