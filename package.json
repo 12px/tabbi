@@ -1,6 +1,6 @@
 {
   "name": "pinnd",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Bookmarks, simple.",
   "main": "src/index.js",
   "repository": "https://github.com/12px/pinnd.git",
