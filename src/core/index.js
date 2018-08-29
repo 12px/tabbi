@@ -1,7 +1,6 @@
 // import dependencies
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuePackeryPlugin from 'vue-packery-plugin'
 import { version } from '../../package.json'
 
 // import app component
@@ -15,7 +14,6 @@ import utility from './tools/utility'
 Vue.use(Vuex)
 Vue.use(sync)
 Vue.use(utility)
-Vue.use(VuePackeryPlugin)
 
 // set up store
 import state from './vuex/state'

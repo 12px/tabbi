@@ -17,8 +17,7 @@
 
       <filter-bar 
         :view="view"
-        :filter="filter"
-        @shuffle="shuffle('boardPanel')">
+        :filter="filter">
       </filter-bar>
 
       <config-panel 
@@ -29,16 +28,14 @@
         v-if="view.tab == 'boards' || filter.active"
         ref="boardPanel"
         :boards="boards"
-        :columns="columns"
-        @shuffle="shuffle('boardPanel')">
+        :columns="columns">
       </content-panel>
 
       <content-panel :name="'session'"
         v-if="view.tab == 'sessions' || filter.active"
         ref="sessionPanel"
         :boards="sessions"
-        :columns="columns"
-        @shuffle="shuffle('sessionPanel')">
+        :columns="columns">
       </content-panel>
 
       <content-panel :name="'trash'"
@@ -46,8 +43,7 @@
         ref="trashPanel"
         :boards="trash.boards"
         :trash="trash"
-        :columns="columns"
-        @shuffle="shuffle('trashPanel')">
+        :columns="columns">
       </content-panel>
 
     </div>
@@ -64,8 +60,6 @@
   import SplashPanel  from './components/SplashPanel.vue'
   import ConfigPanel  from './components/ConfigPanel.vue'
   import ContentPanel from './components/ContentPanel.vue'
-
-  import { packeryEvents } from 'vue-packery-plugin'
 
   export default {
     computed: {
@@ -95,8 +89,7 @@
           let boards = this.$refs.boardPanel.$children[0].$children
           boards[boards.length - 1].amend('board')
         })
-      },
-      shuffle(el) { packeryEvents.$emit('layout', this.$refs[el].$el) }
+      }
     },
     created() {
       if (this.$store.state.meta.syncData) {

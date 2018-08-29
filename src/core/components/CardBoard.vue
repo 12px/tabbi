@@ -93,11 +93,6 @@
         edit: { item: false, active: false },
       }
     },
-    watch: {
-      show: { handler() { this.$emit('shuffle') } },
-      edit: { handler() { this.$emit('shuffle') }, deep: true },
-      drag: { handler() { this.$emit('shuffle') }, deep: true }
-    },
     computed: {
       filter()    { return this.$store.state._.filter },
       links()     { return this.$store.state.view.links },

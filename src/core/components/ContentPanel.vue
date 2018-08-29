@@ -13,8 +13,7 @@
       :class="columns"
       :self="trash"
       :trash="trash"
-      :id="'links'"
-      @shuffle="$emit('shuffle')">
+      :id="'links'">
     </card-board>
 
     <card-board
@@ -23,8 +22,7 @@
       v-for="(board, i) in boards"
       :id="i" :key="board.id"
       :self="board"
-      :trash="trash"
-      @shuffle="$emit('shuffle')">
+      :trash="trash">
     </card-board>
 
     <div v-if="boards && !boards.length && !trash" 
@@ -63,7 +61,6 @@
     methods: {
       handle(drag) {
         this.drag = drag
-        this.$emit('shuffle')
         if (!drag) clearInterval(this.timer)
         else this.timer = setInterval(() => this.$emit('shuffle'), 50)
       }
