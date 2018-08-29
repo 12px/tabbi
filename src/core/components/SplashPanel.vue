@@ -1,13 +1,13 @@
 <template>
-  <div class="splash-view accent">
+  <div class="splash-view">
     <div class="wrap">
 
       <div class="row ctr">
         <div class="col none">
-          <h1 class="m-0">pinnd</h1>
+          <h1 class="main m-0">pinnd</h1>
         </div>
         <div class="col">
-          <h5 class="m-0">your (new) new tab</h5>
+          <h5 class="main m-0">your (new) new tab</h5>
         </div>
       </div>
 
@@ -48,7 +48,9 @@
               </li>
               <li>
                 <strong>Filtering</strong> by Title, Tag, or Board. <br>
-                Hit 'Enter' to open all visible links you've filtered.
+                Hit 'Enter' to open all visible links you've filtered. <br>
+                <br>
+                <code>:key</code> filters boards - <code>#key</code> filters tags
               </li>
             </ul>
           </div>
