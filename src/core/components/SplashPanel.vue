@@ -3,12 +3,13 @@
     <div class="wrap">
 
       <div class="row ctr">
-        <div class="col none">
+        <div class="col none txt-c">
           <h1 class="main m-0">pinnd</h1>
         </div>
-        <div class="col">
+        <div class="col none txt-c">
           <h5 class="main m-0">your (new) new tab</h5>
         </div>
+        <div class="col"></div>
       </div>
 
       <div class="row">
