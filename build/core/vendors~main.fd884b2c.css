@@ -1,0 +1,1 @@
+.fa-icon{display:inline-block;fill:currentColor}.fa-flip-horizontal{transform:scaleX(-1)}.fa-flip-vertical{transform:scaleY(-1)}.fa-spin{animation:fa-spin 1s 0s infinite linear}.fa-inverse{color:#fff}.fa-pulse{animation:fa-spin 1s infinite steps(8)}@keyframes fa-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
