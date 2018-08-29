@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuePackeryPlugin from 'vue-packery-plugin'
+import { version } from '../../package.json'
 
 // import app component
 import App from './App.vue'
@@ -65,6 +66,7 @@ async function initializeApp() {
   var app = new Vue({
     store,
     el: '#app',
+    data: { version },
     render: h => h(App)
   })
 }

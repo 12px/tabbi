@@ -70,6 +70,10 @@
       <a class="btn otln" href="https://github.com/12px/pinnd">Chrome Extension</a>
 
       <a class="nice close" href="#" @click="close">Close</a>
+
+      <div class="mute">
+        <small>Pinnd v{{ $root.version }}, by <a href="https://12px.io">12px</a></small>
+      </div>
     </div>
 
   </div>
