@@ -8,8 +8,8 @@
   "license": "MIT",
   "scripts": {
     "local": "poi",
-    "build": "poi build",
-    "deploy": "git subtree push --prefix build/core origin gh-pages"
+    "build:app": "poi build",
+    "build": "npm run build:app"
   },
   "dependencies": {
     "localforage": "^1.7.2",
