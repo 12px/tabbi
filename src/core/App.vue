@@ -8,7 +8,12 @@
       @newBoard="newBoard()">
     </side-bar>
 
-    <div :class="content">
+    <splash-panel
+      v-if="view.info"
+      :class="content">
+    </splash-panel>
+
+    <div :class="content" v-if="!view.info">
 
       <filter-bar 
         :view="view"
@@ -17,7 +22,7 @@
       </filter-bar>
 
       <config-panel 
-        v-if="view.info">
+        v-if="config">
       </config-panel>
 
       <content-panel :name="'board'"
@@ -56,6 +61,7 @@
 <script>
   import SideBar      from './components/SideBar.vue'
   import FilterBar    from './components/FilterBar.vue'
+  import SplashPanel  from './components/SplashPanel.vue'
   import ConfigPanel  from './components/ConfigPanel.vue'
   import ContentPanel from './components/ContentPanel.vue'
 
@@ -67,6 +73,7 @@
       trash()    { return this.$store.state.trash },
       boards()   { return this.$store.state.boards },
       sessions() { return this.$store.state.sessions },
+      config()   { return this.$store.state._.config },
       filter()   { return this.$store.state._.filter },
       content()  { return ['contain', this.view.sidebar ? 'open' : 'closed'] },
 
@@ -97,7 +104,7 @@
       }
     },
     components: { 
-      SideBar, FilterBar, ConfigPanel, ContentPanel
+      SideBar, FilterBar, SplashPanel, ConfigPanel, ContentPanel
     }
   }
 </script>

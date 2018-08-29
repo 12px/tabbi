@@ -31,6 +31,7 @@ const state = {
 
   // local
   _: {
+    config: false,
     filter: {
       key:   "",
       type:  "string",

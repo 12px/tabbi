@@ -15,26 +15,38 @@
 
       <div style="height: 2em"></div>
 
-      <side-link :class="active('boards')" 
+      <side-link 
+        :class="{ active: active('boards') }" 
         badge="thumbtack" label="Boards" 
         @click.native="switchTab('boards')">
       </side-link>
 
-      <side-link :class="active('sessions')" 
+      <side-link 
+        :class="{ active: active('sessions') }" 
         badge="book-open" label="Sessions" 
         @click.native="switchTab('sessions')">
       </side-link>
 
-      <side-link :class="active('trash')" 
+      <side-link 
+        :class="{ active: active('trash') }" 
         badge="trash-alt" :label="`Trash (${trashed})`" 
         @click.native="switchTab('trash')">
+      </side-link>
+
+      <div style="height: 2em"></div>
+
+      <side-link 
+        :class="{ active: view.info }"
+        badge="info-circle" label="Info" 
+        @click.native="togInfo()">
       </side-link>
     </div>
 
     <div class="foot">
-      <side-link :class="footer"
+      <side-link 
+        :class="{ active: config && !view.info }"
         badge="ellipsis-h" label="Options" 
-        @click.native="togInfo()">
+        @click.native="togConfig()">
       </side-link>
     </div>
 
@@ -58,21 +70,25 @@
   export default {
     props: ['view', 'menu', 'creator'],
     computed: {
+      config() { return this.$store.state._.config },
       inSync() { return this.$store.state.meta.syncData },
       header() { return this.view.sidebar ? 'txt-r' : 'txt-c' },
-      footer() { return this.view.info ? 'active' : '' },
       trashed() {
         let trash = this.$store.state.trash
         return trash.links.length + trash.boards.length
       }
     },
     methods: {
-      active(tab)     { return this.view.tab == tab ? 'active' : '' },
-      updateView(obj) { this.$store.commit('update_view', obj) },
+      active(tab)     { return this.view.tab == tab && !this.view.info },
+      update(x, obj)  { 
+        this.$store.commit('update_' + x, obj) 
+        if (obj.info == null && this.view.info) this.togInfo()
+      },
 
-      togSidebar()   { this.updateView({ sidebar: !this.view.sidebar }) },
-      switchTab(tab) { this.updateView({ tab: tab }) },
-      togInfo()      { this.updateView({ info: !this.view.info }) }
+      togSidebar()   { this.update('view',  { sidebar: !this.view.sidebar }) },
+      switchTab(tab) { this.update('view',  { tab: tab }) },
+      togInfo()      { this.update('view',  { info: !this.view.info }) },
+      togConfig()    { this.update('local', { config: !this.config }) }
     },
     components: { 'side-link': SideLink }
   }
