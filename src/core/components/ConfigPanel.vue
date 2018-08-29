@@ -99,12 +99,6 @@
     font-weight: 400;
     text-transform: capitalize;
   }
-  .about .btn {
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0 2rem;
-    margin-right: 1em;
-  }
   .fa-icon {
     margin-top: 4px;
     margin-right: .5em;
