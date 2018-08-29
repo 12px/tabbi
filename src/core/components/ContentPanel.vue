@@ -3,7 +3,6 @@
     :class="`row sm ${name}-view`"
     :options="{ handle: '.grab' }"
     v-model="boards"
-    v-packery="packery"
     @start="handle(true)"
     @end="handle(false)">
 
@@ -11,7 +10,6 @@
 
     <card-board
       v-if="trash"
-      v-packery-item
       :class="columns"
       :self="trash"
       :trash="trash"
@@ -21,7 +19,6 @@
 
     <card-board
       v-if="boards && boards.length"
-      v-packery-item
       :class="columns"
       v-for="(board, i) in boards"
       :id="i" :key="board.id"
@@ -30,8 +27,7 @@
       @shuffle="$emit('shuffle')">
     </card-board>
 
-    <div v-if="boards && !boards.length && !trash"
-      v-packery-item 
+    <div v-if="boards && !boards.length && !trash" 
       class="col none w-50">
       <div class="card txt-c">
         <span v-if="name == 'board'">
