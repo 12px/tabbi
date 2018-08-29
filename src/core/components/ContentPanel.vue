@@ -1,6 +1,6 @@
 <template>
   <draggable
-    :class="`row sm ${name}-view`"
+    :class="`content row sm ${name}-view`"
     :options="{ handle: '.grab' }"
     v-model="boards"
     @start="handle(true)"
@@ -49,12 +49,7 @@
     data() { 
       return { 
         drag: false, 
-        timer: null,
-        packery: { 
-          scroll: true,
-          transitionDuration: 0,
-          itemSelector: '.card-board'
-        }
+        timer: null
       } 
     },
     props: ['name', 'columns', 'boards', 'trash'],
