@@ -64,7 +64,7 @@
     },
     methods: {
       handleOpt() { return this.$emit(this.item ? 'editItem' : 'remItem') },
-      filtered()  { return this.$$.filtered(this.filter, this.self) }
+      filtered()  { return this.$filtered(this.filter, this.self) }
     }
   }
 </script>

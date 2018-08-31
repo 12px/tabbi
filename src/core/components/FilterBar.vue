@@ -42,7 +42,7 @@
             for (var i = 0; i < board.links.length; i++) {
               let link = board.links[i];
               let self = byBoard ? board : link;
-              if (!this.$$.filtered(this.filter, self, byBoard)) {
+              if (!this.$filtered(this.filter, self, byBoard)) {
                 result.push(link.link)
               }
             }

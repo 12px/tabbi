@@ -103,7 +103,7 @@
     },
     methods: {
       finished()   { return this.edit.active = false },
-      filtered()   { return this.$$.filtered(this.filter, this.self, true) },
+      filtered()   { return this.$filtered(this.filter, this.self, true) },
       amend(thing) { this.edit.item = thing, this.edit.active = !this.edit.active },
       handleOpt()  { return this.trash ? this.restore() : this.openAll() },
       openAll()    { return this.$$.openAll(this.self.links) },

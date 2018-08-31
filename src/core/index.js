@@ -8,11 +8,13 @@ import App from './App.vue'
 
 // import utilities
 import sync from './tools/sync'
+import filtered from './tools/filtered'
 import utility from './tools/utility'
 
 // apply plugins
 Vue.use(Vuex)
 Vue.use(sync)
+Vue.use(filtered)
 Vue.use(utility)
 
 // set up store
