@@ -1,13 +1,13 @@
 <template>
-  <div class="splash-view">
+  <div class="splash-view accent panel">
     <div class="wrap">
 
       <div class="row ctr">
         <div class="col none txt-c">
-          <h1 class="main m-0">pinnd</h1>
+          <h1 class="m-0">pinnd</h1>
         </div>
         <div class="col none txt-c">
-          <h5 class="main m-0">your (new) new tab</h5>
+          <h5 class="m-0">your (new) new tab</h5>
         </div>
         <div class="col"></div>
       </div>
@@ -37,44 +37,52 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="header">
-          <h6>Features</h6>
-        </div>
-        <div class="row">
-          <div class="col">
+      <div class="row">
+        <div class="col w-75 m-0">
+          <div class="card">
+            <div class="header">
+              <h6>Features</h6>
+            </div>
             <ul>
               <li>
                 <strong>Bookmark Sorting</strong> into boards and tags.
               </li>
               <li>
-                <strong>Filtering</strong> by Title, Tag, or Board. <br>
-                Hit 'Enter' to open all visible links you've filtered. <br>
-                <br>
+                <strong>Filtering</strong> by Title, Tag, or Board.
+                <em>Hit 'Enter' to open all visible links you've filtered - </em>
                 <code>:key</code> filters boards - <code>#key</code> filters tags
               </li>
-            </ul>
-          </div>
-          <div class="col">
-            <ul>
               <li>
-                <strong>Session Saving</strong> will save all of your open tabs into a new session board, for re-visiting later. <br>
-                (Extension Required)
+                <strong>Session Saving</strong> will save all of your open tabs into a new session board, for re-visiting later. (Extension Required)
               </li>
             </ul>
           </div>
+        </div>
+        <div class="col m-0">
+          <h3 class="m-b">More</h3>
+          <ul>
+            <li>
+              <a href="https://github.com/12px/pinnd" class="btn otln">
+                View On Github
+              </a>
+            </li>
+            <li>
+              <a href="#" class="btn otln">Chrome Store</a>
+            </li>
+            <li>
+              <a href="https://github.com/12px/pinnd/issues" class="btn otln">
+                Bug / Request?
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <div class="ctr row m-t">
-        <div class="col">
-          <a href="https://github.com/12px/pinnd" class="btn otln">Github</a>
-          <a href="#" class="btn otln">Chrome</a>
-        </div>
-        <div class="col none">
+      <div class="row m-t">
+        <div class="col txt-c">
           <button @click="$store.commit('update_view', { info: false })">
-            Get Started
-          </button>  
+            Go To The App
+          </button>
         </div>
       </div>
 
@@ -96,6 +104,7 @@
   .wrap {
     width: 100%;
     max-width: 800px;
+    margin: 0 auto;
   }
   .accent {
     opacity: 0.95;
@@ -117,14 +126,9 @@
     font-size: 0.75em;
   }
   .btn, button {
+    margin: 0;
     font-weight: 700;
     padding: 0 2rem;
-    margin: 0;
-  }
-  .btn {
-    margin-right: 5px;
-    font-size: 1rem;
-  }
-  button {
+    font-size: 1.3rem;
   }
 </style>

@@ -5,12 +5,12 @@
 
     <side-bar 
       :view="view" 
+      v-if="!view.info"
       @newBoard="newBoard()">
     </side-bar>
 
     <splash-panel
-      v-if="view.info"
-      :class="content">
+      v-if="view.info">
     </splash-panel>
 
     <div :class="content" v-if="!view.info">
