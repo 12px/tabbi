@@ -59,13 +59,18 @@
     },
     methods: {
       close()      { this.view.info = false },
-      getImport(e) { this.$store.dispatch('parse_bookmarks', e) },
 
       setGrid(e)   { this.$store.commit('update_view', { grid:  e.target.value }) },
       setLinks(e)  { this.$store.commit('update_view', { links: e.target.value }) },
 
-      setSync()    { let action = this.synced ? 'disable_sync' : 'enable_sync'
-                     this.$store.dispatch(action, this.$sync)
+      setSync()    { 
+        let action = this.synced ? 'disable_sync' : 'enable_sync'
+        this.$store.dispatch(action, this.$sync)
+      },
+
+      async getImport(e) {
+        let imported = await this.$importer(e.target.files[0])
+        this.$store.commit('import_bookmarks', imported)
       }
     }
   }

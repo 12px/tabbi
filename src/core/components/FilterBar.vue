@@ -14,7 +14,6 @@
     props: ['view', 'filter', 'menu'],
     methods: {
       runFilter(e) {
-        this.$emit('updateGrid')
         let keyword = e.target.value
         if (e.key == 'Enter') this.openFiltered()
         if (e.key == 'Escape' || e.key == 'Enter') keyword = ''
