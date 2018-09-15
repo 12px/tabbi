@@ -24,14 +24,14 @@
         v-if="config">
       </config-panel>
 
-      <content-grid :name="'board'"
+      <content-grid :name="'boards'"
         v-if="view.tab == 'boards' || filter.active"
         ref="boardPanel"
         :boards="boards"
         :columns="columns">
       </content-grid>
 
-      <content-grid :name="'session'"
+      <content-grid :name="'sessions'"
         v-if="view.tab == 'sessions' || filter.active"
         ref="sessionPanel"
         :boards="sessions"

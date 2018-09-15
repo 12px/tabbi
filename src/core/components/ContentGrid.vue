@@ -2,7 +2,7 @@
   <draggable
     :class="`content row sm ${name}-view`"
     :options="{ handle: '.grab' }"
-    v-model="boards"
+    v-model="sorting"
     @start="handle(true)"
     @end="handle(false)">
 
@@ -53,6 +53,12 @@
       } 
     },
     props: ['name', 'columns', 'boards', 'trash'],
+    computed: {
+      sorting: {
+        get()     { return this.$store.state[this.name] },
+        set(data) { console.log(data) }
+      }
+    },
     methods: {
       handle(drag) {
         this.drag = drag
