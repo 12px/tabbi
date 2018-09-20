@@ -1,43 +1,28 @@
 <template>
-  <draggable
-    :class="`content row sm ${name}-view`"
-    :options="{ handle: '.grab' }"
-    v-model="sorting"
-    @start="handle(true)"
-    @end="handle(false)">
+  <draggable v-model="stack">
 
-    <slot></slot>
-
-    <card-board
-      v-if="trash"
-      :class="columns"
-      :self="trash"
-      :trash="trash"
+    <card-board :class="grid"
+      v-if="source == 'trash'"
+      :self="trashed"
+      :trash="trashed"
       :id="'links'">
     </card-board>
-
-    <card-board
-      v-if="boards && boards.length"
-      :class="columns"
-      v-for="(board, i) in boards"
-      :id="i" :key="board.id"
-      :self="board"
-      :trash="trash">
+    
+    <card-board :class="grid"
+      v-if="stack && stack.length"
+      v-for="(card, i) in stack"
+      :id="i" :key="stack.id"
+      :self="card">
+      {{ card.name }}
     </card-board>
 
-    <div v-if="boards && !boards.length && !trash" 
-      class="col none w-50">
+    <div class="col none w-50"
+      v-if="stack && !stack.length && source != 'trash'">
       <div class="card txt-c">
-        <span v-if="name == 'board'">
-          You haven't made a board yet!
-        </span>
-        <span v-if="name == 'session'">
-          You don't have any sessions. <br>
-          Use the chrome extension to save some!
-        </span>
+        You don't have any {{ source }} yet.
       </div>
     </div>
-      
+
   </draggable>
 </template>
 
@@ -46,26 +31,19 @@
   import CardBoard from './CardBoard.vue'
 
   export default {
-    data() { 
-      return { 
-        drag: false, 
-        timer: null
-      } 
-    },
-    props: ['name', 'columns', 'boards', 'trash'],
+    props: ['source', 'grid'],
     computed: {
-      sorting: {
-        get()     { return this.$store.state[this.name] },
-        set(data) { console.log(data) }
+      boards()   { return this.$store.state.boards },
+      sessions() { return this.$store.state.sessions },
+      trashed()  { return this.$store.state.trash },
+      trash()    { return this.trashed.boards },
+
+      stack: {
+        get()     { return this[this.source] },
+        set(data) { return this.$store.commit('update_' + this.source, data) }
       }
     },
-    methods: {
-      handle(drag) {
-        this.drag = drag
-        if (!drag) clearInterval(this.timer)
-        else this.timer = setInterval(() => this.$emit('shuffle'), 50)
-      }
-    },
+    methods: {},
     components: { Draggable, CardBoard }
   }
 </script>

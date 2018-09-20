@@ -20,9 +20,11 @@ body {
 .contain.closed { padding-left: calc(65px + 2vw); }
 .contain.open { padding-left: calc(200px + 2vw); }
 
-.content {
-  justify-content: flex-start;
-}
+.content { justify-content: flex-start; }
+
+.w-sm { width: 250px; }
+.w-md { width: 300px; }
+.w-lg { width: 400px; }
 
 .opt     { cursor: pointer; }
 .grab    { cursor: move; }
@@ -33,9 +35,7 @@ body {
   padding: 1em;
   color: @color-text;
   background-color: @color-bg;
-  border-radius: @border-radius;
-  border: 1px solid @color-border;
-  border-bottom-width: 2px;
+  box-shadow: 0 1px 1px 1px #e2e2e2;
 
   button {
     padding: 0 1.5em;
@@ -74,7 +74,7 @@ body {
   margin: -0.3em 0.5em 0.75em 0;
 }
 
-.sortable-ghost .card { border-color: @color-main; }
+.sortable-ghost .card { box-shadow: 0 1px 1px 1px @color-bare; }
 
 #toast code { 
   background: mix(@color-nice, @color-bg, 10%); 

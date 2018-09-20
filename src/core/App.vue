@@ -24,26 +24,10 @@
         v-if="config">
       </config-panel>
 
-      <content-grid :name="'boards'"
-        v-if="view.tab == 'boards' || filter.active"
-        ref="boardPanel"
-        :boards="boards"
-        :columns="columns">
-      </content-grid>
-
-      <content-grid :name="'sessions'"
-        v-if="view.tab == 'sessions' || filter.active"
-        ref="sessionPanel"
-        :boards="sessions"
-        :columns="columns">
-      </content-grid>
-
-      <content-grid :name="'trash'"
-        v-if="view.tab == 'trash'"
-        ref="trashPanel"
-        :boards="trash.boards"
-        :trash="trash"
-        :columns="columns">
+      <content-grid
+        class="row sm"
+        :grid="columns"
+        :source="view.tab">
       </content-grid>
 
     </div>
@@ -57,9 +41,9 @@
 <script>
   import SideBar     from './components/SideBar.vue'
   import FilterBar   from './components/FilterBar.vue'
+  import ContentGrid   from './components/ContentGrid.vue'
   import SplashPanel from './components/SplashPanel.vue'
   import ConfigPanel from './components/ConfigPanel.vue'
-  import ContentGrid from './components/ContentGrid.vue'
 
   export default {
     computed: {

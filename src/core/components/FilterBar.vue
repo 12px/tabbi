@@ -59,8 +59,9 @@
     padding: 1em 0 0;
   }
   #filter {
-    border-radius: 1.5em;
+    border-radius: 0;
     padding: 1em 1em;
+    border-width: 0 0 1px 0;
   }
   .col {
     margin-left: 0;
