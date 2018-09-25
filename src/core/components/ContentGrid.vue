@@ -1,19 +1,20 @@
 <template>
   <draggable v-model="stack">
+    
+    <card-board :class="grid"
+      v-if="stack && stack.length"
+      v-for="(card, i) in stack"
+      :id="i" :key="stack.id"
+      :self="card" 
+      :trash="source == 'trash'">
+      {{ card.name }}
+    </card-board>
 
     <card-board :class="grid"
       v-if="source == 'trash'"
       :self="trashed"
       :trash="trashed"
       :id="'links'">
-    </card-board>
-    
-    <card-board :class="grid"
-      v-if="stack && stack.length"
-      v-for="(card, i) in stack"
-      :id="i" :key="stack.id"
-      :self="card">
-      {{ card.name }}
     </card-board>
 
     <div class="col none w-50"

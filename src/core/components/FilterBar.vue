@@ -61,7 +61,9 @@
   #filter {
     border-radius: 0;
     padding: 1em 1em;
-    border-width: 0 0 1px 0;
+    border-width: 0 ;
+    background: #fbfbfb;
+    box-shadow: 0 1px 1px 1px #eaeaea;
   }
   .col {
     margin-left: 0;

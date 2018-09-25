@@ -27,6 +27,7 @@
       <content-grid
         class="row sm"
         :grid="columns"
+        ref="contentGrid"
         :source="view.tab">
       </content-grid>
 
@@ -70,8 +71,8 @@
         this.$store.commit('update_view', { tab: 'boards' })
         this.$store.commit('create_board')
         this.$nextTick().then(() => {
-          let boards = this.$refs.boardPanel.$children[0].$children
-          boards[boards.length - 1].amend('board')
+          let boards = this.$refs.contentGrid.$children[0].$children
+          boards[0].amend('board')
         })
       }
     },

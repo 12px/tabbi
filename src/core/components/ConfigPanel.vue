@@ -80,10 +80,6 @@
   .config {
     width: 100%;
     max-width: 250px;
-    position: absolute;
-    bottom: 25px;
-    left: 75px;
-    z-index: 30;
     box-shadow: 0px 1px 10px 2px #4a95d9;
   }
   h6 {
