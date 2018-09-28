@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 300px;
+  min-height: 600px;
+}
+#pinnd {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  position: fixed;
+  background-color: $color-gray-50;
+}
+
+#sidebar {
+  width: 65px;
+  height: 100%;
+  padding: 27px 0;
+  display: flex;
+  position: fixed;
+  text-align: center;
+  flex-direction: column;
+  background-color: $brand-color;
+
+  &.open, &.mobile {
+    width: 200px;
+    text-align: left;
+  }
+
+  a {
+    color: $color-white;
+    opacity: 1 !important;
+  }
+}
+
+#content {
+  width: 100%;
+  height: 100%;
+  padding-left: 65px;
+
+  &.open {
+    padding-left: 200px;
+  }
+}
+
+.wrap {
+  padding: 15px;
+}
+
+.card {
+  margin: 0 0 15px;
+}
+
+.grab {
+  cursor: move;
+}
+
+.mute {
+  color: $color-gray-400;
+}
+
+.good {
+  color: $color-green-500;
+}
+
+.bad {
+  color: $color-red-500;
+}
+
+.has-hint:not(:hover) .hint {
+  opacity: 0;
+}
+
+.item:not(:hover) a {
+  color: $font-color;
+}
+
+@include breakpoint-max($bp-medium) {
+  #sidebar:not(.mobile) {
+    display: none !important
+  }
+  #content {
+    padding-left: 0 !important;
+  }
+}
+
+@include breakpoint-min($bp-xlarge) {
+  .row .col-xlg-2-5 {
+    flex-basis: 20%;
+    max-width: 20%;
+  }
+}

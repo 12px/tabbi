@@ -1,92 +1,72 @@
 <template>
-  <div id="pinnd" 
-    :class="view.theme" 
+  <div id="pinnd"
     @keyup.escape="$store.dispatch('esc')">
 
-    <side-bar 
-      :view="view" 
-      v-if="!view.info"
+    <side-bar
       @newBoard="newBoard()">
     </side-bar>
 
-    <splash-panel
-      v-if="view.info">
-    </splash-panel>
+    <div id="content" :class="{ open: $store.state.view.sidebar }">
+      <div class="wrap">
 
-    <div :class="content" v-if="!view.info">
+        <div id="toast"></div>
 
-      <filter-bar 
-        :view="view"
-        :filter="filter">
-      </filter-bar>
+        <tool-bar></tool-bar>
 
-      <config-panel 
-        v-if="config">
-      </config-panel>
+        <info-pane v-if="$store.state.view.splash"></info-pane>
 
-      <content-grid
-        class="row sm"
-        :grid="columns"
-        ref="contentGrid"
-        :source="view.tab">
-      </content-grid>
+        <opts-pane v-if="$store.state._.config"></opts-pane>
 
+        <card-stack
+          ref="cardStack"
+          :source="$store.state.view.tab">
+        </card-stack>
+
+      </div>
     </div>
-
-
-    <div id="toast" class="fix tr"></div>
 
   </div>
 </template>
 
 <script>
-  import SideBar     from './components/SideBar.vue'
-  import FilterBar   from './components/FilterBar.vue'
-  import ContentGrid   from './components/ContentGrid.vue'
-  import SplashPanel from './components/SplashPanel.vue'
-  import ConfigPanel from './components/ConfigPanel.vue'
+  import SideBar   from './sections/SideBar.vue'
+  import ToolBar   from './sections/ToolBar.vue'
+  import InfoPane  from './sections/InfoPane.vue'
+  import OptsPane  from './sections/OptsPane.vue'
+  import CardStack from './sections/CardStack.vue'
 
   export default {
-    computed: {
-      view()     { return this.$store.state.view },
-      trash()    { return this.$store.state.trash },
-      boards()   { return this.$store.state.boards },
-      sessions() { return this.$store.state.sessions },
-      config()   { return this.$store.state._.config },
-      filter()   { return this.$store.state._.filter },
-      content()  { return ['contain', this.view.sidebar ? 'open' : 'closed'] },
-
-      columns() {
-        let width, cols = this.view.grid
-        if (cols == 5) width = 'w-20'
-        if (cols == 4) width = 'w-25'
-        if (cols == 3) width = 'w-33'
-        if (cols == 2) width = 'w-50'
-        if (cols == 1) width = 'w-100'
-        return `col m-0 ${width}`
-      }
-    },
     methods: {
       newBoard() {
         this.$store.commit('update_view', { tab: 'boards' })
         this.$store.commit('create_board')
         this.$nextTick().then(() => {
-          let boards = this.$refs.contentGrid.$children[0].$children
+          let boards = this.$refs.cardStack.$children[0].$children
           boards[0].amend('board')
         })
       }
     },
     created() {
-      if (this.$store.state.meta.syncData) {
-        this.$store.dispatch('enable_sync', this.$sync)
-      }
+      let sync = this.$store.state.meta.syncData
+      if (sync) this.$store.dispatch('enable_sync', this.$sync)
     },
-    components: { 
-      SideBar, FilterBar, SplashPanel, ConfigPanel, ContentGrid
-    }
+    components: { SideBar, ToolBar, InfoPane, OptsPane, CardStack }
   }
 </script>
 
-<style lang="less">
-  @import './app.less';
+<style lang="scss">
+  @import '~mustard-ui/src/scss/vars/colors.scss';
+
+  $brand-color: $color-blue-500;
+
+  @import '~mustard-ui/src/scss/mustard-ui.scss';
+  @import './app.scss';
+
+  #toast {
+    top: -2px;
+    position: fixed;
+    .alert {
+      border: 1px solid $brand-color;
+    }
+  }
 </style>

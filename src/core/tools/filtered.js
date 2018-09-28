@@ -33,13 +33,13 @@ export default {
 
       let pool = [];
       if (!filter.active) return false;
-      if (isBoard && filter.by == 'board') pool = data.name
-      if (isBoard && filter.by == 'tag') pool = find('tags', data.links)
-      if (isBoard && filter.by == 'string') pool = find('str', data.links)
+      if (isBoard && filter.type == 'board') pool = data.name
+      if (isBoard && filter.type == 'tag') pool = find('tags', data.links)
+      if (isBoard && filter.type == 'string') pool = find('str', data.links)
 
-      if (!isBoard && filter.by == 'board') return false
-      if (!isBoard && filter.by == 'tag') pool = data.tags
-      if (!isBoard && filter.by == 'string') pool = data.name
+      if (!isBoard && filter.type == 'board') return false
+      if (!isBoard && filter.type == 'tag') pool = data.tags
+      if (!isBoard && filter.type == 'string') pool = data.name
 
       return compare(filter.key, pool)
 

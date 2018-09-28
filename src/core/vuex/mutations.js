@@ -1,5 +1,3 @@
-
-
 const mutations = {
 
   refresh(state) { return state = state },

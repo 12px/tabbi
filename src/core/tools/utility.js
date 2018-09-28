@@ -16,7 +16,9 @@ let pd_util = {
     let el = document.querySelector('#toast');
 
     if (toasts.length) {
-      let message = `<code>${toasts.shift()}</code>`;
+      let message = `<p class="alert alert-info alert-border">
+                       ${toasts.shift()}
+                     </p>`;
       el.classList.add('active');
       el.innerHTML = message;
       if (!this.toasting) this.toasting = setTimeout(() => {

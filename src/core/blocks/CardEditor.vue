@@ -1,66 +1,66 @@
 <template>
-  <div class="editor"
-    @keyup.escape="finish">
-    
+  <div class="editor" @keyup.escape="finish()">
+
     <div v-if="!link">
       <input type="text"
         v-focus
         v-model="self.name"
-        @keyup.enter="finish"
+        @keup.enter="finish()"
         placeholder="Board Name">
     </div>
 
-    <div v-if="link">
+    <div class="link" v-if="link">
       <input type="text"
         v-focus
         v-model="link.name"
-        @keyup.enter="finish"
+        @keup.enter="finish()"
         placeholder="Link Name">
 
       <input type="text"
         v-model="link.link"
-        @keyup.enter="finish"
+        @keup.enter="finish()"
         placeholder="Link URL">
 
       <select v-model="newBoard">
         <option value="0" selected>Change Board</option>
-        <option 
-          v-for="(b, key) in $store.state.boards"
-          v-if="self.id != b.id"
-          :value="key">
+        <option v-for="(b, key) in $store.state.boards"
+          v-if="self.id != b.id" :value="key">
           {{ b.name }}
         </option>
       </select>
 
       <input type="text"
         v-model="newTag"
-        @keyup.enter="addTag"
+        @keyup.enter="addTag()"
         placeholder="Add Tag">
 
-      <div class="tags">
-        <code class="tag"
+      <ul class="tags">
+        <li class="tag"
           v-for="(tag, i) in link.tags"
+          @click="remTag(i)"
           :key="i">
-          <strong>#{{ tag }}</strong>
-        </code>
-      </div>
+          <strong>
+            #{{ tag }}
+          </strong>
+        </li>
+      </ul>
     </div>
 
-    <div class="bottom row txt-c">
-      <div class="col">
-        <span class="mute opt" v-if="!none" @click="finish">
-          <icon name="times"></icon>
-        </span>
+    <div class="bottom row align-center">
+      <div class="col col-xs-4">
+        <a href="#" @click="finish()">
+          <i class="mute fas fa-times"></i>
+        </a>
       </div>
-      <div class="col">
-        <span class="bad opt" @click="trash">
-          <icon name="trash-alt"></icon>
-        </span>
+      <div class="col col-xs-4">
+        <a href="#" @click="trash()">
+          <i class="bad fas fa-trash-alt"></i>
+        </a>
       </div>
-      <div class="col">
-        <span class="good opt" @click="finish">
-          <icon name="check"></icon>
-        </span>
+      <div class="col col-xs-4">
+        <a href="#" @click="finish()">
+          <i class="good fas fa-check"></i>
+        </a>
       </div>
     </div>
 
@@ -101,11 +101,8 @@
 </script>
 
 <style scoped>
-  input, select {
-    margin-bottom: .5em;
-  }
-  .bottom {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  .link input[type="text"],
+  .link select {
+    margin-bottom: 10px;
   }
 </style>

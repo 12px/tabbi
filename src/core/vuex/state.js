@@ -13,10 +13,9 @@ const state = {
   view: {
     grid:    3,
     links:   5,
+    splash:  true,
     sidebar: true,
-    tab:     "boards",
-    theme:   "day",
-    info:    true
+    tab:     "boards"
   },
 
   boards:   [ { id: 1, name: "Inbox", links: [] } ],
@@ -32,6 +31,7 @@ const state = {
   // local
   _: {
     config: false,
+    mobile: false,
     filter: {
       key:   "",
       type:  "string",

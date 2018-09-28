@@ -27,7 +27,7 @@ import mutations from './vuex/mutations'
 // persist store with LocalForage
 import LocalForage from 'localforage'
 LocalForage.config({ 
-  storeName: 'pinDB',
+  storeName: 'pinnd',
   driver: LocalForage.indexedDB
 })
 const persist = store => {
@@ -37,11 +37,6 @@ const persist = store => {
     if (state.meta.syncData) sync.sync.save(state)
   })
 }
-
-// import icons
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
-Vue.component('icon', Icon)
 
 Vue.config.productionTip = false
 
