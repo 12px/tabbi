@@ -1,9 +1,9 @@
 {
-  "name": "pinnd",
+  "name": "newtt",
   "version": "0.0.1",
   "description": "Bookmarks, simple.",
   "main": "src/index.js",
-  "repository": "https://github.com/12px/pinnd.git",
+  "repository": "https://github.com/12px/newtt.git",
   "author": "12px <dalton@12px.io>",
   "license": "MIT",
   "scripts": {

@@ -3,7 +3,7 @@
     <div class="card">
       <div class="logo row">
         <div class="col col-lg-1">
-          <h4>pinnd</h4>
+          <h4>Newtt</h4>
         </div>
         <div class="col col-lg-11">
           <h6>your (new) new tab</h6>
@@ -12,12 +12,12 @@
       <div class="row">
         <div class="col col-lg-4">
           <h6>Bookmark Focused</h6>
-          <p><strong>pinnd</strong> puts all the links you save front and center, so you never have to dig for them. The filter bar it makes it find whichever link you're looking for, and quickly. Search by board, title, or tag!</p>
+          <p><strong>Newtt</strong> puts all the links you save front and center, so you never have to dig for them. The filter bar it makes it find whichever link you're looking for, and quickly. Search by board, title, or tag!</p>
           <p>Using an extension, you can even save whole sessions of links!</p>
         </div>
         <div class="col col-lg-4">
           <h6>Use Anywhere</h6>
-          <p>pinnd is available as a static website and a browser extension. Since you can sync your data with google drive, you can use it anywhere.</p>
+          <p>Newtt is available as a static website and a browser extension. Since you can sync your data with google drive, you can use it anywhere.</p>
           <p>Use a browser extension on your desktop, and set it as your home page on mobile.</p>
         </div>
         <div class="col col-lg-4">

@@ -7,7 +7,7 @@ let params = {
   discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
 }
 let list = { 
-  q: 'name="pinnd.json"',
+  q: 'name="newtt.json"',
   spaces: 'appDataFolder', 
   fields: 'nextPageToken, files(id, name)' 
 }
@@ -84,7 +84,7 @@ const sync = {
   create() {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
-        fields: 'id', resource: { name: 'pinnd.json', parents: ['appDataFolder'] }
+        fields: 'id', resource: { name: 'newtt.json', parents: ['appDataFolder'] }
       }).then((response) => { resolve() })
     })
   },

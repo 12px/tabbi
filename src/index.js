@@ -29,7 +29,7 @@ import mutations from './vuex/mutations'
 // persist store with LocalForage
 import LocalForage from 'localforage'
 LocalForage.config({ 
-  storeName: 'pinnd',
+  storeName: 'newtt',
   driver: LocalForage.indexedDB
 })
 const persist = store => {

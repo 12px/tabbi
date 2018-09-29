@@ -1,5 +1,5 @@
 <template>
-  <div id="pinnd"
+  <div id="newtt"
     @keyup.escape="$store.dispatch('esc')">
 
     <side-bar
