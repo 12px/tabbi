@@ -2,10 +2,10 @@
   <div id="info">
     <div class="card">
       <div class="logo row">
-        <div class="col col-lg-1">
-          <h4>Newtt</h4>
+        <div class="col col-lg-2 col-xlg-1">
+          <h3>Newtt</h3>
         </div>
-        <div class="col col-lg-11">
+        <div class="col col-lg-10 col-xlg-11">
           <h6>your (new) new tab</h6>
         </div>
       </div>
@@ -66,10 +66,11 @@
       </div>
       <div class="row">
         <div class="col align-center">
+          <a href="https://github.com/12px/newtt" class="button button-primary-outlined button-small">View On Github</a> <br>
           <button class="button-primary button-small" @click="close()">
             Dismiss
-          </button>
-          <a href="https://github.com/12px/newtt" class="button button-primary-outlined button-small">View On Github</a>
+          </button> <br>
+          <small>v{{ $root.version }}</small>
         </div>
       </div>
     </div>
@@ -115,5 +116,8 @@
   .full {
     width: 100%;
     display: block;
+  }
+  small {
+    margin: 0 10px;
   }
 </style>
