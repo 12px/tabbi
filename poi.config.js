@@ -1,6 +1,6 @@
 module.exports = (options, req) => ({
   entry: 'src/index.js',
-  outDir: 'build/',
+  outDir: 'build/app/',
   staticFolder: 'src/static/',
 
   // webpack

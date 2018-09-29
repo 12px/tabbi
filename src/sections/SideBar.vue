@@ -15,43 +15,49 @@
 
     <div style="height: 2em"></div>
 
-    <tool badge="fa-plus-square" label="New Board"
-      @click.native="$emit('newBoard')">
-    </tool>
+    <a href="#" @click="$emit('newBoard')">
+      <i class="fas fa-plus-square"></i>
+      <strong>New Board</strong>
+    </a>
 
     <div style="height: 2em"></div>
 
-    <tool badge="fa-thumbtack" label="Boards"
-      :class="{ active: active('boards') }"
-      @click.native="switchTab('boards')">
-    </tool>
+    <a href="#" @click="switchTab('boards')"
+      :class="{ active: active('boards') }">
+      <i class="fas fa-thumbtack"></i>
+      <strong>Boards</strong>
+    </a>
 
-    <tool badge="fa-book-open" label="Sessions"
-      :class="{ active: active('sessions') }"
-      @click.native="switchTab('sessions')">
-    </tool>
+    <a href="#" @click="switchTab('sessions')"
+      :class="{ active: active('sessions') }">
+      <i class="fas fa-book-open"></i>
+      <strong>Sessions</strong>
+    </a>
 
-    <tool badge="fa-trash-alt" label="Trash"
-      :class="{ active: active('trash') }"
-      @click.native="switchTab('trash')">
-    </tool>
+    <a href="#" @click="switchTab('trash')"
+      :class="{ active: active('trash') }">
+      <i class="fas fa-trash-alt"></i>
+      <strong>Trash</strong>
+    </a>
 
-    <tool badge="fa-info-circle" label="Info"
-      :class="{ active: local.splash, 'bottom': 1 }"
-      @click.native="splash()">
-    </tool>
+    <a href="#" @click="splash()"
+      :class="{ active: local.splash, 'bottom': 1 }">
+      <i class="fas fa-info-circle"></i>
+      <strong>Info</strong>
+    </a>
 
-    <tool badge="fa-ellipsis-h" label="Options"
-      :class="{ active: local.config }"
-      @click.native="config()">
-    </tool>
+    <a href="#" @click="config()"
+      :class="{ active: local.config }">
+      <i class="fas fa-ellipsis-h"></i>
+      <strong>Options</strong>
+    </a>
 
   </aside>
 </template>
 
 <script>
   // Link Component
-  let Tool = {
+  let SideLink = {
     props: ['badge', 'label'],
     template: 
       `<a href="#" :title="label">
@@ -74,7 +80,7 @@
       close()        { this.update('local', { mobile: !this.local.mobile }) },
       toggle()       { this.update('view',  { sidebar: !this.view.sidebar }) }
     },
-    components: { Tool }
+    components: { SideLink }
   }
 </script>
 

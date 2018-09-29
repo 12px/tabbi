@@ -1,0 +1,37 @@
+{
+  "name": "pinnd",
+  "version": "0.0.1",
+  "description": "A New Tab Bookmarks Manager.",
+  "manifest_version": 2,
+
+  "icons": {
+    "16": "icon/icon16.png",
+    "32": "icon/icon32.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
+  },
+
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  },
+
+  "page_action": {
+    "default_popup": "app/index.html",
+    "default_icon": {
+      "16": "icon/icon16.png",
+      "32": "icon/icon32.png",
+      "48": "icon/icon48.png",
+      "128": "icon/icon128.png"
+    }
+  },
+
+  "permissions": [ "activeTab", "declarativeContent", "storage" ],
+
+  "chrome_url_overrides": {
+    "newtab": "app/index.html"
+  },
+
+  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'"
+
+}
