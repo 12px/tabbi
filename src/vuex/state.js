@@ -13,7 +13,7 @@ const state = {
   view: {
     grid:    3,
     links:   5,
-    splash:  true,
+    config:  true,
     sidebar: true,
     tab:     "boards"
   },
@@ -30,7 +30,6 @@ const state = {
 
   // local
   _: {
-    config: false,
     mobile: false,
     filter: {
       key:   "",

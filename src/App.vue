@@ -15,9 +15,7 @@
 
         <tool-bar></tool-bar>
 
-        <info-pane v-if="$store.state.view.splash"></info-pane>
-
-        <opts-pane v-if="$store.state._.config"></opts-pane>
+        <info-pane v-if="$store.state.view.config"></info-pane>
 
         <card-stack
           ref="cardStack"
@@ -34,7 +32,6 @@
   import SideBar   from './sections/SideBar.vue'
   import ToolBar   from './sections/ToolBar.vue'
   import InfoPane  from './sections/InfoPane.vue'
-  import OptsPane  from './sections/OptsPane.vue'
   import CardStack from './sections/CardStack.vue'
   import ExtPopup  from './sections/ExtPopup.vue'
 
@@ -53,7 +50,7 @@
       let sync = this.$store.state.meta.syncData
       if (sync) this.$store.dispatch('enable_sync', this.$sync)
     },
-    components: { SideBar, ToolBar, InfoPane, OptsPane, CardStack, ExtPopup }
+    components: { SideBar, ToolBar, InfoPane, CardStack, ExtPopup }
   }
 </script>
 

@@ -40,14 +40,8 @@
       <strong>Trash</strong>
     </a>
 
-    <a href="#" @click="splash()"
-      :class="{ active: local.splash, 'bottom': 1 }">
-      <i class="fas fa-info-circle"></i>
-      <strong>Info</strong>
-    </a>
-
     <a href="#" @click="config()"
-      :class="{ active: local.config }">
+      :class="{ active: view.config, 'bottom': 1 }">
       <i class="fas fa-ellipsis-h"></i>
       <strong>Options</strong>
     </a>
@@ -75,8 +69,7 @@
       update(x, obj) { this.$store.commit('update_' + x, obj) },
       active(tab)    { return this.view.tab == tab && !this.view.info },
       switchTab(tab) { this.update('view',  { tab: tab }) },
-      splash()       { this.update('view',  { splash: !this.view.splash }) },
-      config()       { this.update('local', { config: !this.local.config }) },
+      config()       { this.update('view',  { config: !this.view.config }) },
       close()        { this.update('local', { mobile: !this.local.mobile }) },
       toggle()       { this.update('view',  { sidebar: !this.view.sidebar }) }
     },
