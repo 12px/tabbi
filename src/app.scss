@@ -51,6 +51,10 @@ body {
 
 .card {
   margin: 0 0 15px;
+  &.accent {
+    color: $color-white;
+    background: $brand-color;
+  }
 }
 
 .grab {

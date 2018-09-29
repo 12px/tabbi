@@ -11,6 +11,8 @@
 
         <div id="toast"></div>
 
+        <ext-popup></ext-popup>
+
         <tool-bar></tool-bar>
 
         <info-pane v-if="$store.state.view.splash"></info-pane>
@@ -34,6 +36,7 @@
   import InfoPane  from './sections/InfoPane.vue'
   import OptsPane  from './sections/OptsPane.vue'
   import CardStack from './sections/CardStack.vue'
+  import ExtPopup  from './sections/ExtPopup.vue'
 
   export default {
     methods: {
@@ -50,7 +53,7 @@
       let sync = this.$store.state.meta.syncData
       if (sync) this.$store.dispatch('enable_sync', this.$sync)
     },
-    components: { SideBar, ToolBar, InfoPane, OptsPane, CardStack }
+    components: { SideBar, ToolBar, InfoPane, OptsPane, CardStack, ExtPopup }
   }
 </script>
 
