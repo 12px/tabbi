@@ -1,7 +1,7 @@
 // import dependencies
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { version } from '../../package.json'
+import { version } from '../package.json'
 
 // import app component
 import App from './App.vue'
