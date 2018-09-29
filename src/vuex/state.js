@@ -4,7 +4,7 @@ const state = {
     ver:        1,
     linkIndex:  1,
     boardIndex: 2,
-    lastBoard:  1,
+    lastBoard:  0,
     updatedAt:  0,
     createdAt:  Date.now(),
     syncData:   false

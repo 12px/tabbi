@@ -11,6 +11,7 @@ import sync from './tools/sync'
 import filtered from './tools/filtered'
 import importer from './tools/importer'
 import utility from './tools/utility'
+import browser from './tools/browser'
 
 // apply plugins
 Vue.use(Vuex)
@@ -18,6 +19,7 @@ Vue.use(sync)
 Vue.use(filtered)
 Vue.use(importer)
 Vue.use(utility)
+Vue.use(browser)
 
 // set up store
 import state from './vuex/state'

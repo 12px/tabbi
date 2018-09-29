@@ -35,6 +35,7 @@ const mutations = {
       tags: data.tags ? data.tags : []
     })
     state.meta.linkIndex += 1
+    if (data.board) state.meta.lastBoard = data.board
   },
 
   // editor
