@@ -3,8 +3,9 @@
     <div class="card has-hint">
       <h6 :class="{ grab: !this.trash }">
         {{ self.name }}
-        <a href="#" class="hint float-right" @click="openCard()">
+        <a href="#" class="hint tooltip float-right" @click="openCard()">
           <i class="mute fas fa-external-link-alt"></i>
+          <span class="tooltip-text">Open {{ self.links.length }} Links</span>
         </a>
       </h6>
 
@@ -135,6 +136,7 @@
     font-size: 0.8rem;
   }
   .card {
+    overflow: visible;
     margin: 0 5px 15px;
     padding: 20px 30px 10px;
   }
@@ -146,5 +148,16 @@
   }
   .overflow i {
     font-size: 1.2em;
+  }
+  .tooltip {
+    border: none;
+  }
+  .tooltip-text {
+    padding: 5px;
+    min-width: 175px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background-color: rgba(0,0,0,0.6);
+    text-transform: uppercase;
   }
 </style>
