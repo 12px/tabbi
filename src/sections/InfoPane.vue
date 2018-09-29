@@ -66,9 +66,10 @@
       </div>
       <div class="row">
         <div class="col align-center">
-          <button class="button-primary-outlined button-small" @click="close()">
+          <button class="button-primary button-small" @click="close()">
             Dismiss
           </button>
+          <a href="https://github.com/12px/newtt" class="button button-primary-outlined button-small">View On Github</a>
         </div>
       </div>
     </div>
