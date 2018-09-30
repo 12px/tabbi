@@ -1,13 +1,14 @@
 const state = {
 
   meta: {
-    ver:        1,
-    linkIndex:  1,
-    boardIndex: 2,
-    lastBoard:  0,
-    updatedAt:  0,
-    createdAt:  Date.now(),
-    syncData:   false
+    ver:          1,
+    linkIndex:    1,
+    boardIndex:   2,
+    sessionIndex: 1,
+    lastBoard:    0,
+    updatedAt:    0,
+    createdAt:    Date.now(),
+    syncData:     false
   },
 
   view: {

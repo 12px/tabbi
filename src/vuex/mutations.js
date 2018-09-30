@@ -14,26 +14,36 @@ const mutations = {
 
   update_sessions(state, data) { return state.sessions = data  },
 
-  // creator
-  toggle_creator(state, data) { return state._.create.active = true },
+  // sessions
+  create_session(state, data) {
+    let result = { 
+      id: state.meta.sessionIndex, 
+      name: data.name ? data.name : '', 
+      links: data.links ? data.links : []
+    }
+    state.sessions.unshift(result)
+    state.meta.sessionIndex += 1
+  },
 
   create_board(state, data) {
-    state.boards.unshift({ 
+    let result = { 
       id: state.meta.boardIndex, 
       name: data ? data : '', 
       links: [] 
-    })
+    }
+    state.boards.unshift(result)
     state.meta.boardIndex += 1
   },
 
   create_link(state, data) {
     let b = data.board ? data.board : 0
-    state.boards[b].links.push({  
+    let result = {  
       id: state.meta.linkIndex, 
       name: data.name ? data.name : '',
       link: data.link ? data.link : '', 
       tags: data.tags ? data.tags : []
-    })
+    }
+    state.boards[b].links.push(result)
     state.meta.linkIndex += 1
     if (data.board) state.meta.lastBoard = data.board
   },
