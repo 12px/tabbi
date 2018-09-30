@@ -19,6 +19,7 @@ body {
   height: 100%;
   padding: 27px 0;
   display: flex;
+  z-index: 1000;
   position: fixed;
   text-align: center;
   flex-direction: column;

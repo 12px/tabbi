@@ -39,6 +39,7 @@
     methods: {
       newBoard() {
         this.$store.commit('update_view', { tab: 'boards' })
+        this.$store.commit('update_local', { mobile: false })
         this.$store.commit('create_board')
         this.$nextTick().then(() => {
           let boards = this.$refs.cardStack.$children[0].$children

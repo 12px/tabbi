@@ -66,12 +66,16 @@
       local() { return this.$store.state._ }
     },
     methods: {
-      update(x, obj) { this.$store.commit('update_' + x, obj) },
       active(tab)    { return this.view.tab == tab && !this.view.info },
       switchTab(tab) { this.update('view',  { tab: tab }) },
       config()       { this.update('view',  { config: !this.view.config }) },
       close()        { this.update('local', { mobile: !this.local.mobile }) },
-      toggle()       { this.update('view',  { sidebar: !this.view.sidebar }) }
+      toggle()       { this.update('view',  { sidebar: !this.view.sidebar }) },
+
+      update(x, obj) { 
+        this.$store.commit('update_' + x, obj) 
+        this.$store.commit('update_local', { mobile: false })
+      }
     },
     components: { SideLink }
   }
