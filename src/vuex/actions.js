@@ -1,8 +1,10 @@
 const actions = {
 
   esc({commit, state}) {
+    if (state._.mobile) return commit('update_local', { mobile: false })
+    if (state.view.config) return commit('update_view', { config: false })
     if (state._.filter.active) {
-      return commit('update_local', { filter: { key: '', active: false } } )
+      return commit('update_local', { filter: { key: '', active: false } })
     }
   },
 
