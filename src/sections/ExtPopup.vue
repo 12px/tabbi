@@ -1,8 +1,8 @@
 <template>
-  <div id="popup" class="accent card" v-if="extActive">
+  <div id="popup" v-if="extActive">
 
     <div class="accent card">
-      <h3 class="card-title">Add Link</h3>
+      <h6>Add Link</h6>
 
       <input type="text"
         v-focus
@@ -101,9 +101,12 @@
     margin-bottom: 10px;
   }
   i {
-    font-size: 1.5em;
+    font-size: 1.25em;
   }
   .card {
-    padding: 20px 30px 10px;
+    padding: 20px 30px;
+  }
+  .bottom {
+    margin: -10px 0 0;
   }
 </style>

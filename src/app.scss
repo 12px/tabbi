@@ -55,7 +55,7 @@ body {
   &.accent {
     color: $color-white;
     background: $brand-color;
-    .card-title, a {
+    h6, a {
       color: $color-white;
     }
   }
