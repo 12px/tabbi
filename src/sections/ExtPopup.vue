@@ -1,53 +1,56 @@
 <template>
   <div id="popup" class="accent card" v-if="extActive">
 
-    <h3 class="card-title">Add Link</h3>
+    <div class="accent card">
+      <h3 class="card-title">Add Link</h3>
 
-    <input type="text"
-      v-focus
-      :value="name"
-      @keup.enter="finish()"
-      placeholder="Link Name">
+      <input type="text"
+        v-focus
+        :value="name"
+        @keup.enter="finish()"
+        placeholder="Link Name">
 
-    <input type="text"
-      :value="link"
-      @keup.enter="finish()"
-      placeholder="Link URL">
+      <input type="text"
+        :value="link"
+        @keup.enter="finish()"
+        placeholder="Link URL">
 
-    <select v-model="lastBoard">
-      <option v-for="(b, key) in $store.state.boards" :value="key">
-        {{ b.name }}
-      </option>
-    </select>
+      <select v-model="lastBoard">
+        <option v-for="(b, key) in $store.state.boards" :value="key">
+          {{ b.name }}
+        </option>
+      </select>
 
-    <input type="text"
-      v-model="nTag"
-      @keyup.enter="addTag()"
-      placeholder="Add Tag">
+      <input type="text"
+        v-model="nTag"
+        @keyup.enter="addTag()"
+        placeholder="Add Tag">
 
-    <ul class="tags">
-      <li class="tag"
-        v-for="(tag, i) in tags"
-        @click="remTag(i)"
-        :key="i">
-        <strong>
-          #{{ tag }}
-        </strong>
-      </li>
-    </ul>
+      <ul class="tags">
+        <li class="tag"
+          v-for="(tag, i) in tags"
+          @click="remTag(i)"
+          :key="i">
+          <strong>
+            #{{ tag }}
+          </strong>
+        </li>
+      </ul>
 
-    <div class="bottom row align-center">
-      <div class="col col-xs-6">
-        <a href="#" @click="cancel()">
-          <i class="fas fa-times"></i>
-        </a>
-      </div>
-      <div class="col col-xs-6">
-        <a href="#" @click="finish()">
-          <i class="fas fa-check"></i>
-        </a>
+      <div class="bottom row align-center">
+        <div class="col col-xs-6">
+          <a href="#" @click="cancel()">
+            <i class="fas fa-times"></i>
+          </a>
+        </div>
+        <div class="col col-xs-6">
+          <a href="#" @click="finish()">
+            <i class="fas fa-check"></i>
+          </a>
+        </div>
       </div>
     </div>
+      
   </div>
 </template>
 
@@ -99,5 +102,8 @@
   }
   i {
     font-size: 1.5em;
+  }
+  .card {
+    padding: 20px 30px 10px;
   }
 </style>
