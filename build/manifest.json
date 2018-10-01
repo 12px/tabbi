@@ -26,7 +26,7 @@
     }
   },
 
-  "permissions": [ "activeTab", "declarativeContent", "storage" ],
+  "permissions": [ "tabs", "declarativeContent", "storage" ],
 
   "chrome_url_overrides": {
     "newtab": "app/index.html"

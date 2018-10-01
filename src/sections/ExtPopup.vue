@@ -50,6 +50,13 @@
         </div>
       </div>
     </div>
+
+    <div class="accent card">
+      <h6>Current Tabs</h6>
+      <div v-for="tab in tabs">
+        <strong>{{ tab.title }}</strong>
+      </div>
+    </div>
       
   </div>
 </template>
@@ -61,7 +68,8 @@
         name: '',
         link: '',
         tags: [],
-        nTag: ''
+        nTag: '',
+        tabs: []
       }
     },
     computed: {
@@ -85,12 +93,20 @@
         this.name = ''
         this.link = ''
         this.tags = ''
+        this.tabs = []
       }
     },
     created() {
-      this.$browser.page().then((data) => {
-        this.name = data.title
-        this.link = data.url
+      this.$browser().then((data) => {
+        if (data) {
+          for (var i = data.length - 1; i >= 0; i--) {
+            this.tabs.push({ title: data[i].title, link: data[i].url })
+            if (data[i].active) {
+              this.name = data[i].title
+              this.link = data[i].url
+            }
+          }
+        }
       })
     }
   }
