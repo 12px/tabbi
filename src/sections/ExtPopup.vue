@@ -85,7 +85,7 @@
       }
     },
     created() {
-      this.$browser().then((data) => {
+      this.$browser.page().then((data) => {
         this.name = data.title
         this.link = data.url
       })
