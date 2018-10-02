@@ -4,7 +4,6 @@ const state = {
     ver:          1,
     linkIndex:    1,
     boardIndex:   2,
-    sessionIndex: 1,
     lastBoard:    0,
     updatedAt:    0,
     createdAt:    Date.now(),
@@ -26,7 +25,8 @@ const state = {
   trash:    { 
     name: "Trash",
     links: [],
-    boards: []
+    boards: [],
+    sessions: []
   },
 
   // local

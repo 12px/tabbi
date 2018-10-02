@@ -17,12 +17,12 @@ const mutations = {
   // sessions
   create_session(state, data) {
     let result = { 
-      id: state.meta.sessionIndex, 
+      id: state.meta.boardIndex, 
       name: data.name ? data.name : '', 
       links: data.links ? data.links : []
     }
     state.sessions.unshift(result)
-    state.meta.sessionIndex += 1
+    state.meta.boardIndex += 1
   },
 
   create_board(state, data) {
@@ -71,6 +71,15 @@ const mutations = {
       }
     }
     state.boards.splice(data, 1)
+  },
+
+  trash_session(state, data) {
+    let session = state.sessions[data]
+    // if not empty, trash, otherwise delete
+    if (session.links.length) {
+      state.trash.sessions.push(session)
+    }
+    state.sessions.splice(data, 1)
   },
 
   trash_link(state, data) {

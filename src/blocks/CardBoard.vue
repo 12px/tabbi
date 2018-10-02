@@ -3,13 +3,18 @@
     <div class="card has-hint">
       <h6 :class="{ grab: source != 'trash' }">
         {{ self.name }}
-        <a href="#" class="hint tooltip float-right" @click="openCard()">
+
+        <a href="#" class="hint tooltip float-right" 
+          v-if="source != 'trash'" @click="openCard()">
           <i class="mute fas fa-external-link-alt"></i>
-          <span class="tooltip-text">Open {{ self.links.length }} Links</span>
+          <span class="tooltip-text">
+            Open {{ self.links.length }} Links
+          </span>
         </a>
       </h6>
 
-      <div class="nothing align-center" v-if="!hasLinks && !edit.active">
+      <div class="nothing align-center" 
+        v-if="!hasLinks && !edit.active">
         There's nothing here.
       </div>
 
@@ -34,16 +39,21 @@
       <card-editor
         v-if="edit.active"
         :board="id"
+        :source="source"
         :item="edit.item"
         @finished="finished">
       </card-editor>
 
       <div class="overflow row align-center">
         <div class="col-xs-4">
-          <a href="#" class="hint" v-if="source != 'trash'" @click="amend('board')">
-            Edit
+          <a href="#" class="hint" 
+            v-if="source != 'trash'" 
+            @click="amend('board')">
+            <strong>Edit</strong>
           </a>
-          <a href="#" class="hint bad" v-if="source == 'trash'" @click="remove()">
+          <a href="#" class="hint bad" 
+            v-if="source == 'trash'" 
+            @click="remove()">
             <strong>Delete</strong>
           </a>
         </div>
@@ -53,10 +63,14 @@
           </a>
         </div>
         <div class="col-xs-4">
-          <a class="hint" href="#" v-if="source != 'trash'" @click="create()">
+          <a class="hint" href="#" 
+            v-if="source == 'boards'" 
+            @click="create()">
             <strong>New</strong>
           </a>
-          <a href="#" class="hint good" v-if="source == 'trash'" @click="restore()">
+          <a href="#" class="hint good" 
+            v-if="source == 'trash'" 
+            @click="restore()">
             <strong>Restore</strong>
           </a>
         </div>
@@ -72,16 +86,17 @@
   import CardEditor from './CardEditor.vue'
 
   export default {
-    props: ['id', 'self', 'source'],
+    props: ['id', 'self', 'source', 'sesh'],
     data() { 
       return { 
-        show: false,
-        drag: false,
+        show: false, drag: false,
         edit: { item: false, active: false } 
       } 
     },
     computed: {
+      session()  { return this.source == 'sessions' },
       filter()   { return this.$store.state._.filter },
+      trash()    { return this.$store.state.trash },
       links()    { return this.$store.state.view.links },
       overflow() { return this.self.links.length > this.links },
       hasLinks() { return this.self.links && this.self.links.length }
@@ -101,7 +116,8 @@
       remove(id) {
         if (id || id === 0) this.self.links.splice(id, 1)
         else if (this.id == 'links') this.self.links = []
-        else this.$store.state.trash.boards.splice(this.id, 1)
+        else if (this.sesh) this.trash.sessions.splice(this.id, 1)
+        else this.trash.boards.splice(this.id, 1)
         this.$store.commit('refresh')
       },
       restore(tack, key) {
@@ -110,14 +126,19 @@
           if (board < 0) return this.$$.toast("Unknown Board.")
           delete tack.board
           this.$store.state.boards[board].links.push(tack)
-          this.$store.state.trash.links.splice(key, 1)
+          this.trash.links.splice(key, 1)
         } else {
           if (this.id != 'links') {
-            this.$store.state.boards.push(this.$store.state.trash.boards[this.id])
-            this.$store.state.trash.boards.splice(this.id, 1)
+            if (this.sesh) {
+              this.$store.state.sessions.push(this.trash.sessions[this.id])
+              this.trash.sessions.splice(this.id, 1)
+            } else {
+              this.$store.state.boards.push(this.trash.boards[this.id])
+              this.trash.boards.splice(this.id, 1)
+            }
           } else {
-            for (var i = this.$store.state.trash.links.length - 1; i >= 0; i--) {
-              this.restore(this.$store.state.trash.links[i], i)
+            for (var i = this.trash.links.length - 1; i >= 0; i--) {
+              this.restore(this.trash.links[i], i)
             }
           }
         }

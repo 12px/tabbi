@@ -49,9 +49,9 @@ async function initializeApp() {
 
   // if storage, merge it
   if (local) {
+    state.trash = local.trash
     state.boards = local.boards
     state.sessions = local.sessions
-    state.trash = local.trash
     for (var opt in local.meta) state.meta[opt] = local.meta[opt]
     for (var opt in local.view) state.view[opt] = local.view[opt]
   }

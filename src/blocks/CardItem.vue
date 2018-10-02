@@ -1,15 +1,15 @@
 <template>
   <div class="item has-hint" v-show="!filtered()">
-    <i :class="['grab mute fas', prefix]"></i>
+    <i v-if="source != 'sessions'" :class="['grab mute fas', prefix]"></i>
     <a class="link" :href="self.link">
       {{ self.name }}
     </a>
     <a class="hint" href="#" 
-      v-if="!item && id == 'links'"
+      v-if="source == 'trash' && id == 'links'"
       @click="$emit('resItem')">
       <i class="mute fas fa-history"></i>
     </a>
-    <a class="hint" href="#" @click="doOption()">
+    <a v-if="source != 'sessions'" class="hint" href="#" @click="doOption()">
       <i :class="['mute fas', option]"></i>
     </a>
   </div>
@@ -17,13 +17,12 @@
 
 <script>
   export default {
-    props: ['id', 'self', 'trash'],
+    props: ['id', 'self', 'source'],
     computed: {
-      item() { return !this.trash && this.trash !== 0 },
       filter() { return this.$store.state._.filter },
       tagged() { return this.self.tags && this.self.tags.length },
       prefix() { return this.tagged ? 'fa-tag' : 'fa-sort' },
-      option() { return this.item ? 'fa-pencil-alt' : 'fa-trash-alt' },
+      option() { return this.source == 'boards' ? 'fa-pencil-alt' : 'fa-trash-alt' },
       tags() { return this.filter.active && this.filter.by == 'tag' },
 
       board() {
@@ -32,8 +31,10 @@
       }
     },
     methods: {
-      doOption() { return this.$emit(this.item ? 'editItem' : 'remItem') },
-      filtered() { return this.$filter.out(this.filter, this.self) }
+      filtered() { return this.$filter.out(this.filter, this.self) },
+      doOption() { 
+        return this.$emit(this.source != 'trash' ? 'editItem' : 'remItem') 
+      }
     }
   }
 </script>

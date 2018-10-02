@@ -1,48 +1,50 @@
 <template>
-  <div class="row" v-if="isBrowser">
+  <div id="popup">
+    <div class="row" v-if="isBrowser">
 
-    <div class="col col-md-6 col-lg-4 col-xlg-2-5">
-      
-      <div class="input-box" v-if="session">
-        <input disabled type="text" 
-          v-for="tab in tabs" :value="tab.name">
+      <div class="col col-md-6 col-lg-4 col-xlg-2-5">
+        
+        <div class="input-box" v-if="session">
+          <input disabled type="text" 
+            v-for="tab in tabs" :value="tab.name">
 
-        <input v-focus type="text" :value="label"
-          @keup.enter="saveSession()" placeholder="Session Name">
+          <input v-focus type="text" :value="label"
+            @keup.enter="saveSession()" placeholder="Session Name">
 
-        <button class="full button-primary" @click="saveSession()">
-          Save Session
+          <button class="full button-primary" @click="saveSession()">
+            Save Session
+          </button>
+        </div>
+
+        <button v-if="!session"
+          class="full button-primary-outlined" 
+          @click="session = true">
+          Save Session ({{ tabs.length }})
         </button>
-      </div>
 
-      <button v-if="!session"
-        class="full button-primary-outlined" 
-        @click="session = true">
-        Save Session ({{ tabs.length }})
-      </button>
+        <div class="input-box" v-if="!session">
+          <input v-focus type="text" :value="name"
+            @keup.enter="saveLink()" placeholder="Link Name">
 
-      <div class="input-box" v-if="!session">
-        <input v-focus type="text" :value="name"
-          @keup.enter="saveLink()" placeholder="Link Name">
+          <select v-model="lastBoard">
+            <option v-for="(b, key) in $store.state.boards" :value="key">
+              {{ b.name }}
+            </option>
+          </select>
 
-        <select v-model="lastBoard">
-          <option v-for="(b, key) in $store.state.boards" :value="key">
-            {{ b.name }}
-          </option>
-        </select>
+          <button class="full button-primary" @click="saveLink()">
+            Save Link
+          </button>
+        </div>
 
-        <button class="full button-primary" @click="saveLink()">
+        <button v-if="session"
+          class="full button-primary-outlined" 
+          @click="session = false">
           Save Link
         </button>
       </div>
-
-      <button v-if="session"
-        class="full button-primary-outlined" 
-        @click="session = false">
-        Save Link
-      </button>
+        
     </div>
-      
   </div>
 </template>
 
@@ -64,7 +66,7 @@
         this.cancel()
       },
       saveSession() {
-        let session = { name: this.sesh.name, links: this.tabs }
+        let session = { name: this.label, links: this.tabs }
         this.$store.commit('create_session', session)
         this.cancel()
       },

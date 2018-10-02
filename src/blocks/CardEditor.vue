@@ -69,10 +69,10 @@
 
 <script>
   export default {
-    props: ['board', 'item'],
+    props: ['board', 'item', 'source'],
     data() { return { newTag: '', newBoard: 0 } },
     computed: {
-      self() { return this.$store.state.boards[this.board] },
+      self() { return this.$store.state[this.source][this.board] },
       link() { return this.self.links[this.item] },
       none() { return this.link ? this.link.name == '' : !this.self.links.length }
     },
@@ -85,8 +85,13 @@
       remTag(i) { this.link.tags.splice(i, 1) },
 
       trash() {
-        if (!this.link) this.$store.commit('trash_board', this.board)
-        else this.$store.commit('trash_link', { board: this.board, item: this.item })
+        if (this.link) {
+          this.$store.commit('trash_link', { board: this.board, item: this.item })
+        } else if (this.source == 'boards') {
+          this.$store.commit('trash_board', this.board)
+        } else if (this.source == 'sessions') {
+          this.$store.commit('trash_session', this.board)
+        }
         this.finish()
       },
 
