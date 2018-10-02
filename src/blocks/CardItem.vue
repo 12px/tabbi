@@ -1,15 +1,15 @@
 <template>
   <div class="item has-hint" v-show="!filtered()">
-    <i :class="['grab mute fas fa-flip-horizontal', prefix]"></i>
-    <a :href="self.link">
+    <i :class="['grab mute fas', prefix]"></i>
+    <a class="link" :href="self.link">
       {{ self.name }}
     </a>
-    <a class="hint float-right" href="#" 
+    <a class="hint" href="#" 
       v-if="!item && id == 'links'"
       @click="$emit('resItem')">
       <i class="mute fas fa-history"></i>
     </a>
-    <a class="hint float-right" href="#" @click="doOption()">
+    <a class="hint" href="#" @click="doOption()">
       <i :class="['mute fas', option]"></i>
     </a>
   </div>
@@ -33,32 +33,31 @@
     },
     methods: {
       doOption() { return this.$emit(this.item ? 'editItem' : 'remItem') },
-      filtered() { return this.$filtered(this.filter, this.self) }
+      filtered() { return this.$filter.out(this.filter, this.self) }
     }
   }
 </script>
 
 <style scoped>
-  .fa-flip-horizontal {
-    margin: 0 5px 0 -5px;
+  .item {
+    display: flex;
+    align-items: center;
   }
-  .fa-sort {
-    width: 1em;
+  .grab {
+    flex-shrink: 0;
+    flex-basis: 2rem;
   }
-  .fa-history,
-  .fa-pencil-alt
-  .fa-trash-alt {
-    font-size: 0.8em;
+  .link {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
-  .fa-history {
-    margin-left: 5px;
-  }
-  .fa-tag {
-    width: 1.4em;
-    font-size: 0.7em;
-    display: inline-block;
+  .hint {
+    margin-left: auto;
   }
   a {
     font-weight: 600;
+    display: inline-block;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div v-show="!filtered()">
     <div class="card has-hint">
-      <h6 :class="{ grab: !this.trash }">
+      <h6 :class="{ grab: source != 'trash' }">
         {{ self.name }}
         <a href="#" class="hint tooltip float-right" @click="openCard()">
           <i class="mute fas fa-external-link-alt"></i>
@@ -22,7 +22,7 @@
           v-for="(link, key) in self.links"
           :id="id" :key="link.id"
           :self="link"
-          :trash="trash"
+          :source="source"
           v-show="visible(key)"
           @editItem="amend(key)"
           @remItem="remove(key)"
@@ -40,10 +40,10 @@
 
       <div class="overflow row align-center">
         <div class="col-xs-4">
-          <a href="#" class="hint" v-if="!trash" @click="amend('board')">
+          <a href="#" class="hint" v-if="source != 'trash'" @click="amend('board')">
             Edit
           </a>
-          <a href="#" class="hint bad" v-if="trash" @click="remove()">
+          <a href="#" class="hint bad" v-if="source == 'trash'" @click="remove()">
             <strong>Delete</strong>
           </a>
         </div>
@@ -53,10 +53,10 @@
           </a>
         </div>
         <div class="col-xs-4">
-          <a class="hint" href="#" v-if="!trash" @click="create()">
+          <a class="hint" href="#" v-if="source != 'trash'" @click="create()">
             <strong>New</strong>
           </a>
-          <a href="#" class="hint good" v-if="trash" @click="restore()">
+          <a href="#" class="hint good" v-if="source == 'trash'" @click="restore()">
             <strong>Restore</strong>
           </a>
         </div>
@@ -72,7 +72,7 @@
   import CardEditor from './CardEditor.vue'
 
   export default {
-    props: ['id', 'self', 'trash'],
+    props: ['id', 'self', 'source'],
     data() { 
       return { 
         show: false,
@@ -88,7 +88,7 @@
     },
     methods: {
       finished() { return this.edit.active = false },
-      filtered() { return this.$filtered(this.filter, this.self, true) },
+      filtered() { return this.$filter.out(this.filter, this.self, true) },
       amend(itm) { this.edit.item = itm, this.edit.active = !this.edit.active },
       openCard() { return this.$$.openAll(this.self.links) },
       visible(i) { if (this.edit.active) return false

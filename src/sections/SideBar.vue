@@ -50,16 +50,6 @@
 </template>
 
 <script>
-  // Link Component
-  let SideLink = {
-    props: ['badge', 'label'],
-    template: 
-      `<a href="#" :title="label">
-        <i :class="['fas', badge]"></i>
-        <strong>{{ label }}</strong>
-      </a>`
-  }
-
   export default {
     computed: {
       view()   { return this.$store.state.view },
@@ -76,18 +66,17 @@
         this.$store.commit('update_' + x, obj) 
         this.$store.commit('update_local', { mobile: false })
       }
-    },
-    components: { SideLink }
+    }
   }
 </script>
 
 <style scoped>
-  >>> a {
+  a {
     width: 100%;
     margin-bottom: .75em;
   }
 
-  >>> i {
+  i {
     width: 2em;
     font-size: 1.2em;
     text-align: center;
@@ -95,14 +84,14 @@
     vertical-align: middle;
   }
 
-  >>> strong { 
+  strong { 
     display: none; 
     font-weight: 700;
     padding-left: .25em;
     vertical-align: middle;
   }
 
-  >>> .bottom {
+  .bottom {
     margin-top: auto;
     margin-bottom: 1em;
   }
@@ -124,8 +113,8 @@
     border-left: none;
   }
 
-  .open >>> strong,
-  .mobile >>> strong {
+  .open strong,
+  .mobile strong {
     display: inline-block;
   }
 </style>

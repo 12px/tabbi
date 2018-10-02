@@ -3,7 +3,7 @@
 
     <card-board :class="columns"
       v-if="stack && stack.length"
-      :trash="source == 'trash'"
+      :source="source"
       v-for="(card, i) in stack"
       :id="i" :key="stack.id"
       :self="card">
@@ -42,7 +42,7 @@
         set(data) { return this.$store.commit('update_' + this.source, data) }
       },
 
-      columns()  { return ['col', 'col-md-6', 'col-lg-4', 'col-xlg-2-5'] },
+      columns()  { return 'col col-md-6 col-lg-4 col-xlg-2-5' },
       notEmpty() { return this.stack && !this.stack.length && this.source != 'trash' }
     },
     components: { Draggable, CardBoard }

@@ -10,7 +10,8 @@
         </div>
         <!-- Filter -->
         <div class="col col-xs-10">
-          <input v-focus type="text" placeholder="Type to filter" @keyup="filter">
+          <input v-focus type="text" 
+            placeholder="Type to filter" @keyup="setFilter">
         </div>
       </div>
     </div>
@@ -24,23 +25,10 @@
     },
     methods: {
       show() { this.$store.commit('update_local', { mobile: !this.mobile }) },
-      filter(e) {
-        let key = (e.key == 'Enter' || e.key == 'Escape') ? '' : e.target.value
-        let result = { 
-          key: '', 
-          type: 'string', 
-          active: false
-        }
-
-        if (key) {
-          let by = key.charAt(0)
-          result.active = true;
-          result.type = by == ':' ? 'board' : by == '#' ? 'tag' : 'string'
-          result.key = result.type == 'string' ? key : key.substr(1)
-        }
-
-        this.$store.commit('update_local', { filter: result })
-        if (e.key == 'Enter') this.openFiltered(result)
+      setFilter(event) {
+        let filter = this.$filter.run(event)
+        this.$store.commit('update_local', { filter })
+        if (event.key == 'Enter') this.openFiltered(filter)
       },
       openFiltered(filter) {
         let result = []
@@ -55,7 +43,7 @@
             for (var i = board.links.length - 1; i >= 0; i--) {
               let link = board.links[i]
               let self = byBoard ? board : link
-              if (!this.$filtered(filter, self, byBoard)) result.push(link.link)
+              if (!this.$filter.out(filter, self, byBoard)) result.push(link.link)
             }
           }
         }
