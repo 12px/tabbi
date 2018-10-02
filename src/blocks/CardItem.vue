@@ -43,9 +43,9 @@
     display: flex;
     align-items: center;
   }
-  .grab {
+  .grab, .hint {
     flex-shrink: 0;
-    flex-basis: 2rem;
+    flex-basis: 1.2rem;
   }
   .link {
     flex-grow: 1;
@@ -59,5 +59,13 @@
   a {
     font-weight: 600;
     display: inline-block;
+  }
+  .fa-history,
+  .fa-pencil-alt,
+  .fa-trash-alt {
+    font-size: 0.8em;
+  }
+  .fa-tag {
+    font-size: 0.7em;
   }
 </style>
