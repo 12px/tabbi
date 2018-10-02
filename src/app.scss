@@ -46,6 +46,35 @@ body {
   }
 }
 
+.input-box {
+  margin: 15px 0;
+
+  input:not(:first-child):not(:last-child),
+  select:not(:first-child):not(:last-child),
+  button:not(:first-child):not(:last-child) {
+    border-radius: 0px;
+    border-top: none;
+  }
+  input:first-child,
+  select:first-child,
+  button:first-child {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  input:last-child,
+  select:last-child,
+  button:last-child {
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}
+
+button,
+.button {
+  margin-left: 0;
+}
+
 .wrap {
   padding: 15px;
 }
@@ -59,6 +88,11 @@ body {
       color: $color-white;
     }
   }
+}
+
+.full {
+  width: 100%;
+  display: block;
 }
 
 .grab {
