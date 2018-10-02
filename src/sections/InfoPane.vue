@@ -113,10 +113,6 @@
   input[type=file] {
     display: none;
   }
-  .full {
-    width: 100%;
-    display: block;
-  }
   small {
     margin: 0 10px;
   }
