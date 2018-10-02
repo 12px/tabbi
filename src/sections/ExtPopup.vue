@@ -1,61 +1,54 @@
 <template>
-  <div id="popup" v-if="extActive">
+  <div class="row" v-if="extActive">
 
-    <div class="accent card">
-      <h6>Add Link</h6>
+    <div class="col col-md-6 col-lg-4 col-xlg-2-5">
+      
+      <div class="input-box" v-if="sesh.save">
+        <input disabled
+          type="text" 
+          v-for="tab in tabs" 
+          :value="tab.name">
 
-      <input type="text"
-        v-focus
-        :value="name"
-        @keup.enter="finish()"
-        placeholder="Link Name">
+        <input type="text"
+          v-focus
+          :value="sesh.name"
+          @keup.enter="saveSession()"
+          placeholder="Session Name">
 
-      <input type="text"
-        :value="link"
-        @keup.enter="finish()"
-        placeholder="Link URL">
-
-      <select v-model="lastBoard">
-        <option v-for="(b, key) in $store.state.boards" :value="key">
-          {{ b.name }}
-        </option>
-      </select>
-
-      <input type="text"
-        v-model="nTag"
-        @keyup.enter="addTag()"
-        placeholder="Add Tag">
-
-      <ul class="tags">
-        <li class="tag"
-          v-for="(tag, i) in tags"
-          @click="remTag(i)"
-          :key="i">
-          <strong>
-            #{{ tag }}
-          </strong>
-        </li>
-      </ul>
-
-      <div class="bottom row align-center">
-        <div class="col col-xs-6">
-          <a href="#" @click="cancel()">
-            <i class="fas fa-times"></i>
-          </a>
-        </div>
-        <div class="col col-xs-6">
-          <a href="#" @click="finish()">
-            <i class="fas fa-check"></i>
-          </a>
-        </div>
+        <button class="full button-primary" @click="saveSession()">
+          Save Session
+        </button>
       </div>
-    </div>
 
-    <div class="accent card">
-      <h6>Current Tabs</h6>
-      <div v-for="tab in tabs">
-        <strong>{{ tab.title }}</strong>
+      <button v-if="!sesh.save"
+        class="full button-primary-outlined" 
+        @click="sesh.save = true">
+        Save Session ({{ tabs.length }})
+      </button>
+
+      <div class="input-box" v-if="!sesh.save">
+        <input type="text"
+          v-focus
+          :value="name"
+          @keup.enter="saveLink()"
+          placeholder="Link Name">
+
+        <select v-model="lastBoard">
+          <option v-for="(b, key) in $store.state.boards" :value="key">
+            {{ b.name }}
+          </option>
+        </select>
+
+        <button class="full button-primary" @click="saveLink()">
+          Save Link
+        </button>
       </div>
+
+      <button v-if="sesh.save"
+        class="full button-primary-outlined" 
+        @click="sesh.save = false">
+        Save Link
+      </button>
     </div>
       
   </div>
@@ -67,40 +60,43 @@
       return {
         name: '',
         link: '',
-        tags: [],
-        nTag: '',
-        tabs: []
+        tabs: [],
+        sesh: {
+          save: false,
+          name: 'Session On ' +  new Date().toLocaleDateString('en-US')
+        },
+
       }
     },
     computed: {
       extActive() { return this.name && this.link },
-      lastBoard() { return this.$store.state.meta.lastBoard }
+      lastBoard() { return this.$store.state.meta.lastBoard },
+      sessionName() {
+        let today = new Date()
+        return 'Session On ' +  today.toLocaleDateString('en-US')
+      }
     },
     methods: {
-      remTag(i) { this.tags.splice(i, 1) },
-      addTag()  {
-        if (!this.nTag) return this.$$.toast("No Tag Specified.")
-        this.tags.push(this.nTag)
-        this.nTag = ''
+      saveLink()  { 
+        this.$store.commit('create_link', { name: this.name, link: this.link })
+        this.cancel()
       },
-      finish()  { 
-        this.$store.commit('create_link', { 
-          name: this.name, link: this.link, tags: this.tags
-        })
+      saveSession() {
+        let session = { name: this.sesh.name, links: this.tabs }
+        this.$store.commit('create_session', session)
         this.cancel()
       },
       cancel() {
         this.name = ''
         this.link = ''
-        this.tags = ''
         this.tabs = []
       }
     },
     created() {
       this.$browser().then((data) => {
         if (data) {
-          for (var i = data.length - 1; i >= 0; i--) {
-            this.tabs.push({ title: data[i].title, link: data[i].url })
+          for (var i = 0; i < data.length; i++) {
+            this.tabs.push({ name: data[i].title, link: data[i].url })
             if (data[i].active) {
               this.name = data[i].title
               this.link = data[i].url
@@ -113,16 +109,16 @@
 </script>
 
 <style scoped>
-  input, select {
-    margin-bottom: 10px;
-  }
   i {
     font-size: 1.25em;
   }
   .card {
     padding: 20px 30px;
   }
-  .bottom {
-    margin: -10px 0 0;
+  .row {
+    margin: 0;
+  }
+  .row .col {
+    padding: 0;
   }
 </style>
