@@ -9,6 +9,7 @@ const actions = {
   },
 
   enable_sync({commit, state}, sync) {
+    state._.syncing = true
     sync.enable(state).then((data) => { 
       if (data.state) {
         commit('update_meta', data.state.meta)
@@ -19,6 +20,7 @@ const actions = {
         commit('update_sessions', data.state.sessions)
       }
       else commit('update_meta', { syncData: data.sync }) 
+      state._.syncing = false
     })
   },
 

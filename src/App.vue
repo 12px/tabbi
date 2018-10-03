@@ -48,8 +48,11 @@
       }
     },
     created() {
-      let sync = this.$store.state.meta.syncData
-      if (sync) this.$store.dispatch('enable_sync', this.$sync)
+      if (this.$store.state.meta.syncData) {
+        let sync = () => this.$store.dispatch('enable_sync', this.$sync)
+        window.addEventListener('focus', () => sync())
+        if (!this.$store.state._.syncing) sync()
+      }
     },
     components: { SideBar, ToolBar, InfoPane, CardStack, ExtPopup }
   }

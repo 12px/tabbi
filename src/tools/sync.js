@@ -21,7 +21,7 @@ const sync = {
     })
   },
 
-  enable(state, commit) {
+  enable(state) {
     console.info("Enabling Sync.")
     return new Promise((resolve, reject) => {
       let crx = chrome.identity
@@ -58,7 +58,7 @@ const sync = {
     })
   },
 
-  fetch(state, commit) {
+  fetch(state) {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.list(list).then((data) => {
         if (!data.result.files.length) {
@@ -70,14 +70,14 @@ const sync = {
           console.info("Syncing Data...")
           let fileId = data.result.files[0].id
           gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
-            return this.handle(state, commit, file).then((data) => resolve(data))
+            return this.handle(state, file).then((data) => resolve(data))
           })
         }
       })
     })
   },
 
-  handle(state, commit, data) {
+  handle(state, data) {
     return new Promise((resolve, reject) => {
       let loaded = JSON.parse(data.body)
       let cur = state.meta, got = loaded.meta
@@ -88,7 +88,7 @@ const sync = {
       }
       // Sync'd Data is newer, use that
       if (cur.createdAt > got.createdAt || cur.updatedAt < got.updatedAt) {
-        console.info("Data Synced.")
+        console.info("Loading Synced Data.")
         return resolve({ sync: true, state: loaded })
       }
       // Data is in sync
