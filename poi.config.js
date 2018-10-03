@@ -5,7 +5,7 @@ module.exports = (options, req) => ({
 
   // webpack
   publicPath: './',
-  html: { title: "New Tab • Newtt" },
+  html: { title: "New Tab • Tabbi" },
 
   autoprefixer: {
     browsers: ['ie > 9', 'last 4 versions']
