@@ -1,9 +1,9 @@
 {
-  "name": "Newtt",
+  "name": "Tabbi",
   "version": "0.0.1",
-  "description": "Bookmarks, simple.",
+  "description": "Bookmarks, Front And Center.",
   "main": "src/index.js",
-  "repository": "https://github.com/12px/newtt.git",
+  "repository": "https://github.com/12px/tabbi.git",
   "author": "12px <dalton@12px.io>",
   "license": "MIT",
   "scripts": {
