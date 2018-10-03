@@ -62,12 +62,15 @@
     },
     methods: {
       saveLink()  { 
-        this.$store.commit('create_link', { name: this.name, link: this.link })
+        this.$store.commit('create_link', { 
+          board: this.lastBoard, name: this.name, link: this.link 
+        })
         this.cancel()
       },
       saveSession() {
-        let session = { name: this.label, links: this.tabs }
-        this.$store.commit('create_session', session)
+        this.$store.commit('create_session', {
+          name: this.label, links: this.tabs
+        })
         this.cancel()
       },
       cancel() {
