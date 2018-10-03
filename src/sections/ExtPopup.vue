@@ -57,7 +57,7 @@
       }
     },
     computed: {
-      isBrowser() { return this.name && this.link },
+      isBrowser()   { return this.name && this.link },
       lastBoard() { return this.$store.state.meta.lastBoard }
     },
     methods: {
@@ -77,17 +77,19 @@
       }
     },
     created() {
-      this.$browser().then((data) => {
-        if (data) {
-          for (var i = 0; i < data.length; i++) {
-            this.tabs.push({ name: data[i].title, link: data[i].url })
-            if (data[i].active) {
-              this.name = data[i].title
-              this.link = data[i].url
+      if (window.location.href.indexOf('popup=true') > -1) {
+        this.$browser().then((data) => {
+          if (data) {
+            for (var i = 0; i < data.length; i++) {
+              this.tabs.push({ name: data[i].title, link: data[i].url })
+              if (data[i].active) {
+                this.name = data[i].title
+                this.link = data[i].url
+              }
             }
           }
-        }
-      })
+        })
+      }
     }
   }
 </script>
