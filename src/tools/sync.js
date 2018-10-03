@@ -7,7 +7,7 @@ let params = {
   discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
 }
 let list = { 
-  q: 'name="newtt.json"',
+  q: 'name="tabbi.json"',
   spaces: 'appDataFolder', 
   fields: 'nextPageToken, files(id, name)' 
 }
@@ -17,25 +17,43 @@ const sync = {
   disable() {
     console.info("Disabling Sync.")
     return new Promise((resolve, reject) => {
-      gapi.auth2.getAuthInstance().signOut().then(() => { resolve() })
+      gapi.auth2.getAuthInstance().signOut().then(() => resolve())
     })
   },
 
   enable(state, commit) {
     console.info("Enabling Sync.")
     return new Promise((resolve, reject) => {
+      let crx = chrome.identity
       Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
-        gapi.client.init(params).then(() => {
-          let auth = gapi.auth2.getAuthInstance()
-          if (auth.isSignedIn.get()) {
-            return this.fetch(state).then((data) => { resolve(data) })
-          } else {
-            // sign in with google if not authenticated
-            return Promise.resolve(auth.signIn()).then(() => {
-              this.fetch(state).then((data) => { resolve(data) })
+        if (crx) {
+          // we're in a chrome extension
+          // which doesn't allow use of gapi client
+          // have to use chrome identity 
+          Promise.resolve(crx.getAuthToken({ 'interactive': true }, (token) => {
+            Promise.all([
+              gapi.client.init({ apiKey: params.apiKey }),
+              gapi.client.setToken({ access_token: token })
+            ]).then(() => {
+              this.fetch(state).then((data) => resolve(data))
             })
-          }
-        })
+          }))
+        } else {
+          // if no chrome.identity
+          // assume we're in browser mode
+          // with full API access
+          gapi.client.init(params).then(() => {
+            let auth = gapi.auth2.getAuthInstance()
+            if (auth.isSignedIn.get()) {
+              return this.fetch(state).then((data) => resolve(data))
+            } else {
+              // sign in with google if not authenticated
+              return Promise.resolve(auth.signIn()).then(() => {
+                this.fetch(state).then((data) => resolve(data))
+              })
+            }
+          })
+        }
       })
     })
   },
@@ -46,13 +64,13 @@ const sync = {
         if (!data.result.files.length) {
           console.info("No Sync Data Found, Creating...")
           this.create().then(() => { 
-            this.save(state).then(() => { resolve({ sync: true }) })
+            this.save(state).then(() => resolve({ sync: true }))
           })
         } else {
           console.info("Syncing Data...")
           let fileId = data.result.files[0].id
           gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
-            return this.handle(state, commit, file).then((data) => { resolve(data) })
+            return this.handle(state, commit, file).then((data) => resolve(data))
           })
         }
       })
@@ -66,7 +84,7 @@ const sync = {
       // Local data is newer, save that
       if (cur.updatedAt > got.updatedAt || cur.ver != got.ver) {
         console.info("Syncing Local Data")
-        return this.save(state).then(() => { resolve({ sync: true }) })
+        return this.save(state).then(() => resolve({ sync: true }))
       }
       // Sync'd Data is newer, use that
       if (cur.createdAt > got.createdAt || cur.updatedAt < got.updatedAt) {
@@ -84,8 +102,8 @@ const sync = {
   create() {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.create({
-        fields: 'id', resource: { name: 'newtt.json', parents: ['appDataFolder'] }
-      }).then((response) => { resolve() })
+        fields: 'id', resource: { name: 'tabbi.json', parents: ['appDataFolder'] }
+      }).then((response) => resolve())
     })
   },
 
