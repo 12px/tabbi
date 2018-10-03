@@ -3,21 +3,21 @@
     <div class="card">
       <div class="logo row">
         <div class="col col-lg-2 col-xlg-1">
-          <h3>Newtt</h3>
+          <h3>Tabbi</h3>
         </div>
         <div class="col col-lg-10 col-xlg-11">
-          <h6>your (new) new tab</h6>
+          <h6>your (new) new tab page</h6>
         </div>
       </div>
       <div class="row">
         <div class="col col-lg-4">
           <h6>Bookmark Focused</h6>
-          <p><strong>Newtt</strong> puts all the links you save front and center, so you never have to dig for them. The filter bar it makes it find whichever link you're looking for, and quickly.</p>
+          <p><strong>Tabbi</strong> puts all the links you save front and center, so you never have to dig for them. The filter bar it makes it find whichever link you're looking for, and quickly.</p>
           <p>Using an extension, you can even save whole sessions of links!</p>
         </div>
         <div class="col col-lg-4">
           <h6>Use Anywhere</h6>
-          <p>Newtt is available as a static website and a browser extension. Since you can sync your data with google drive, you can use it anywhere.</p>
+          <p>Tabbi is available as a static website and a browser extension. Since you can sync your data with google drive, you can use it anywhere.</p>
           <p>Use a browser extension on your desktop, and set it as your home page on mobile.</p>
         </div>
         <div class="col col-lg-4">
@@ -66,7 +66,7 @@
       </div>
       <div class="row">
         <div class="col align-center">
-          <a href="https://github.com/12px/newtt" class="button button-primary-outlined button-small">View On Github</a> <br>
+          <a href="https://github.com/12px/tabbi" class="button button-primary-outlined button-small">View On Github</a> <br>
           <button class="button-primary button-small" @click="close()">
             Dismiss
           </button> <br>

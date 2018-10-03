@@ -4,13 +4,13 @@
     <!-- Mobile -->
     <a href="#" class="logo display-md-down" @click="close()">
       <i class="fas fa-times"></i>
-      <strong>Newtt</strong>
+      <strong>Tabbi</strong>
     </a>
     
     <!-- Desktop -->
     <a href="#" class="logo display-lg-up" @click="toggle()">
       <i class="fas fa-bars"></i>
-      <strong>Newtt</strong>
+      <strong>Tabbi</strong>
     </a>
 
     <div style="height: 2em"></div>
