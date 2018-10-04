@@ -16,7 +16,7 @@
       <draggable
         v-model="self.links"
         :options="{ handle: '.grab', group: 'items' }"
-        @start="drag = true" @end="drag = false">
+        @start="drag = true" @end="finishDrag()">
 
         <card-item
           v-for="(link, key) in self.links"
@@ -108,6 +108,10 @@
       openCard() { return this.$$.openAll(this.self.links) },
       visible(i) { if (this.edit.active) return false
         return this.show || i < this.links || this.filter.active || this.drag
+      },
+      finishDrag() {
+        this.drag = false
+        this.$store.commit('refresh')
       },
       create() {
         this.$store.commit('create_link', { board: this.id })
