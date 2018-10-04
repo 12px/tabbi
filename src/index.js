@@ -65,7 +65,7 @@ async function initializeApp() {
   var app = new Vue({
     store,
     el: '#app',
-    data: { version },
+    data: { version, popup: false },
     render: h => h(App)
   })
 }

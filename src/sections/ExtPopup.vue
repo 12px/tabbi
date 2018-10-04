@@ -60,7 +60,7 @@
     computed: {
       hasTabs()   { return this.tabs.length > 1 },
       hasLink()   { return this.name && this.link },
-      isBrowser() { return this.hasLink || this.hasTabs }
+      isBrowser() { return this.hasLink || this.hasTabs && this.$root.popup }
     },
     methods: {
       saveLink()  { 
@@ -82,21 +82,19 @@
       }
     },
     created() {
-      if (window.location.href.indexOf('popup=true') > -1) {
-        this.$browser().then((data) => {
-          if (data) {
-            for (var i = 0; i < data.length; i++) {
-              if (data[i].url != 'chrome://newtab/') {
-                this.tabs.push({ name: data[i].title, link: data[i].url })
-                if (data[i].active) {
-                  this.name = data[i].title
-                  this.link = data[i].url
-                }
+      this.$browser().then((data) => {
+        if (data) {
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].url != 'chrome://newtab/') {
+              this.tabs.push({ name: data[i].title, link: data[i].url })
+              if (data[i].active) {
+                this.name = data[i].title
+                this.link = data[i].url
               }
             }
           }
-        })
-      }
+        }
+      })
     }
   }
 </script>

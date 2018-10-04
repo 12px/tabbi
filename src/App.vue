@@ -53,6 +53,7 @@
         window.addEventListener('focus', () => sync())
         if (!this.$store.state._.syncing) sync()
       }
+      if (window.location.href.indexOf('popup=true') > -1) this.$root.popup = true
     },
     components: { SideBar, ToolBar, InfoPane, CardStack, ExtPopup }
   }
