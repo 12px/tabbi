@@ -66,8 +66,14 @@
       </div>
       <div class="row">
         <div class="col align-center">
-          <a href="https://github.com/12px/tabbi" target="_blank" class="button button-primary-outlined button-small">Github</a>
-          <a href="https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd" target="_blank" class="button button-primary-outlined button-small">For Chrome</a> <br>
+          <a href="https://github.com/12px/tabbi" 
+            target="_blank" class="button button-primary-outlined button-small">
+            On Github
+          </a>
+          <a href="https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd"
+            target="_blank" class="button button-primary-outlined button-small">
+            For Chrome
+          </a> <br>
           <button class="button-primary button-small" @click="close()">
             Dismiss
           </button> <br>
