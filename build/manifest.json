@@ -1,6 +1,6 @@
 {
   "name": "Tabbi",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0.0",
   "description": "Bookmarks, Front And Center",
   "manifest_version": 2,
 
@@ -8,19 +8,14 @@
     "128": "icon.png"
   },
 
-  "background": {
-    "scripts": [ "background.js" ],
-    "persistent": false
-  },
-
-  "page_action": {
+  "browser_action": {
     "default_popup": "app/index.html?popup=true",
     "default_icon": {
       "128": "icon.png"
     }
   },
 
-  "permissions": [ "tabs", "identity", "declarativeContent", "storage" ],
+  "permissions": [ "tabs", "identity", "storage" ],
 
   "chrome_url_overrides": {
     "newtab": "app/index.html"
