@@ -41,12 +41,16 @@ let pd_util = {
     let openArray = function(arr) {
       for (var i = 0; i < arr.length; i++) {
         let url = typeof arr[i].link === 'string' ? arr[i].link : arr[i];
-        let newTab = window.open(url)
-        try {
-          newTab.focus()
-        } catch (e) {
-          this.toast(allow)
-          break
+        if (chrome.identity) {
+          chrome.tabs.create({ url })
+        } else {
+          let newTab = window.open(url)
+          try {
+            newTab.focus()
+          } catch (e) {
+            this.toast(allow)
+            break
+          }
         }
       }
     }

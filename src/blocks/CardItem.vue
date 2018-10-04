@@ -1,7 +1,7 @@
 <template>
   <div class="item has-hint" v-show="!filtered()">
     <i v-if="source != 'sessions'" :class="['grab mute fas', prefix]"></i>
-    <a class="link" :href="self.link">
+    <a class="link" :href="self.link" @click="handleLink">
       {{ self.name }}
     </a>
     <a class="hint" href="#" 
@@ -34,6 +34,12 @@
       filtered() { return this.$filter.out(this.filter, this.self) },
       doOption() { 
         return this.$emit(this.source != 'trash' ? 'editItem' : 'remItem') 
+      },
+      handleLink(e) {
+        if (chrome.identity && this.$root.popup) {
+          console.log(e)
+          chrome.tabs.create({ url: e.target.href })
+        }
       }
     }
   }
