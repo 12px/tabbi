@@ -3,11 +3,11 @@
     <div class="card">
       <div class="logo row">
         <div class="col">
-          <h3>Tabbi</h3>
-          <h6>your (new) new tab page</h6>
           <h5 class="float-right">
             <a href="#" @click="close()"><i class="fas fa-times"></i></a>
           </h5>
+          <h3>Tabbi</h3>
+          <h6>your (new) new tab page</h6>
         </div>
       </div>
       <div class="row">
@@ -16,12 +16,12 @@
           <p>You can export them to an HTML file, and then import them here.</p>
           <input type="file" id="import" @change="getImport">
           <label for="import" class="align-center full button button-primary">
-            Import Bookmarks (*.html)
+            Import (*.html)
           </label>
         </div>
         <div class="col col-lg-4">
           <h6>Keep Data In Sync</h6>
-          <p>Tabbi can sync with your Google Drive account so you don't lose data.</p>
+          <p>Tabbi can sync with your Google Drive so you don't lose data.</p>
           <button class="full button-primary" @click="setSync()">
             Drive Sync: {{ synced ? 'On' : 'Off' }}
             <i class="fas fa-exclamation-circle" v-if="!synced"></i>
@@ -29,7 +29,7 @@
         </div>
         <div class="col col-lg-4">
           <h6>Tabbi Options</h6>
-          <p><strong>Visible Links</strong> how many links shown per card before collapsing</p>
+          <p><strong>Visible Links - </strong> How many links shown per card before collapsing.</p>
           <select :value="view.links" @change="setLinks">
             <option value="3">3 Links</option>
             <option value="5">5 Links</option>
@@ -39,10 +39,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col align-right">
-          <small class="float-left">
+        <div class="col col-lg-4 col-xlg-3">
+          <small>
             Use Reddit or Github to request features and report bugs.
           </small>
+        </div>
+        <div class="col col-lg-8 col-xlg-9 align-right">
           <a @click="about = true"
             href="#" class="button button-primary-outlined button-small">
             About
