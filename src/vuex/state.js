@@ -11,7 +11,6 @@ const state = {
   },
 
   view: {
-    grid:    3,
     links:   5,
     config:  true,
     sidebar: true,

@@ -67,7 +67,7 @@ const sync = {
             this.save(state).then(() => resolve({ sync: true }))
           })
         } else {
-          console.info("Syncing Data...")
+          console.info("Retreiving Data...")
           let fileId = data.result.files[0].id
           gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
             return this.handle(state, file).then((data) => resolve(data))
@@ -81,21 +81,8 @@ const sync = {
     return new Promise((resolve, reject) => {
       let loaded = JSON.parse(data.body)
       let cur = state.meta, got = loaded.meta
-      // Local data is newer, save that
-      if (cur.updatedAt > got.updatedAt || cur.ver != got.ver) {
-        console.info("Syncing Local Data")
-        return this.save(state).then(() => resolve({ sync: true }))
-      }
-      // Sync'd Data is newer, use that
-      if (cur.createdAt > got.createdAt || cur.updatedAt < got.updatedAt) {
-        console.info("Loading Synced Data.")
-        return resolve({ sync: true, state: loaded })
-      }
-      // Data is in sync
-      if (cur.updatedAt == got.updatedAt) {
-        console.info("Data In Sync.")
-        return resolve({ sync: true })
-      }
+      console.info("Loading Synced Data")
+      return resolve({ sync: true, state: loaded })
     })
   },
 
