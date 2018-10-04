@@ -5,10 +5,7 @@
   "manifest_version": 2,
 
   "icons": {
-    "16": "icon/icon16.png",
-    "32": "icon/icon32.png",
-    "48": "icon/icon48.png",
-    "128": "icon/icon128.png"
+    "128": "icon.png"
   },
 
   "background": {
@@ -19,19 +16,23 @@
   "page_action": {
     "default_popup": "app/index.html?popup=true",
     "default_icon": {
-      "16": "icon/icon16.png",
-      "32": "icon/icon32.png",
-      "48": "icon/icon48.png",
-      "128": "icon/icon128.png"
+      "128": "icon.png"
     }
   },
 
-  "permissions": [ "tabs", "declarativeContent", "storage" ],
+  "permissions": [ "tabs", "identity", "declarativeContent", "storage" ],
 
   "chrome_url_overrides": {
     "newtab": "app/index.html"
   },
 
-  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
+
+  "oauth2": {
+    "client_id": "645077009967-98p3d9s3r8rnedjvpkbj32mbtildsc7o.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.appdata"
+    ]
+  }
 
 }
