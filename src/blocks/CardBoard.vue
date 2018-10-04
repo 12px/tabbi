@@ -13,11 +13,6 @@
         </a>
       </h6>
 
-      <div class="nothing align-center" 
-        v-if="!hasLinks && !edit.active">
-        There's nothing here.
-      </div>
-
       <draggable
         v-model="self.links"
         :options="{ handle: '.grab', group: 'items' }"
@@ -33,6 +28,11 @@
           @remItem="remove(key)"
           @resItem="restore(link, key)">
         </card-item>
+
+        <div class="nothing align-center" 
+          v-if="!hasLinks && !edit.active">
+          There's nothing here.
+        </div>
 
       </draggable>
 
