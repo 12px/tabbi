@@ -42,7 +42,7 @@
 
     <a href="#" @click="config()"
       :class="{ active: view.config, 'bottom': 1 }">
-      <i class="fas fa-ellipsis-h"></i>
+      <i :class="['fas', icon]"></i>
       <strong>Options</strong>
     </a>
 
@@ -52,8 +52,10 @@
 <script>
   export default {
     computed: {
-      view()   { return this.$store.state.view },
-      local() { return this.$store.state._ }
+      view()  { return this.$store.state.view },
+      local() { return this.$store.state._ },
+      sync()  { return this.$store.state.meta.syncData },
+      icon()  { return this.sync ? 'fa-ellipsis-h' : 'fa-exclamation-circle' } 
     },
     methods: {
       active(tab)    { return this.view.tab == tab && !this.view.info },

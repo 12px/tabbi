@@ -24,6 +24,7 @@
           <p>Tabbi can sync with your Google Drive account so you don't lose data.</p>
           <button class="full button-primary" @click="setSync()">
             Drive Sync: {{ synced ? 'On' : 'Off' }}
+            <i class="fas fa-exclamation-circle" v-if="!synced"></i>
           </button>
         </div>
         <div class="col col-lg-4">
