@@ -26,7 +26,7 @@
           <input v-focus type="text" :value="name"
             @keup.enter="saveLink()" placeholder="Link Name">
 
-          <select v-model="lastBoard">
+          <select v-model="board">
             <option v-for="(b, key) in $store.state.boards" :value="key">
               {{ b.name }}
             </option>
@@ -52,20 +52,20 @@
   export default {
     data() { 
       return { 
-        name: '', link: '', tabs: [], session: false,
+        board: this.$store.state.meta.lastBoard,
+        name: '', link: '', tabs: [], session: false, 
         label: 'Session On ' +  new Date().toLocaleDateString('en-US')
       }
     },
     computed: {
       hasTabs()   { return this.tabs.length > 1 },
       hasLink()   { return this.name && this.link },
-      isBrowser() { return this.hasLink || this.hasTabs },
-      lastBoard() { return this.$store.state.meta.lastBoard }
+      isBrowser() { return this.hasLink || this.hasTabs }
     },
     methods: {
       saveLink()  { 
         this.$store.commit('create_link', { 
-          board: this.lastBoard, name: this.name, link: this.link 
+          board: this.board, name: this.name, link: this.link 
         })
         this.cancel()
       },
@@ -83,13 +83,10 @@
     },
     created() {
       if (window.location.href.indexOf('popup=true') > -1) {
-        console.log("we have a popup")
         this.$browser().then((data) => {
           if (data) {
-            console.log("we have data")
             for (var i = 0; i < data.length; i++) {
               if (data[i].url != 'chrome://newtab/') {
-                console.log("it's not a new tab")
                 this.tabs.push({ name: data[i].title, link: data[i].url })
                 if (data[i].active) {
                   this.name = data[i].title
