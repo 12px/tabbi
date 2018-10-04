@@ -4,7 +4,7 @@
 
       <div class="col col-md-6 col-lg-4 col-xlg-2-5">
         
-        <div class="input-box" v-if="session && hasTabs()">
+        <div class="input-box" v-if="session && hasTabs">
           <input disabled type="text" 
             v-for="tab in tabs" :value="tab.name">
 
@@ -16,13 +16,13 @@
           </button>
         </div>
 
-        <button v-if="!session && hasTabs()"
+        <button v-if="!session && hasTabs"
           class="full button-primary-outlined" 
           @click="session = true">
           Save Session ({{ tabs.length }})
         </button>
 
-        <div class="input-box" v-if="!session && hasLink()">
+        <div class="input-box" v-if="!session && hasLink">
           <input v-focus type="text" :value="name"
             @keup.enter="saveLink()" placeholder="Link Name">
 
@@ -37,7 +37,7 @@
           </button>
         </div>
 
-        <button v-if="session && hasLink()"
+        <button v-if="session && hasLink"
           class="full button-primary-outlined" 
           @click="session = false">
           Save Link
@@ -59,7 +59,7 @@
     computed: {
       hasTabs()   { return this.tabs.length > 1 },
       hasLink()   { return this.name && this.link },
-      isBrowser() { return this.hasLink() || this.hasTabs() },
+      isBrowser() { return this.hasLink || this.hasTabs },
       lastBoard() { return this.$store.state.meta.lastBoard }
     },
     methods: {
@@ -83,10 +83,13 @@
     },
     created() {
       if (window.location.href.indexOf('popup=true') > -1) {
+        console.log("we have a popup")
         this.$browser().then((data) => {
           if (data) {
+            console.log("we have data")
             for (var i = 0; i < data.length; i++) {
-              if (data[i].url != 'chrome://newtab') {
+              if (data[i].url != 'chrome://newtab/') {
+                console.log("it's not a new tab")
                 this.tabs.push({ name: data[i].title, link: data[i].url })
                 if (data[i].active) {
                   this.name = data[i].title
