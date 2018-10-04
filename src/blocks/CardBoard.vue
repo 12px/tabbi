@@ -178,11 +178,10 @@
     border: none;
   }
   .tooltip-text {
-    padding: 5px;
-    min-width: 175px;
-    font-size: 0.7rem;
+    padding: 0;
+    min-width: 110px;
     font-weight: 700;
-    background-color: rgba(0,0,0,0.6);
+    font-size: 0.7rem;
     text-transform: uppercase;
   }
 </style>
