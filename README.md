@@ -10,7 +10,7 @@
 You'll never have to look for a link you saved again. Tabbi is a bookmark manager first and foremost, a great utility for people looking to save links. Organize your links into boards, and give them tags.
 
 ### Use Anywhere
-Tabbi is primarily used as a chrome extension, but is also available as a web app. Go to https://tabbi.12px.io to start using it anywhere today. Set it as your home page so it shows up as intended!
+Tabbi is primarily used as a [chrome extension](https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd), but is also available as a web app. Go to https://tabbi.12px.io to start using it anywhere today. Set it as your home page so it shows up as intended!
 
 ### Features
 - **Open Lists** - Tabbi lets you open entire lists of links at a time.
