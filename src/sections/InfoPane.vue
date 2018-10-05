@@ -11,7 +11,28 @@
         </div>
       </div>
       <div class="row">
-        <div class="col col-lg-4">
+        <div class="col col-md-6 col-lg-3">
+          <h6>Help & Links</h6>
+          <div class="buttons">
+            <a class="button button-primary button-small button-round" @click="about = true">
+              About
+            </a>
+            <a href="https://github.com/12px/tabbi" 
+              target="_blank" class="button button-primary-outlined button-small">
+              Github
+            </a>
+            <a href="https://reddit.com/r/tabbi" 
+              target="_blank" class="button button-primary-outlined button-small">
+              Reddit
+            </a>
+          </div>
+
+          <a href="https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd"
+            target="_blank" class="full button button-primary">
+            Tabbi For Chrome
+          </a>
+        </div>
+        <div class="col col-md-6 col-lg-3">
           <h6>Already Have Bookmarks?</h6>
           <p>You can export them to an HTML file, and then import them here.</p>
           <input type="file" id="import" @change="getImport">
@@ -19,7 +40,7 @@
             Import (*.html)
           </label>
         </div>
-        <div class="col col-lg-4">
+        <div class="col col-md-6 col-lg-3">
           <h6>Keep Data In Sync</h6>
           <p>Tabbi can sync with your Google Drive so you don't lose data.</p>
           <button class="full button-primary" @click="setSync()">
@@ -27,7 +48,7 @@
             <i class="fas fa-exclamation-circle" v-if="!synced"></i>
           </button>
         </div>
-        <div class="col col-lg-4">
+        <div class="col col-md-6 col-lg-3">
           <h6>Tabbi Options</h6>
           <p><strong>Visible Links - </strong> How many links shown per card before collapsing.</p>
           <select :value="view.links" @change="setLinks">
@@ -39,28 +60,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col col-lg-4 col-xlg-3">
+        <div class="col align-center">
           <small>
             Use Reddit or Github to request features and report bugs.
           </small>
-        </div>
-        <div class="col col-lg-8 col-xlg-9 align-right">
-          <a @click="about = true"
-            href="#" class="button button-primary-outlined button-small">
-            About
-          </a>
-          <a href="https://github.com/12px/tabbi" 
-            target="_blank" class="button button-primary-outlined button-small">
-            On Github
-          </a>
-          <a href="https://reddit.com/r/tabbi" 
-            target="_blank" class="button button-primary-outlined button-small">
-            On Reddit
-          </a>
-          <a href="https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd"
-            target="_blank" class="button button-primary button-small">
-            For Chrome
-          </a>
         </div>
       </div>
     </div>
@@ -100,7 +103,7 @@
           <button class="button-primary" @click="about = false">Close</button>
         </div>
       </div>
-  </div>
+    </div>
   </div>
 </template>
 
@@ -152,10 +155,13 @@
   .card {
     margin: 0;
   }
+  .buttons {
+    margin: 15px 0;
+  }
   select, .button.full {
     margin-bottom: 0;
   }
-  .row .col-lg-4 {
+  .row .col-lg-3 {
     padding-right: 20px;
   }
   input[type=file] {
