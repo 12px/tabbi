@@ -9,6 +9,10 @@
     <div id="content" :class="{ open: $store.state.view.sidebar }">
       <div class="wrap">
 
+        <div class="progress-bar striped animated" v-if="$store.state._.syncing">
+          <span class="progress-bar-blue" style="width: 100%;"></span>
+        </div>
+
         <div id="toast"></div>
 
         <ext-popup></ext-popup>
@@ -73,5 +77,15 @@
     .alert {
       border: 1px solid $brand-color;
     }
+  }
+</style>
+
+<style scoped>
+  .progress-bar {
+    top: -15px;
+    left: 15px;
+    right: 15px;
+    height: 7px;
+    position: absolute;
   }
 </style>
