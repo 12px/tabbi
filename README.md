@@ -27,5 +27,17 @@ Tabbi is primarily used as a [chrome extension](https://chrome.google.com/websto
 <a name="installation"></a>
 ## Installation
 
-1. `npm install`
-2. Run poi - `node node_module/poi/bin/cli.js` to run the application on localhost
+#### Local
+1. Clone Repo 
+2. Run `npm install` to get dependencies.
+3. Use `npm run local` to run uncompiled.
+3. Use `npm run build` to compile app.
+
+#### Chrome
+1. Install on the [Chrome Store](https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd)
+
+#### Firefox
+1. Use the web app: https://tabbi.12px.io
+
+#### Mobile
+1. Use the web app: https://tabbi.12px.io
