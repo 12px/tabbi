@@ -31,6 +31,15 @@ let pd_util = {
     }
   },
 
+  // tag parser
+  getTags(string) {
+    let tags = string.split(',')
+    for (var i = tags.length - 1; i >= 0; i--) {
+      tags[i] = tags[i].trim()
+    }
+    return tags
+  },
+
   // link opener
   openAll(links) {
     let allow = "You'll need to allow popups to use this feature!";

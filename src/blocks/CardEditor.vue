@@ -79,7 +79,7 @@
     methods: {
       addTag() {
         if (!this.newTag) return this.$$.toast("No Tag Specified.")
-        this.link.tags.push(this.newTag)
+        this.link.tags = [ ...this.link.tags, ...this.$$.getTags(this.newTag) ]
         this.newTag = ''
       },
       remTag(i) { this.link.tags.splice(i, 1) },

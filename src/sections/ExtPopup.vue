@@ -81,7 +81,7 @@
     methods: {
       addTag() {
         if (!this.nTag) return this.$$.toast("No Tag Specified.")
-        this.tags.push(this.nTag)
+        this.tags = [ ...this.tags, ...this.$$.getTags(this.nTag) ]
         this.nTag = ''
       },
       remTag(i) { this.tags.splice(i, 1) },
