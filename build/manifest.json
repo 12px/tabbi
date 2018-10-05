@@ -24,7 +24,7 @@
   "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
 
   "oauth2": {
-    "client_id": "645077009967-98p3d9s3r8rnedjvpkbj32mbtildsc7o.apps.googleusercontent.com",
+    "client_id": "645077009967-qhq77o1l3qgnijjor0ap9vtbvrtq0st2.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/drive.appdata"
     ]
