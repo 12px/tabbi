@@ -7,8 +7,11 @@
 [![David](https://img.shields.io/david/12px/tabbi.svg)]()
 [![David](https://img.shields.io/david/dev/12px/tabbi.svg)]()
 
+1. [Description](#desc)
+2. [Installation](#installation)
 
-
+<a name="desc"></a>
+## Description
 ### Bookmark Focused
 You'll never have to look for a link you saved again. Tabbi is a bookmark manager first and foremost, a great utility for people looking to save links. Organize your links into boards, and give them tags.
 
@@ -19,3 +22,10 @@ Tabbi is primarily used as a [chrome extension](https://chrome.google.com/websto
 - **Open Lists** - Tabbi lets you open entire lists of links at a time.
 - **Filtering** - The Filter Bar lets you filter tags by name, board, or tag. Hit Enter to open all filtered links.
 - **Session Saving** - Using the chrome extension? Save all of your open tabs into a special board called a "session" for easy access later.
+
+
+<a name="installation"></a>
+## Installation
+
+1. `npm install`
+2. Run poi - `node node_module/poi/bin/cli.js` to run the application on localhost
