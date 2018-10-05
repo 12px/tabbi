@@ -65,39 +65,6 @@ const sync = {
           })
         }
       }
-
-
-      // Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
-      //   console.log("Chrome Extension")
-      //   if (crx && crx.getAuthToken) {
-      //     // we're in a chrome extension
-      //     // which doesn't allow use of gapi client
-      //     // have to use chrome identity 
-      //     Promise.resolve(crx.getAuthToken({ 'interactive': true }, (token) => {
-      //       Promise.all([
-      //         gapi.client.init({ apiKey: params.apiKey }),
-      //         gapi.client.setToken({ access_token: token })
-      //       ]).then(() => {
-      //         this.fetch(state).then((data) => resolve(data))
-      //       })
-      //     }))
-      //   } else {
-      //     // if no chrome.identity
-      //     // assume we're in browser mode
-      //     // with full API access
-      //     gapi.client.init(params).then(() => {
-      //       let auth = gapi.auth2.getAuthInstance()
-      //       if (auth.isSignedIn.get()) {
-      //         return this.fetch(state).then((data) => resolve(data))
-      //       } else {
-      //         // sign in with google if not authenticated
-      //         return Promise.resolve(auth.signIn()).then(() => {
-      //           this.fetch(state).then((data) => resolve(data))
-      //         })
-      //       }
-      //     })
-      //   }
-      // })
     })
   },
 
