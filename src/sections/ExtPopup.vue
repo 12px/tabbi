@@ -1,14 +1,14 @@
 <template>
   <div id="popup">
-    <div class="row" v-if="isBrowser">
+    <div class="row">
 
       <div class="col col-md-6 col-lg-4 col-xlg-2-5">
         
         <div class="input-box" v-if="session && hasTabs">
           <input disabled type="text" 
-            v-for="tab in tabs" :value="tab.name">
+            v-for="tab in tabs" v-model="tab.name">
 
-          <input v-focus type="text" :value="label"
+          <input v-focus type="text" v-model="label"
             @keup.enter="saveSession()" placeholder="Session Name">
 
           <button class="full button-primary" @click="saveSession()">
@@ -23,7 +23,7 @@
         </button>
 
         <div class="input-box" v-if="!session && hasLink">
-          <input v-focus type="text" :value="name"
+          <input v-focus type="text"v-model="name"
             @keup.enter="saveLink()" placeholder="Link Name">
 
           <select v-model="board">
@@ -32,10 +32,26 @@
             </option>
           </select>
 
+          <input type="text"
+            v-model="nTag"
+            @keyup.enter="addTag()"
+            placeholder="Add Tag">
+
           <button class="full button-primary" @click="saveLink()">
             Save Link
           </button>
-        </div>
+        </div>        
+
+        <ul class="tags" v-if="!session && hasLink">
+          <li class="tag"
+            v-for="(tag, i) in tags"
+            @click="remTag(i)"
+            :key="i">
+            <strong>
+              #{{ tag }}
+            </strong>
+          </li>
+        </ul>
 
         <button v-if="session && hasLink"
           class="full button-primary-outlined" 
@@ -53,7 +69,7 @@
     data() { 
       return { 
         board: this.$store.state.meta.lastBoard,
-        name: '', link: '', tabs: [], session: false, 
+        name: '', link: '', tabs: [], session: false, tags: [], nTag: '',
         label: 'Session On ' +  new Date().toLocaleDateString('en-US')
       }
     },
@@ -63,9 +79,16 @@
       isBrowser() { return (this.hasLink || this.hasTabs) && this.$root.popup }
     },
     methods: {
+      addTag() {
+        if (!this.nTag) return this.$$.toast("No Tag Specified.")
+        this.tags.push(this.nTag)
+        this.nTag = ''
+      },
+      remTag(i) { this.tags.splice(i, 1) },
+
       saveLink()  { 
         this.$store.commit('create_link', { 
-          board: this.board, name: this.name, link: this.link 
+          board: this.board, name: this.name, link: this.link, tags: this.tags
         })
         this.cancel()
       },
@@ -78,7 +101,9 @@
       cancel() {
         this.name = ''
         this.link = ''
+        this.nTag = ''
         this.tabs = []
+        this.tags = []
       }
     },
     created() {
