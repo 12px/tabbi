@@ -2,8 +2,11 @@
 > Keep your bookmarks right at your fingertips. A new-tab replacement, tabbi organizes your bookmarks into boards for easy access whatever you're doing. 
 
 [![GitHub release](https://img.shields.io/github/release/12px/tabbi.svg)]()
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ilonjmcjjkcnhndjfkaoekocdfhedlfd.svg)]()
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ilonjmcjjkcnhndjfkaoekocdfhedlfd.svg)]()
 [![David](https://img.shields.io/david/12px/tabbi.svg)]()
 [![David](https://img.shields.io/david/dev/12px/tabbi.svg)]()
+
 
 
 ### Bookmark Focused
