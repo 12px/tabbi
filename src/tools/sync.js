@@ -24,24 +24,12 @@ const sync = {
   enable(state) {
     console.info("Enabling Sync.")
     return new Promise((resolve, reject) => {
-      let crx = chrome.identity
-      Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
-        if (crx) {
-          // we're in a chrome extension
-          // which doesn't allow use of gapi client
-          // have to use chrome identity 
-          Promise.resolve(crx.getAuthToken({ 'interactive': true }, (token) => {
-            Promise.all([
-              gapi.client.init({ apiKey: params.apiKey }),
-              gapi.client.setToken({ access_token: token })
-            ]).then(() => {
-              this.fetch(state).then((data) => resolve(data))
-            })
-          }))
-        } else {
-          // if no chrome.identity
-          // assume we're in browser mode
-          // with full API access
+      let        extension = false
+      try      { extension = chrome ? chrome.identity : false } 
+      catch(e) { extension = false }
+
+      if (!extension) {
+        Promise.resolve(gapi.client.load('drive', 'v3')).then(() => {
           gapi.client.init(params).then(() => {
             let auth = gapi.auth2.getAuthInstance()
             if (auth.isSignedIn.get()) {
@@ -53,26 +41,83 @@ const sync = {
               })
             }
           })
+        })
+      } else {
+        if (extension.getAuthToken) {
+          // chrome extension
+          Promise.resolve(extension.getAuthToken({ 'interactive': true }, (token) => {
+            Promise.all([
+              gapi.client.load('drive', 'v3'),
+              gapi.client.init({ apiKey: params.apiKey }),
+              gapi.client.setToken({ access_token: token })
+            ]).then(() => {
+              this.fetch(state).then((data) => resolve(data))
+            })
+          }))
+        } else {
+          // firefox extension
+          let scopes = ["openid", "profile", "email"]
+          extension.launchWebAuthFlow({
+            interactive: true,
+            url: `https://accounts.google.com/o/oauth2/auth?client_id=${ params.clientId }&response_type=token&redirect_uri=${ encodeURIComponent(extension.getRedirectURL()) }&scope=${ encodeURIComponent(scopes.join(' ')) }`
+          }).then((redirectURL) => {
+            console.log(redirectURL)
+          })
         }
-      })
+      }
+
+
+      // Promise.all([ gapi.client.load('drive', 'v3' )]).then(() => {
+      //   console.log("Chrome Extension")
+      //   if (crx && crx.getAuthToken) {
+      //     // we're in a chrome extension
+      //     // which doesn't allow use of gapi client
+      //     // have to use chrome identity 
+      //     Promise.resolve(crx.getAuthToken({ 'interactive': true }, (token) => {
+      //       Promise.all([
+      //         gapi.client.init({ apiKey: params.apiKey }),
+      //         gapi.client.setToken({ access_token: token })
+      //       ]).then(() => {
+      //         this.fetch(state).then((data) => resolve(data))
+      //       })
+      //     }))
+      //   } else {
+      //     // if no chrome.identity
+      //     // assume we're in browser mode
+      //     // with full API access
+      //     gapi.client.init(params).then(() => {
+      //       let auth = gapi.auth2.getAuthInstance()
+      //       if (auth.isSignedIn.get()) {
+      //         return this.fetch(state).then((data) => resolve(data))
+      //       } else {
+      //         // sign in with google if not authenticated
+      //         return Promise.resolve(auth.signIn()).then(() => {
+      //           this.fetch(state).then((data) => resolve(data))
+      //         })
+      //       }
+      //     })
+      //   }
+      // })
     })
   },
 
   fetch(state) {
     return new Promise((resolve, reject) => {
-      gapi.client.drive.files.list(list).then((data) => {
-        if (!data.result.files.length) {
-          console.info("No Sync Data Found, Creating...")
-          this.create().then(() => { 
-            this.save(state).then(() => resolve({ sync: true }))
-          })
-        } else {
-          console.info("Retreiving Data...")
-          let fileId = data.result.files[0].id
-          gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
-            return this.handle(state, file).then((data) => resolve(data))
-          })
-        }
+      Promise.resolve(gapi.client.load('drive', 'v3')).then(() => {
+        gapi.client.drive.files.list(list).then((data) => {
+          if (!data.result.files.length) {
+            console.info("No Sync Data Found, Creating...")
+            this.create().then(() => { 
+              this.save(state).then(() => resolve({ sync: true }))
+            })
+          } else {
+            console.info("Retreiving Data...")
+            let fileId = data.result.files[0].id
+            gapi.client.drive.files.get({ alt: 'media',  fileId }).then((file) => {
+              return this.handle(state, file).then((data) => resolve(data))
+            })
+          }
+        })
       })
     })
   },
