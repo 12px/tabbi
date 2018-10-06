@@ -22,7 +22,7 @@ const sync = {
   },
 
   enable(state) {
-    console.info("Enabling Sync.")
+    console.info("Starting Sync.")
     return new Promise((resolve, reject) => {
       let        extension = false
       try      { extension = chrome ? chrome.identity : false } 
