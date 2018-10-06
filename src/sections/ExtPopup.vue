@@ -76,7 +76,10 @@
     computed: {
       hasTabs()   { return this.tabs.length > 1 },
       hasLink()   { return this.name && this.link },
-      isBrowser() { return (this.hasLink || this.hasTabs) && this.$root.popup }
+      isBrowser() { 
+        let current = (this.hasLink || this.hasTabs)
+        return current && (this.$root.popup || this.$store.state.view.tab == 'sessions')
+      }
     },
     methods: {
       addTag() {
