@@ -9,15 +9,15 @@
     <div id="content" :class="{ open: $store.state.view.sidebar }">
       <div class="wrap">
 
-        <div class="progress-bar striped animated" v-if="$store.state._.syncing">
-          <span class="progress-bar-blue" style="width: 100%;"></span>
-        </div>
-
         <div id="toast"></div>
 
         <ext-popup></ext-popup>
 
         <tool-bar></tool-bar>
+
+        <div class="progress-bar striped animated" v-if="$store.state._.syncing">
+          <span class="progress-bar-blue" style="width: 100%;"></span>
+        </div>
 
         <info-pane v-if="$store.state.view.config"></info-pane>
 
@@ -70,7 +70,9 @@
 
   @import '~mustard-ui/src/scss/mustard-ui.scss';
   @import './app.scss';
+</style>
 
+<style scoped>
   #toast {
     top: -2px;
     position: fixed;
@@ -78,14 +80,11 @@
       border: 1px solid $brand-color;
     }
   }
-</style>
-
-<style scoped>
   .progress-bar {
-    top: -15px;
-    left: 15px;
-    right: 15px;
-    height: 7px;
+    left: 20px;
+    right: 20px;
+    height: 5px;
+    margin-top: -18px;
     position: absolute;
   }
 </style>
