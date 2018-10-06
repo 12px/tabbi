@@ -16,17 +16,22 @@ export default {
           let isGeneric = function(str) {
             return str == "Bookmarks" || str == "Bookmarks Bar"
           }
+          let getElm = function(el) {
+            if (el.closest('UL')) return 'UL'
+            return 'DL'
+          }
 
           for (var i = bookmarks.length - 1; i >= 0; i--) {
             let el = bookmarks[i]
+            let elm = getElm(el)
             let result = { tags: [] }
-            let parent = el.closest('DL').previousElementSibling
+            let parent = el.closest(elm).previousElementSibling
             let cat = parent.innerText
 
             // loop through all parent folders
             // add any sub folders as tags
-            while (parent.closest('DL')) {
-              parent = parent.closest('DL').previousElementSibling
+            while (parent.closest(elm)) {
+              parent = parent.closest(elm).previousElementSibling
               if (!isGeneric(parent.innerText)) {
                 result.tags.push(cat)
                 cat = parent.innerText
