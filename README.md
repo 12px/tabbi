@@ -18,6 +18,12 @@ You'll never have to look for a link you saved again. Tabbi is a bookmark manage
 ### Use Anywhere
 Tabbi is primarily used as a [chrome extension](https://chrome.google.com/webstore/detail/ilonjmcjjkcnhndjfkaoekocdfhedlfd), but is also available as a web app. Go to https://tabbi.12px.io to start using it anywhere today. Set it as your home page so it shows up as intended!
 
+### In-Sync
+Tabbi can sync your bookmarks in your Google Drive's `appdata` folder. This allows it to sync between any number of devices, giving you access to your bookmarks wherever you are.
+
+### No Accounts
+You don't need an account for Tabbi - in fact, it runs completely serverless. Your data exists in your browser, and in your google drive. Nowhere else.
+
 ### Features
 - **Open Lists** - Tabbi lets you open entire lists of links at a time.
 - **Filtering** - The Filter Bar lets you filter tags by name, board, or tag. Hit Enter to open all filtered links.
