@@ -1,6 +1,6 @@
 <template>
   <div id="popup">
-    <div class="row">
+    <div class="row" v-if="isBrowser">
 
       <div class="col col-md-6 col-lg-4 col-xlg-2-5">
         
